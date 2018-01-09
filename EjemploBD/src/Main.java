@@ -4,7 +4,7 @@ public class Main {
 
 	public static void main(String[] args) throws SQLException {
 		//System.out.println("C:\nuevos\trabajos");
-		String url = "jdbc:sqlite:C:\\Users\\javierlete\\git\\javajavierlete\\EjemploBD\\bdd\\javierlete.db";
+		String url = "jdbc:sqlite:bdd\\javierlete.db";
 		
 		Connection con;
 		con = DriverManager.getConnection(url);
