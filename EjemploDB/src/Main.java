@@ -11,7 +11,7 @@ public class Main {
 	public static void main(String[] args) throws SQLException {
 
 		String url = "jdbc:sqlite:C:\\desarrolloRedes\\javajavierlete\\EjemploDB\\DB\\ex1.db";
-		
+		//TODO Comparar con el del profe
 		Connection con;
 		con = DriverManager.getConnection(url);
 		
