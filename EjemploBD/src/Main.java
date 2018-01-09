@@ -4,14 +4,17 @@ public class Main {
 
 	public static void main(String[] args) throws SQLException {
 		//System.out.println("C:\nuevos\trabajos");
-		String url = "jdbc:sqlite:bdd\\javierlete.db";
+		//final String url = "jdbc:sqlite:bdd\\javierlete.db";
+		final String url = "jdbc:mysql://localhost:3306/ipartekjava";
+		final String usuario = "root";
+		final String password = "";
 		
 		Connection con;
-		con = DriverManager.getConnection(url);
+		con = DriverManager.getConnection(url, usuario, password);
 		
 		Statement st = con.createStatement();
 		
-		String sql = "SELECT pass,nick FROM usuarios";
+		String sql = "SELECT nick,pass FROM usuarios";
 		
 		ResultSet rs = st.executeQuery(sql);
 		
