@@ -1,9 +1,14 @@
 import java.sql.*;
 
+/**
+ * Ejemplo de llamadas a SQLite
+ * @author java
+ *
+ */
+
 public class Main {
 
 	public static void main(String[] args) throws SQLException {
-		// TODO Auto-generated method stub
 
 		String url = "jdbc:sqlite:C:\\desarrolloRedes\\EjemploDB\\DB\\ex1.db";
 		
