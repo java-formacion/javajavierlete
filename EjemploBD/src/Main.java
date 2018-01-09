@@ -4,8 +4,8 @@ public class Main {
 
 	public static void main(String[] args) throws SQLException {
 		//System.out.println("C:\nuevos\trabajos");
-		//final String url = "jdbc:sqlite:bdd\\javierlete.db";
-		final String url = "jdbc:mysql://localhost:3306/ipartekjava";
+		final String url = "jdbc:sqlite:bdd\\javierlete.db";
+		//final String url = "jdbc:mysql://localhost:3306/ipartekjava";
 		final String usuario = "root";
 		final String password = "";
 		
