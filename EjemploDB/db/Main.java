@@ -5,7 +5,7 @@ import java.sql.*;
 public class Main {
 
 	public static void main(String[] args) throws SQLException {
-		String url = "jdbc:sqlite:C:\\Users\\Java\\Documents\\sqlite-tools-win32-x86-3210000\\ex1.db";//obtenes direccion de la bd
+		String url = "jdbc:sqlite:C:\\Users\\Java\\Documents\\SQLiteDB\\ex1.db";//obtenes direccion de la bd
 		
 		Connection con;//declarar el objeto conexion
 		
