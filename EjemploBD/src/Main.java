@@ -14,6 +14,39 @@ public class Main {
 		
 		Statement st = con.createStatement();
 		
+		mostrarRegistros(st);
+		
+		String nick = "sqlite";
+		String pass = "pass";
+		String sql = "INSERT INTO usuarios (nick, pass) VALUES ('"
+				+ nick + "', '" + pass + "')";
+		
+		int numeroRegistrosModificados = st.executeUpdate(sql);
+		
+		System.out.println(numeroRegistrosModificados);
+		
+		mostrarRegistros(st);
+		
+		pass="nueva password";
+		sql = "UPDATE usuarios SET pass='" + pass + 
+				"' WHERE nick='" + nick + "'";
+		
+		numeroRegistrosModificados = st.executeUpdate(sql);
+		
+		System.out.println(numeroRegistrosModificados);
+		
+		mostrarRegistros(st);
+		
+		sql = "DELETE FROM usuarios WHERE nick='" + nick + "'";
+		
+		numeroRegistrosModificados = st.executeUpdate(sql);
+		
+		System.out.println(numeroRegistrosModificados);
+		
+		mostrarRegistros(st);
+	}
+
+	private static void mostrarRegistros(Statement st) throws SQLException {
 		String sql = "SELECT nick,pass FROM usuarios";
 		
 		ResultSet rs = st.executeQuery(sql);
