@@ -1,18 +1,12 @@
 
-
-/**
- * Ejemplo de llamadas a SQLite
- * @author java
- *
- */
-
 import java.sql.*;
 
 public class Main {
-
+	private static PreparedStatement pst = null;
+	
 	public static void main(String[] args) {
 		// System.out.println("C:\nuevos\trabajos");
-		final String url = "jdbc:sqlite:C:\\desarrolloRedes\\javajavierlete\\EjemploDB\\DB\\ex1.db";
+		final String url = "jdbc:sqlite:DB\\javierlete.db";
 		// final String url = "jdbc:mysql://localhost:3306/ipartekjava";
 		final String usuario = "root";
 		final String password = "";
@@ -23,36 +17,53 @@ public class Main {
 		try {
 			con = DriverManager.getConnection(url, usuario, password);
 
-			st = con.createStatement();
+			String sql = "SELECT nick,pass FROM usuarios";
+			
+			pst = con.prepareStatement(sql);
 
-			mostrarRegistros(st);
-
+			mostrarRegistros();
+			
 			String nick = "sqlite";
 			String pass = "pass";
-			String sql = "INSERT INTO usuarios (nick, pass) VALUES ('" + nick + "', '" + pass + "')";
+			sql = "INSERT INTO usuarios (nick, pass) VALUES (?, ?)";
 
-			int numeroRegistrosModificados = st.executeUpdate(sql);
+			PreparedStatement pst = con.prepareStatement(sql);
+			
+			pst.setString(1, nick);
+			pst.setString(2, pass);
+			
+			int numeroRegistrosModificados = pst.executeUpdate();
 
 			System.out.println(numeroRegistrosModificados);
 
-			mostrarRegistros(st);
+			mostrarRegistros();
 
 			pass = "nueva password";
-			sql = "UPDATE usuarios SET pass='" + pass + "' WHERE nick='" + nick + "'";
+			sql = "UPDATE usuarios SET pass=? WHERE nick=?";
 
-			numeroRegistrosModificados = st.executeUpdate(sql);
-
-			System.out.println(numeroRegistrosModificados);
-
-			mostrarRegistros(st);
-
-			sql = "DELETE FROM usuarios WHERE nick='" + nick + "'";
-
-			numeroRegistrosModificados = st.executeUpdate(sql);
+			pst = con.prepareStatement(sql);
+			
+			pst.setString(2, nick);
+			pst.setString(1, pass);
+			
+			numeroRegistrosModificados = pst.executeUpdate();
 
 			System.out.println(numeroRegistrosModificados);
 
-			mostrarRegistros(st);
+			mostrarRegistros();
+
+			sql = "DELETE FROM usuarios WHERE nick=?";
+
+			pst = con.prepareStatement(sql);
+			
+			pst.setString(1, nick);
+			
+			numeroRegistrosModificados = pst.executeUpdate();
+
+			System.out.println(numeroRegistrosModificados);
+
+			mostrarRegistros();			
+
 		} catch (SQLException e) {
 
 			System.out.println("Ha habido un error al trabajar con la base de datos");
@@ -76,11 +87,13 @@ public class Main {
 			
 		}
 	}
+	
+	private static void mostrarRegistros() throws SQLException {
+		mostrarRegistros(pst);
+	}
 
-	private static void mostrarRegistros(Statement st) throws SQLException {
-		String sql = "SELECT nick,pass FROM usuarios";
-
-		ResultSet rs = st.executeQuery(sql);
+	private static void mostrarRegistros(PreparedStatement pst) throws SQLException {
+		ResultSet rs = pst.executeQuery();
 
 		ResultSetMetaData rsmd = rs.getMetaData();
 
