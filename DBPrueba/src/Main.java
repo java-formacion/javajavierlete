@@ -3,6 +3,8 @@
 import java.sql.*;
 
 /**
+ * PAra modificar DB sqliteadmin.exe
+ * 
  * Hacer un ejercicio con los comandos equivalentes a estas lineas:
  * 
  * SELECT nick, password FROM usuarios;
