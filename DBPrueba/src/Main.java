@@ -1,18 +1,32 @@
+
 //llamada a java sql para la modificacion de bases de datos SQL
 import java.sql.*;
 
+/**
+ * Hacer un ejercicio con los comandos equivalentes a estas lineas:
+ * 
+ * SELECT nick, password FROM usuarios;
+ * INSERT INTO usuarios (nick, password) VALUES ('pepe', 'contra');
+ * UPDATE usuarios SET password='contra2' WHERE nick='pepe';
+ * DELETE FROM usuarios WHERE nick='pepe';
+ * 
+ * @author java
+ *
+ */
+
 public class Main {
+
 	private static PreparedStatement pst = null;
-	
+
 	public static void main(String[] args) {
 		// System.out.println("C:\nuevos\trabajos");
-		
-		
-		//llamada al comando de sqlite para abrir el DB dentro de la carpeta DB
+
+		// llamada al comando de sqlite para abrir el DB dentro de la carpeta DB
 		final String url = "jdbc:sqlite:DB\\PRUEBA.s3db";
 		// final String url = "jdbc:mysql://localhost:3306/ipartekjava";
-		
-		//se le da un valor para un usuario y contraseña para la modificacion de los datos
+
+		// Se le da un valor para un usuario y contraseña para la modificacion de los
+		// datos
 		final String usuario = "root";
 		final String password = "";
 
@@ -20,38 +34,56 @@ public class Main {
 		Statement st = null;
 
 		try {
-			//llamada al DriverManager que esta dentro del java.sql
+			// llamada al DriverManager que esta dentro del java.sql
 			con = DriverManager.getConnection(url, usuario, password);
 
-			String sql = "SELECT nick,pass FROM usuarios";
-			
+			//llamada a consola para que muestre lo que hay en la tabla
+			String sql = "SELECT id,nombre,descripcion,stock,precio FROM usuarios";
+
 			pst = con.prepareStatement(sql);
 
 			mostrarRegistros();
-			
-			String nick = "sqlite";
-			String pass = "pass";
-			sql = "INSERT INTO usuarios (nick, pass) VALUES (?, ?)";
 
+			//Declaracion de las variables que haran de campos de nombre de las tablas
+			String nombre = "Pan";
+			String descripcion = "Pacomer";
+			int cantidad = 6;
+			double precio = 1.1;
+			
+			
+			//Se crea una plantilla "segura" para evitar modificaciones no preparadas
+			sql = "INSERT INTO Productos (Nombre,Descripcion,Stock,Precio) VALUES (?, ?, ?, ?)";
+			//lo que ponga dentro de sql sera lo que vaya a ir a la consola dentro del programa de sql
+			
+			
+			
 			PreparedStatement pst = con.prepareStatement(sql);
-			
-			pst.setString(1, nick);
-			pst.setString(2, pass);
-			
+
+			//se declaran las 4 variables de la plantilla
+			pst.setString(1, nombre);
+			pst.setString(2, descripcion);
+			pst.setInt(3, cantidad);
+			pst.setDouble(4, precio);
+
 			int numeroRegistrosModificados = pst.executeUpdate();
 
 			System.out.println(numeroRegistrosModificados);
 
 			mostrarRegistros();
 
+			
 			pass = "nueva password";
+			
+			//declaracion del mensaje de sql
 			sql = "UPDATE usuarios SET pass=? WHERE nick=?";
 
+			//inicio de llamada
 			pst = con.prepareStatement(sql);
-			
+
 			pst.setString(2, nick);
 			pst.setString(1, pass);
-			
+			//fin de la llamada
+
 			numeroRegistrosModificados = pst.executeUpdate();
 
 			System.out.println(numeroRegistrosModificados);
@@ -61,28 +93,28 @@ public class Main {
 			sql = "DELETE FROM usuarios WHERE nick=?";
 
 			pst = con.prepareStatement(sql);
-			
+
 			pst.setString(1, nick);
-			
+
 			numeroRegistrosModificados = pst.executeUpdate();
 
 			System.out.println(numeroRegistrosModificados);
 
-			mostrarRegistros();			
+			mostrarRegistros();
 
 		} catch (SQLException e) {
 
 			System.out.println("Ha habido un error al trabajar con la base de datos");
 			System.out.println(e.getMessage());
 		} finally {
-			if(st != null)
+			if (st != null)
 				try {
 					st.close();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			
+
 			if (con != null)
 				try {
 					con.close();
@@ -90,10 +122,10 @@ public class Main {
 					System.out.println("HA HABIDO UN ERROR AL CERRAR LA CONEXIÓN");
 					System.out.println(e);
 				}
-			
+
 		}
 	}
-	
+
 	private static void mostrarRegistros() throws SQLException {
 		mostrarRegistros(pst);
 	}
