@@ -1,5 +1,12 @@
 import java.sql.*;
 
+/*
+ * SELECT nick, password FROM usuarios;
+ * INSERT INTO usuarios (nick, password) VALUES ('pepe', 'contra');
+ * UPDATE usuarios SET password='contra2' WHERE nick='pepe';
+ * DELETE FROM usuarios WHERE nick='pepe';
+ */
+
 public class Main {
 	private static PreparedStatement pst = null;
 	
