@@ -38,7 +38,7 @@ public class Main {
 			con = DriverManager.getConnection(url, usuario, password);
 
 			//llamada a consola para que muestre lo que hay en la tabla
-			String sql = "SELECT id,nombre,descripcion,stock,precio FROM usuarios";
+			String sql = "SELECT id,nombre,descripcion,stock,precio FROM productos";
 
 			pst = con.prepareStatement(sql);
 
@@ -72,29 +72,31 @@ public class Main {
 			mostrarRegistros();
 
 			
-			pass = "nueva password";
+			descripcion = "Muy rico";
 			
 			//declaracion del mensaje de sql
-			sql = "UPDATE usuarios SET pass=? WHERE nick=?";
+			sql = "UPDATE productos SET descripcion=? WHERE nombre=?";
 
 			//inicio de llamada
 			pst = con.prepareStatement(sql);
 
-			pst.setString(2, nick);
-			pst.setString(1, pass);
+			pst.setString(1, descripcion);
+			pst.setString(2, nombre);
 			//fin de la llamada
 
+			//ejecuta la llamada para actualizar los campos
 			numeroRegistrosModificados = pst.executeUpdate();
 
 			System.out.println(numeroRegistrosModificados);
 
 			mostrarRegistros();
 
-			sql = "DELETE FROM usuarios WHERE nick=?";
+			//llamada SQL para borrar la linea
+			sql = "DELETE FROM prueba WHERE nombre=?";
 
 			pst = con.prepareStatement(sql);
 
-			pst.setString(1, nick);
+			pst.setString(1, nombre);
 
 			numeroRegistrosModificados = pst.executeUpdate();
 
@@ -111,7 +113,6 @@ public class Main {
 				try {
 					st.close();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
