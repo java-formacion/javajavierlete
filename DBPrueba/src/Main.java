@@ -1,4 +1,4 @@
-
+//llamada a java sql para la modificacion de bases de datos SQL
 import java.sql.*;
 
 public class Main {
@@ -6,8 +6,13 @@ public class Main {
 	
 	public static void main(String[] args) {
 		// System.out.println("C:\nuevos\trabajos");
-		final String url = "jdbc:sqlite:DB\\javierlete.db";
+		
+		
+		//llamada al comando de sqlite para abrir el DB dentro de la carpeta DB
+		final String url = "jdbc:sqlite:DB\\PRUEBA.s3db";
 		// final String url = "jdbc:mysql://localhost:3306/ipartekjava";
+		
+		//se le da un valor para un usuario y contraseña para la modificacion de los datos
 		final String usuario = "root";
 		final String password = "";
 
@@ -15,6 +20,7 @@ public class Main {
 		Statement st = null;
 
 		try {
+			//llamada al DriverManager que esta dentro del java.sql
 			con = DriverManager.getConnection(url, usuario, password);
 
 			String sql = "SELECT nick,pass FROM usuarios";
