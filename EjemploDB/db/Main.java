@@ -45,14 +45,11 @@ public class Main {
 				try {
 					con.close();
 				} catch (SQLException e2) {
-					System.out.println("Error al Cerrar la base de datos");
+					System.out.println("Error al Cerrar la conexion a la BD");
 					System.out.println(e2.getMessage());
 				}
 			}
-			
-
 		}
-
 	}
 
 	private static void mostrarRegistros(Statement st) throws SQLException {
