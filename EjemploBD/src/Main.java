@@ -19,11 +19,17 @@ public class Main {
 
 			mostrarRegistros(st);
 
+			
 			String nick = "sqlite";
 			String pass = "pass";
-			String sql = "INSERT INTO usuarios (nick, pass) VALUES ('" + nick + "', '" + pass + "')";
+			String sql = "INSERT INTO usuarios (nick, pass) VALUES (?, ?)";
 
-			int numeroRegistrosModificados = st.executeUpdate(sql);
+			PreparedStatement pst = con.prepareStatement(sql);
+			
+			pst.setString(1, nick);
+			pst.setString(2, pass);
+			
+			int numeroRegistrosModificados = pst.executeUpdate();
 
 			System.out.println(numeroRegistrosModificados);
 
@@ -45,6 +51,22 @@ public class Main {
 			System.out.println(numeroRegistrosModificados);
 
 			mostrarRegistros(st);
+			
+			sql = "DELETE FROM usuarios WHERE nick='" + nick + "'";
+
+			numeroRegistrosModificados = st.executeUpdate(sql);
+
+			System.out.println(numeroRegistrosModificados);
+
+			mostrarRegistros(st);
+			
+			nick = "javierlete'; DELETE FROM usuarios WHERE nick LIKE 'juan";
+			
+			sql = "SELECT * FROM usuarios WHERE nick='" + nick + "'";
+
+			mostrarRegistros(sql, st);
+			
+
 		} catch (SQLException e) {
 
 			System.out.println("Ha habido un error al trabajar con la base de datos");
@@ -71,7 +93,11 @@ public class Main {
 
 	private static void mostrarRegistros(Statement st) throws SQLException {
 		String sql = "SELECT nick,pass FROM usuarios";
+		
+		mostrarRegistros(sql, st);
+	}
 
+	private static void mostrarRegistros(String sql, Statement st) throws SQLException {
 		ResultSet rs = st.executeQuery(sql);
 
 		ResultSetMetaData rsmd = rs.getMetaData();
