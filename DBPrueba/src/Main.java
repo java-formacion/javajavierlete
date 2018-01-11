@@ -106,6 +106,8 @@ public class Main {
 
 			mostrarRegistros();
 
+			
+			//Aqui buscamos los posibles fallos que puede haber. en caso de que falle en algun punto sobre este, saltara el fallo y vendra aqui.
 		} catch (SQLException e) {
 
 			System.out.println("Ha habido un error al trabajar con la base de datos");
