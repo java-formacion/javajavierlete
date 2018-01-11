@@ -1,7 +1,6 @@
 package com.ipartek.formacion.ejemplocapas.entidades;
-//TODO corrige
-import com.ipartek.formacion.ejemplocapas.accesodatos.AccesoDatosException;
-import com.ipartek.formacion.ejemplocapas.accesodatos.EntidadesException;
+
+
 
 public class Usuario {
 
