@@ -1,16 +1,13 @@
 package com.ipartek.formacion.ejemplocapas.entidades;
 
 public class Usuario {
-	private long id;
+	private final long id;
 	private String dni;
 	private String email, password;
 	private String nombre, apellidos;
 	
 	public long getId() {
 		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
 	}
 	public String getDni() {
 		return dni;
@@ -59,9 +56,6 @@ public class Usuario {
 		this.apellidos = apellidos;
 	}
 	
-	public Usuario() {
-		
-	}
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", dni=" + dni + ", email=" + email + ", password=" + password + ", nombre="
