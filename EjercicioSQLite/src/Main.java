@@ -71,7 +71,7 @@ public class Main {
 				try {
 					pst.close();
 				} catch (SQLException e1) {
-					System.out.println("Ha habido un problema al cerrar la conexión");
+					System.out.println("Ha habido un problema");
 				}
 			}
 			if (con != null) {
@@ -97,13 +97,14 @@ public class Main {
 
 		ResultSetMetaData rsmd = rs.getMetaData();
 
-		for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+		int numeroCampos = rsmd.getColumnCount();
+		for (int i = 1; i <= numeroCampos; i++) {
 			System.out.print(rsmd.getColumnName(i) + "\t");
 		}
 		System.out.println();
 
 		while (rs.next()) {
-			for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+			for (int i = 1; i <= numeroCampos; i++) {
 				System.out.print(rs.getString(i) + "\t");
 			}
 			System.out.println();
