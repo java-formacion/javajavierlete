@@ -94,7 +94,7 @@ public class Main {
 			mostrarRegistros();
 
 			//llamada SQL para borrar la linea
-			sql = "DELETE FROM prueba WHERE nombre=?";
+			sql = "DELETE FROM productos WHERE nombre=?";
 
 			pst = con.prepareStatement(sql);
 
