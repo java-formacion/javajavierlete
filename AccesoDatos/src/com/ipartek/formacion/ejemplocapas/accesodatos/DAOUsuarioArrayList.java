@@ -46,7 +46,7 @@ public class DAOUsuarioArrayList implements DAOUsuario {
 	@Override
 	public Usuario[] obtenerUsuarios() {
 
-		return (Usuario[]) usuarios.toArray();
+		return usuarios.toArray(new Usuario[usuarios.size()]);
 
 	}
 
