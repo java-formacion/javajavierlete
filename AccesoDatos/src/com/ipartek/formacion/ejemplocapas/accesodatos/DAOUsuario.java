@@ -16,6 +16,4 @@ public interface DAOUsuario {
 
 	Usuario obtenerUsuarioPorEmail(String email);
 
-	// boolean existeUsuarioEMail(String email, String password);
-
 }
