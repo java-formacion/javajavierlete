@@ -27,7 +27,7 @@ private ArrayList <Usuario> usuarios = new ArrayList <Usuario>();
 
 	@Override
 	public void baja(Usuario usuario) {
-		// TODO Auto-generated method stub
+		usuarios.remove(usuario);
 		
 	}
 

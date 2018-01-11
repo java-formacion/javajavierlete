@@ -26,7 +26,7 @@ public class Main {
 
 		uc.mostrarUsuarios();
 
-		Usuario usuario = daoUsuario.obtenerUsuariosPorEmail("JUDIT@email.com");
+		Usuario usuario = daoUsuario.obtenerUsuariosPorEmail(usuario2.getEmail());
 
 		System.out.println("El usuario cuyo email es nuevo... es ");
 
