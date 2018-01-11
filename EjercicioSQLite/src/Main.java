@@ -11,7 +11,7 @@ public class Main {
 		final String password = "";
 
 		Connection con = null;
-		Statement st = null;
+		PreparedStatement pst = null;
 
 		try {
 
@@ -27,7 +27,7 @@ public class Main {
 			int stock = 50;
 			sql = "INSERT INTO productos (nombre, descripcion, precio, stock) VALUES (?, ?, ?, ?)";
 
-			PreparedStatement pst = con.prepareStatement(sql);
+			pst = con.prepareStatement(sql);
 
 			pst.setString(1, nombre);
 			pst.setString(2, descripcion);
@@ -67,11 +67,11 @@ public class Main {
 
 		} finally {
 
-			if (st != null) {
+			if (pst != null) {
 				try {
-					st.close();
+					pst.close();
 				} catch (SQLException e1) {
-					e1.printStackTrace();
+					System.out.println("Ha habido un problema al cerrar la conexión");
 				}
 			}
 			if (con != null) {
