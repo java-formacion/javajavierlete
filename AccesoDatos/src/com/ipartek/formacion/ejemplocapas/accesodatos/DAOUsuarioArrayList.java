@@ -10,13 +10,21 @@ private ArrayList <Usuario> usuarios = new ArrayList <Usuario>();
 	
 	@Override
 	public void alta(Usuario usuario) {
-		// TODO Auto-generated method stub
+		if(obtenerUsuariosPorEmail(usuario.getEmail()) !=null)
+			throw new AccesoDatosException("Ya existe un usuario con el email "+usuario.getEmail());
+		
+		//expresion regular  email: \w+\@\w+\.\w+
+		//expresion regular codigo postal: \d{5}
+		//expresion regular numero telefonos [6789]\d{8}
+		
+		
+		usuarios.add(usuario);
 		
 	}
 
 	@Override
 	public void baja(Usuario usuario) {
-		// TODO Auto-generated method stub
+		usuarios.remove(usuario);
 		
 	}
 
@@ -43,8 +51,7 @@ private ArrayList <Usuario> usuarios = new ArrayList <Usuario>();
 
 	@Override
 	public Usuario[] obtenerUsuarios() {
-		// TODO Auto-generated method stub
-		return null;
+		return usuarios.toArray(new Usuario[usuarios.size()]);
 	}
 
 	@Override

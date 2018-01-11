@@ -41,6 +41,12 @@ public class Usuario {
 		return email;
 	}
 	public void setEmail(String email) {
+		if(email == null)
+			throw new EntidadesException("No se admiten emails nulos");
+		
+		if(!email.matches("\\w+\\@\\w+\\.\\w+"))
+				throw new EntidadesException("El email no tiene el formato adecuado");
+		
 		this.email = email;
 	}
 	public String getPassword() {
