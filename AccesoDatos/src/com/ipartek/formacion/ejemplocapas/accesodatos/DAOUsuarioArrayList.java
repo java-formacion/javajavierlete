@@ -10,7 +10,15 @@ public class DAOUsuarioArrayList implements DAOUsuarios {
 
 	@Override
 	public void alta(Usuario usuario) {
+		if (obtenerUsuarioPorEmail(usuario.getEmail()) != null)
+			throw new AccesoDatosException("Ya existe un usuario con el email " + usuario.getEmail());
+
 		usuarios.add(usuario);
+
+		/**
+		 * Expresiones regulares: \w+\@\w+\.\w+ seria para email \d{5} seria para un
+		 * numero de 5 digitos \[6789]\d{8}
+		 */
 
 	}
 
@@ -49,14 +57,18 @@ public class DAOUsuarioArrayList implements DAOUsuarios {
 		for (Usuario u : usuarios)
 			if (id == u.getId())
 				return u;
-		
+
 		return null;
-		
-		
+
 	}
 
 	@Override
 	public Usuario obtenerUsuarioPorEmail(String email) {
+		if (email == null)
+			return null;
+		for (Usuario u : usuarios)
+			if (u.getEmail() != null && u.getEmail().equals(email))
+				return u;
 		return null;
 	}
 

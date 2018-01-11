@@ -1,4 +1,7 @@
 package com.ipartek.formacion.ejemplocapas.entidades;
+//TODO corrige
+import com.ipartek.formacion.ejemplocapas.accesodatos.AccesoDatosException;
+import com.ipartek.formacion.ejemplocapas.accesodatos.EntidadesException;
 
 public class Usuario {
 
@@ -6,47 +9,69 @@ public class Usuario {
 	private String DNI;
 	private String email, password;
 	private String nombre, apellido;
+
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	public String getDNI() {
 		return DNI;
 	}
+
 	public void setDNI(String dNI) {
 		DNI = dNI;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
-		this.email = email;
+		if (email == null)
+			throw new EntidadesException("El email no debe ser nulo");	
+		
+		if (!email.matches("\\w+\\@\\w+\\.\\w+"))
+		throw new EntidadesException("El email no tienes el formato adecuado");
+	
+	
+		
+	this.email=email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 	public String getApellido() {
 		return apellido;
 	}
+
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
+
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", DNI=" + DNI + ", email=" + email + ", password=" + password + ", nombre="
 				+ nombre + ", apellido=" + apellido + "]";
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -59,6 +84,7 @@ public class Usuario {
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -97,7 +123,5 @@ public class Usuario {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }
