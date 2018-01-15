@@ -28,19 +28,17 @@ public class DAOUsuarioArrayList implements DAOUsuario {
 	@Override
 	public void modificacion(Usuario usuario) {
 
-		Usuario u;
+		Usuario u = obtenerUsuarioPorId(usuario.getId());
 
-		for (int i = 0; i < usuarios.size(); i++) {
-			u = usuarios.get(i);
-			if (u.getId() == usuario.getId()) {
-				u.setApellidos(usuario.getApellidos());
-				u.setDni(usuario.getDni());
-				u.setEmail(usuario.getEmail());
-				u.setNombre(usuario.getNombre());
-				u.setPassword(usuario.getPassword());
-			}
+		if (u != null) {
+			u.setApellidos(usuario.getApellidos());
+			u.setDni(usuario.getDni());
+			u.setEmail(usuario.getEmail());
+			u.setNombre(usuario.getNombre());
+			u.setPassword(usuario.getPassword());
+		} else {
+			throw new AccesoDatosException("No se ha encontrado el usuario a modificar");
 		}
-
 	}
 
 	@Override

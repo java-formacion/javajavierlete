@@ -10,7 +10,12 @@ public class DAOProductoArrayList implements DAOProducto {
 
 	@Override
 	public void alta(Producto producto) {
-		// TODO Auto-generated method stub
+
+		if (obtenerProductoPorId(producto.getId()) == null) {
+			productos.add(producto);
+		} else {
+			throw new AccesoDatosException("Ya existe ese producto con ID = " + producto.getId());
+		}
 
 	}
 
@@ -23,7 +28,16 @@ public class DAOProductoArrayList implements DAOProducto {
 
 	@Override
 	public void modificacion(Producto producto) {
-		// TODO Auto-generated method stub
+
+		Producto p = obtenerProductoPorId(producto.getId());
+
+		if (p != null) {
+			p.setNombre(producto.getNombre());
+			p.setDescripcion(producto.getDescripcion());
+			p.setPrecio(producto.getPrecio());
+		} else {
+			throw new AccesoDatosException("No existe el producto a modificar");
+		}
 
 	}
 
@@ -36,8 +50,17 @@ public class DAOProductoArrayList implements DAOProducto {
 
 	@Override
 	public Producto obtenerProductoPorId(long id) {
-		// TODO Auto-generated method stub
+
+		Producto p;
+
+		for (int i = 0; i < productos.size(); i++) {
+			p = productos.get(i);
+			if (p.getId() == id) {
+				return p;
+			}
+		}
 		return null;
+
 	}
 
 }

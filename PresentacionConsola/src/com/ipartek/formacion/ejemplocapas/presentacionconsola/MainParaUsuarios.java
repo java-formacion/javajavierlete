@@ -7,6 +7,7 @@ import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
 public class MainParaUsuarios {
 
 	public static void main(String[] args) {
+
 		DAOUsuario daoUsuario = new DAOUsuarioArrayList();
 
 		UsuariosComponente uc = new UsuariosComponente(daoUsuario);
