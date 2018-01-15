@@ -16,8 +16,47 @@ import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
 
 public class Main {
+	public static void main(String[] args) {
+		DAOProducto daoProducto = new DAOProductoArrayList();
+		
+		ProductosComponente pc = new ProductosComponente(daoProducto);
+		
+		for(int i = 1; i <= 3; i++)
+			daoProducto.alta(new Producto(
+				i,
+				"Producto" + i,
+				"Descripción" + i,
+				new BigDecimal("" + i + i + "." + i + i)
+				)
+			);
+		
+		Producto producto = daoProducto.obtenerProductosPorNombreParcial("ucto1")[0];
+		
+		pc.mostrarProducto(producto);
+		
+		producto.setNombre("MODIFICADO");
+		producto.setPrecio(new BigDecimal("50.50"));
+		
+		daoProducto.modificacion(producto);
+		
+		pc.mostrarProductos();
+		
+		Producto producto2 = daoProducto.obtenerProductoPorId(producto.getId());
+		
+		pc.mostrarProducto(producto2);
+		
+		pc.mostrarProductos();
+		
+		Producto producto1 = new Producto(
+				2, "Producto2", "Descripción2", new BigDecimal("22.22")
+				);
+
+		daoProducto.baja(producto1);
+		
+		pc.mostrarProductos();
+	}
 	
-	public static void main(String[] args) throws FileNotFoundException, IOException {
+	public static void mainUsuariosConProperties(String[] args) throws FileNotFoundException, IOException {
 		Properties p = new Properties();
 		p.load(new FileReader("src/ejemplocapas.properties"));
 

@@ -9,4 +9,5 @@ public interface DAOProducto {
 	
 	Producto[] obtenerProductos();
 	Producto obtenerProductoPorId(long id);
+	Producto[] obtenerProductosPorNombreParcial(String nombreParcial);
 }
