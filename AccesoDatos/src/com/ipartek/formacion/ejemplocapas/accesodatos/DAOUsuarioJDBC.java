@@ -18,7 +18,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 
 	@Override
 	public void alta(Usuario usuario) {
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -35,21 +35,24 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 
 			int num = ps.executeUpdate();
 
-			if (num != 1)
+			if (num != 1) {
 				throw new AccesoDatosException("La inserción ha devuelto un resultado diferente de 1");
+			}
 		} catch (SQLException e) {
 			throw new AccesoDatosException("Error al acceder a la base de datos", e);
 		} finally {
 			try {
-				if (ps != null)
+				if (ps != null) {
 					ps.close();
-				if (con != null)
+				}
+				if (con != null) {
 					con.close();
+				}
 			} catch (SQLException e) {
 				throw new AccesoDatosException("Ha habido un error al cerrar", e);
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -66,7 +69,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 
 	@Override
 	public Usuario[] obtenerUsuarios() {
-		
+
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 
 		Connection con = null;
@@ -94,12 +97,15 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 			throw new AccesoDatosException("Error al acceder a la base de datos", e);
 		} finally {
 			try {
-				if (rs != null)
+				if (rs != null) {
 					rs.close();
-				if (ps != null)
+				}
+				if (ps != null) {
 					ps.close();
-				if (con != null)
+				}
+				if (con != null) {
 					con.close();
+				}
 			} catch (SQLException e) {
 				throw new AccesoDatosException("Ha habido un error al cerrar", e);
 			}
