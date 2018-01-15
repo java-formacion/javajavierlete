@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
 
-public class DAOUsuarioArrayList implements DAOUsuarios {
+public class DAOUsuarioArrayList implements DAOUsuario {
 
 	private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 	
@@ -24,19 +24,17 @@ public class DAOUsuarioArrayList implements DAOUsuarios {
 
 	@Override
 	public void modificacion(Usuario usuario) {
-		Usuario u;
-		
-		for(int i = 0; i < usuarios.size(); i++) {
-			u = usuarios.get(i);
+		Usuario u = obtenerUsuarioPorId(usuario.getId());
 			
-			if(u.getId() == usuario.getId()) {
-				u.setApellidos(usuario.getApellidos());
-				u.setDni(usuario.getDni());
-				u.setEmail(usuario.getEmail());
-				u.setNombre(usuario.getNombre());
-				u.setPassword(usuario.getPassword());
-			}
-		}		
+		if(u != null) {
+			u.setApellidos(usuario.getApellidos());
+			u.setDni(usuario.getDni());
+			u.setEmail(usuario.getEmail());
+			u.setNombre(usuario.getNombre());
+			u.setPassword(usuario.getPassword());
+		} else {
+			throw new AccesoDatosException("No se ha encontrado el usuario a modificar");
+		}
 	}
 
 	@Override

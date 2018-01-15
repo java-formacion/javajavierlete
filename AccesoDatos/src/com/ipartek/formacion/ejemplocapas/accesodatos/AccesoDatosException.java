@@ -2,12 +2,10 @@ package com.ipartek.formacion.ejemplocapas.accesodatos;
 
 public class AccesoDatosException extends RuntimeException {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3286088152828963908L;
 
 	public AccesoDatosException() {
+		
 	}
 
 	public AccesoDatosException(String message) {

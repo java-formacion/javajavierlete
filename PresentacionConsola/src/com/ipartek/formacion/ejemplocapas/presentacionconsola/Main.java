@@ -1,18 +1,76 @@
 package com.ipartek.formacion.ejemplocapas.presentacionconsola;
 
-import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuarios;
+import java.math.BigDecimal;
+
+import com.ipartek.formacion.ejemplocapas.accesodatos.DAOProducto;
+import com.ipartek.formacion.ejemplocapas.accesodatos.DAOProductoArrayList;
+import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuario;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuarioArrayList;
+import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuarioJDBC;
+import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
 
 public class Main {
 	
 	public static void main(String[] args) {
+		DAOUsuario daoUsuario = new DAOUsuarioJDBC(
+				"jdbc:sqlite:..\\AccesoDatos\\bdd\\ejemplocapas.s3db");
 		
-		DAOUsuarios daoUsuario = new DAOUsuarioArrayList();
+		daoUsuario.alta(new Usuario(
+				0, 
+				"12345678Z", 
+				"yepa@email.com",
+				"contraseña",
+				"Javier",
+				"Lete")
+		);
+		
+		Usuario[] usuarios = daoUsuario.obtenerUsuarios();
+		
+		for(Usuario u: usuarios)
+			System.out.println(u);
+	}
+	
+	public static void mainProducto(String[] args) {
+		DAOProducto daoProducto = new DAOProductoArrayList();
+		
+		ProductosComponente pc = new ProductosComponente(daoProducto);
+		
+		for(int i = 1; i <= 3; i++)
+			daoProducto.alta(new Producto(
+				i,
+				"Producto" + i,
+				"Descripción" + i,
+				new BigDecimal("" + i + i + "." + i + i)
+				)
+			);
+		
+		pc.mostrarProductos();
+		
+		Producto producto2 = daoProducto.obtenerProductoPorId(1);
+		
+		pc.mostrarProducto(producto2);
+				
+		producto2.setNombre("MODIFICADO");
+		producto2.setPrecio(new BigDecimal("50.50"));
+		
+		daoProducto.modificacion(producto2);
+		
+		pc.mostrarProductos();
+		
+		Producto producto1 = new Producto(
+				2, "Producto2", "Descripción2", new BigDecimal("22.22")
+				);
+
+		daoProducto.baja(producto1);
+		
+		pc.mostrarProductos();
+	}
+	public static void mainUsuario(String[] args) {
+		DAOUsuario daoUsuario = new DAOUsuarioArrayList();
 		
 		UsuariosComponente uc = new UsuariosComponente(daoUsuario);
 		
-		//insercion de datos para el usuario 1
 		Usuario usuario1 = new Usuario(
 				1, 
 				"12345678Z", 
@@ -21,7 +79,6 @@ public class Main {
 				"Javier", 
 				"Lete");
 		
-		//insercion de datos para el usuario 2
 		Usuario usuario2 = new Usuario(
 				2, 
 				"12345678Z", 
@@ -30,33 +87,30 @@ public class Main {
 				"Pepe", 
 				"Pérez");
 		
-		//llamada a alta para ambos usuarios
 		daoUsuario.alta(usuario1);
+		
 		daoUsuario.alta(usuario2);
 
-		//llamada al metodo de mostrar usuarios
 		uc.mostrarUsuarios();
 		
-		//modificacion del email en usuario 2
 		usuario2.setEmail("nuevo@email.com");
+		
 		daoUsuario.modificacion(usuario2);
 		
 		uc.mostrarUsuarios();
 		
-		//llamada para la busqueda del usuario al que le hemos modificado el email
 		Usuario usuario = daoUsuario.obtenerUsuarioPorEmail("nuevo@email.com");
+		
 		System.out.println("El usuario cuyo email es nuevo... es ");
 		
 		uc.mostrarUsuario(usuario);
 		
-		//llamada para mostrar el usuario usando su ID
 		usuario = daoUsuario.obtenerUsuarioPorId(1);
 		
 		System.out.println("Usuario ID = 1 ");
 		
 		uc.mostrarUsuario(usuario);
 		
-		//da de baja al usuario con el ID que hemos marcado antes
 		daoUsuario.baja(usuario);
 		
 		uc.mostrarUsuarios();
