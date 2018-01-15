@@ -6,12 +6,32 @@ import com.ipartek.formacion.ejemplocapas.accesodatos.DAOProducto;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOProductoArrayList;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuario;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuarioArrayList;
+import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuarioJDBC;
 import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
 
 public class Main {
 	
 	public static void main(String[] args) {
+		DAOUsuario daoUsuario = new DAOUsuarioJDBC(
+				"jdbc:sqlite:..\\AccesoDatos\\bdd\\ejemplocapas.s3db");
+		
+		daoUsuario.alta(new Usuario(
+				0, 
+				"12345678Z", 
+				"yepa@email.com",
+				"contraseña",
+				"Javier",
+				"Lete")
+		);
+		
+		Usuario[] usuarios = daoUsuario.obtenerUsuarios();
+		
+		for(Usuario u: usuarios)
+			System.out.println(u);
+	}
+	
+	public static void mainProducto(String[] args) {
 		DAOProducto daoProducto = new DAOProductoArrayList();
 		
 		ProductosComponente pc = new ProductosComponente(daoProducto);
