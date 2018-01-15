@@ -4,12 +4,13 @@ import com.ipartek.formacion.ejemplocapas.accesodatos.*;
 import com.ipartek.formacion.ejemplocapas.entidades.*;
 
 public class Main {
+	
+	
 	private static DAOUusuario daoUsuario = new DAOUsuarioArrayList();
 
 	public static void main(String[] args) {
 
 		
-
 		UsuariosComponente uc = new UsuariosComponente(daoUsuario);
 
 		Usuario usuario1 = new Usuario(1, "45665487S", "lol@gtn.es", "contraseña","Judit", "Herrero");
