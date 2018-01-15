@@ -55,4 +55,19 @@ public class DAOProductoArrayList implements DAOProducto {
 		return null;
 	}
 
+	@Override
+	public Producto[] obtenerProductosPorNombreParcial(String nombreParcial) {
+		Producto p;
+		ArrayList<Producto> resultados = new ArrayList<Producto>();
+		
+		for(int i = 0; i < productos.size(); i++) {
+			p = productos.get(i);
+			
+			if(p.getNombre().contains(nombreParcial)) 
+				resultados.add(p);
+		}
+		
+		return resultados.toArray(new Producto[resultados.size()]);
+	}
+
 }
