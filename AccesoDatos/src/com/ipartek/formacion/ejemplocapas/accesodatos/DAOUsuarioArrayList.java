@@ -10,24 +10,18 @@ public class DAOUsuarioArrayList implements DAOUsuario {
 
 	@Override
 	public void alta(Usuario usuario) {
-
-		if (obtenerUsuarioPorEmail(usuario.getEmail()) != null) {
+		if (obtenerUsuarioPorEmail(usuario.getEmail()) != null)
 			throw new AccesoDatosException("Ya existe un usuario con el email " + usuario.getEmail());
-		}
 		usuarios.add(usuario);
-
 	}
 
 	@Override
 	public void baja(Usuario usuario) {
-
 		usuarios.remove(usuario);
-
 	}
 
 	@Override
 	public void modificacion(Usuario usuario) {
-
 		Usuario u = obtenerUsuarioPorId(usuario.getId());
 
 		if (u != null) {
@@ -43,36 +37,28 @@ public class DAOUsuarioArrayList implements DAOUsuario {
 
 	@Override
 	public Usuario[] obtenerUsuarios() {
-
 		return usuarios.toArray(new Usuario[usuarios.size()]);
-
 	}
 
 	@Override
 	public Usuario obtenerUsuarioPorId(long id) {
-
-		for (Usuario u : usuarios) {
-			if (id == u.getId()) {
+		for (Usuario u : usuarios)
+			if (id == u.getId())
 				return u;
-			}
-		}
-		return null;
 
+		return null;
 	}
 
 	@Override
 	public Usuario obtenerUsuarioPorEmail(String email) {
-
-		if (email == null) {
+		if (email == null)
 			return null;
-		}
-		for (Usuario u : usuarios) {
-			if (u.getEmail() != null && u.getEmail().equals(email)) {
-				return u;
-			}
-		}
-		return null;
 
+		for (Usuario u : usuarios)
+			if (u.getEmail() != null && u.getEmail().equals(email))
+				return u;
+
+		return null;
 	}
 
 }
