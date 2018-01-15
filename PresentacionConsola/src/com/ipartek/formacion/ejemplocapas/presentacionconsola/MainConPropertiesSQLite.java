@@ -1,14 +1,25 @@
 package com.ipartek.formacion.ejemplocapas.presentacionconsola;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
+import com.ipartek.formacion.ejemplocapas.accesodatos.DAOFactory;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuario;
-import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuarioJDBC;
 import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
 
-public class MainConSQLite {
+public class MainConPropertiesSQLite {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
+		Properties p = new Properties();
+		p.load(new FileReader("src/ejemplocapas.properties"));
 
-		DAOUsuario daoUsuario = new DAOUsuarioJDBC("jdbc:sqlite:..\\AccesoDatos\\bdd\\ejemplocapas.s3db");
+		String url = p.getProperty("accesodatos.url");
+		String motor = p.getProperty("accesodatos.motor");
+
+		DAOFactory df = new DAOFactory(motor, url);
+		DAOUsuario daoUsuario = df.getDAOUsuario();
 
 		UsuariosComponente uc = new UsuariosComponente(daoUsuario);
 
