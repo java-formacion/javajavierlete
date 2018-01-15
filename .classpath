@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="AccesoDatos/src"/>
+	<classpathentry kind="src" path="EjemploBD/src"/>
+	<classpathentry kind="src" path="EjemploPOO/src"/>
+	<classpathentry kind="src" path="Entidades/src"/>
+	<classpathentry kind="src" path="PresentacionConsola/src"/>
+	<classpathentry kind="lib" path="AccesoDatos/lib/mysql-connector-java-5.1.45-bin.jar"/>
+	<classpathentry kind="lib" path="AccesoDatos/lib/sqlite-jdbc-3.21.0.jar"/>
+	<classpathentry kind="lib" path="EjemploBD/lib/mysql-connector-java-5.1.45-bin.jar"/>
+	<classpathentry kind="lib" path="EjemploBD/lib/sqlite-jdbc-3.21.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
