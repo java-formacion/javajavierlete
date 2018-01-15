@@ -1,62 +1,31 @@
 package com.ipartek.formacion.ejemplocapas.entidades;
 
 public class Usuario {
-
-	//los id es recomendable poner longs en id (9 trillones de dígitos)
-	private long id;
-	private String email;
-	private String password;
-	private String nombre;
-	private String apellido;
+	private final long id;
 	private String dni;
+	private String email, password;
+	private String nombre, apellidos;
 	
-	
-	public Usuario(long id, String email, String password, String nombre, String apellido, String dni) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.password = password;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.dni = dni;
-	}
-	
-	public Usuario() {
-		
-	}
-	
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", email=" + email + ", password=" + password + ", nombre=" + nombre
-				+ ", apellido=" + apellido + ", dni=" + dni + "]";
-	}
-
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) {
-		
-		
-		
-		this.id = id;
+	public String getDni() {
+		return dni;
+	}
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
-		//--> \W+ SIGNIFICA PQUE PUEDE TENER UNA LETRA ALFANUMERICA O MAS (+)
-				// \@ ARROBA CON LA BARRA CON CARACTER ESPECCIAL
-				// \. EL PUNTO TAMBIEN ES UN CARACTER ESPECIAL
-				// PARA FORMAR UNA EXPERSION REGULAR DE COMPORBACION DE CORREO SERÍA ASI:
-				//--> \w+\@\w+\.\w+
-				// metemos dos contrabarras porque 
-				
-				if(email == null)
-					throw new EntidadesException (" No se admiten emails nulos");
-					
-				if(!email.matches("\\w+\\@\\w+\\.\\w+"))
-					throw new EntidadesException ("formato erroneo");
+		if(email == null)
+			throw new EntidadesException("No se admiten emails nulos");
 		
+		if(!email.matches("\\w+\\@\\w+\\.\\w+"))
+			throw new EntidadesException(
+					"El email no tiene el formato adecuado");
+			
 		this.email = email;
 	}
 	public String getPassword() {
@@ -71,19 +40,75 @@ public class Usuario {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getApellido() {
-		return apellido;
+	public String getApellidos() {
+		return apellidos;
 	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
 	}
-	public String getDni() {
-		return dni;
-	}
-	public void setDni(String dni) {
+	public Usuario(long id, String dni, String email, String password, String nombre, String apellidos) {
+		super();
+		this.id = id;
 		this.dni = dni;
+		this.email = email;
+		this.password = password;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
 	}
 	
-	
-	
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", dni=" + dni + ", email=" + email + ", password=" + password + ", nombre="
+				+ nombre + ", apellidos=" + apellidos + "]";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((apellidos == null) ? 0 : apellidos.hashCode());
+		result = prime * result + ((dni == null) ? 0 : dni.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (apellidos == null) {
+			if (other.apellidos != null)
+				return false;
+		} else if (!apellidos.equals(other.apellidos))
+			return false;
+		if (dni == null) {
+			if (other.dni != null)
+				return false;
+		} else if (!dni.equals(other.dni))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (id != other.id)
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		return true;
+	}
 }

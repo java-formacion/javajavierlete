@@ -1,45 +1,38 @@
 package com.ipartek.formacion.ejemplocapas.accesodatos;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
 
-public class DAOUsuarioJDBC implements DAOUsuario {
+public class DAOProductoJDBC implements DAOProducto{
 
-	private static final String SQL_INSERT = 
-			"INSERT INTO usuarios " +
-			"(dni, email, password, nombre, apellidos)" +
-			"VALUES (?, ?, ?, ?, ?)";
-	private static final String SQL_UPDATE =
-			"UPDATE usuarios SET "+
-			"dni=?, email=?, password=?, nombre=?, apellidos=? "+
-			"WHERE id=?";
-	private static final String SQL_DELETE =
-			"DELETE FROM usuarios WHERE id=?";
 	
-	private static final String SQL_SELECT = 
-			"SELECT id, dni, email, password, nombre, apellidos FROM usuarios ";
-	private static final String SQL_SELECT_ID = 
-			"SELECT id, dni, email, password, nombre, apellidos "+
-			"FROM usuarios WHERE id=?";
-	private static final String SQL_SELECT_EMAIL = 
-			"SELECT id, dni, email, password, nombre, apellidos "+
-			"FROM usuarios WHERE email=?";
-
-	private final String url, user, password;
+	private static final String SQL_INSERT="INSERT INTO Producto (nombre,descripcion,precio) VALUES (?,?,?)";
+	private static final String SQL_UPDATE="UPDATE SET nombre=?,descripcion=?,precio=? WHERE id=?";
+	private static final String SQL_DELETE="DELETE nombre,descripcion,precio FROM producto WHERE id=?";
+	private static final String SQL_SELECT="SELECT id,nombre,descripcion,precio FROM producto";
+	private static final String SQL_SELECT_ID="SELECT id,nombre,descripcion,precio FROM producto WHERE id=?";
+	private static final String SQL_SELECT_NOMBRE="SELECT id,nombre,descripcion,precio FROM producto WHERE nombre=?";
+	
+	private final String url,user,password;
 	
 	
-	
-	public DAOUsuarioJDBC(String url, String user, String password) {
+	public DAOProductoJDBC(String url, String user, String password) {
 		super();
 		this.url = url;
 		this.user = user;
 		this.password = password;
 	}
+	
 
 	@Override
-	public void alta(Usuario usuario) {
+	public void alta(Producto producto) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
@@ -48,17 +41,15 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 			
 			ps = con.prepareStatement(SQL_INSERT);
 			
-			ps.setString(1, usuario.getDni());
-			ps.setString(2, usuario.getEmail());
-			ps.setString(3, usuario.getPassword());
-			ps.setString(4, usuario.getNombre());
-			ps.setString(5, usuario.getApellidos());
+			ps.setString(1, producto.getNombre());
+			ps.setString(2, producto.getDescripcion());
+			ps.setBigDecimal(3, producto.getPrecio());
 			
 			int num = ps.executeUpdate();
 			
 			if(num != 1)
 				throw new AccesoDatosException(
-						"La inserción ha devuelto un resultado diferente de 1");
+						"La inserción ha devuelto un resultado diferente de 1 al insertar un producto");
 		} catch (SQLException e) {
 			throw new AccesoDatosException(
 					"Error al acceder a la base de datos", e);
@@ -72,10 +63,11 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 				throw new AccesoDatosException("Ha habido un error al cerrar", e);
 			}
 		}
+		
 	}
 
 	@Override
-	public void baja(Usuario usuario) {
+	public void baja(Producto producto) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
@@ -84,7 +76,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 			
 			ps = con.prepareStatement(SQL_DELETE);
 			
-			ps.setLong(1, usuario.getId());
+			ps.setLong(1, producto.getId());
 			
 			int num = ps.executeUpdate();
 			
@@ -104,10 +96,11 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 				throw new AccesoDatosException("Ha habido un error al cerrar", e);
 			}
 		}
+		
 	}
 
 	@Override
-	public void modificacion(Usuario usuario) {
+	public void modificacion(Producto producto) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
@@ -116,18 +109,15 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 			
 			ps = con.prepareStatement(SQL_UPDATE);
 			
-			ps.setString(1, usuario.getDni());
-			ps.setString(2, usuario.getEmail());
-			ps.setString(3, usuario.getPassword());
-			ps.setString(4, usuario.getNombre());
-			ps.setString(5, usuario.getApellidos());
-			ps.setLong(6, usuario.getId());
+			ps.setString(1, producto.getNombre());
+			ps.setString(2, producto.getDescripcion());
+			ps.setBigDecimal(3, producto.getPrecio());
 			
 			int num = ps.executeUpdate();
 			
 			if(num != 1)
 				throw new AccesoDatosException(
-						"La actualización ha devuelto un resultado diferente de 1");
+						"La actualización ha devuelto un resultado diferente de 1 al modificar un producto");
 		} catch (SQLException e) {
 			throw new AccesoDatosException(
 					"Error al acceder a la base de datos", e);
@@ -141,11 +131,12 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 				throw new AccesoDatosException("Ha habido un error al cerrar", e);
 			}
 		}
+		
 	}
 
 	@Override
-	public Usuario[] obtenerUsuarios() {
-		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+	public Producto[] obtenerProductos() {
+		ArrayList<Producto> productos = new ArrayList<Producto>();
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -158,21 +149,19 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 			
 			rs = ps.executeQuery();
 			
-			Usuario u;
+			Producto p;
 			
 			while(rs.next()) {
-				u = new Usuario(
+				p = new Producto(
 						rs.getLong("id"),
-						rs.getString("dni"),
-						rs.getString("email"),
-						rs.getString("password"),
 						rs.getString("nombre"),
-						rs.getString("apellidos"));
+						rs.getString("descripcion"),
+						rs.getBigDecimal("precio"));
 				
-				usuarios.add(u);
+				productos.add(p);
 			}
 			
-			return usuarios.toArray(new Usuario[usuarios.size()]);
+			return productos.toArray(new Producto[productos.size()]);
 		} catch (SQLException e) {
 			throw new AccesoDatosException(
 					"Error al acceder a la base de datos", e);
@@ -191,7 +180,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 	}
 
 	@Override
-	public Usuario obtenerUsuarioPorId(long id) {
+	public Producto obtenerProductoPorId(long id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -205,18 +194,18 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 			
 			rs = ps.executeQuery();
 			
-			Usuario u;
+			Producto p;
 			
 			if(rs.next()) {
-				u = new Usuario(
+				p = new Producto(
 						rs.getLong("id"),
-						rs.getString("dni"),
-						rs.getString("email"),
-						rs.getString("password"),
 						rs.getString("nombre"),
-						rs.getString("apellidos"));
+						rs.getString("descripcion"),
+						rs.getBigDecimal("precio"));
 				
-				return u;
+			
+				
+				return p;
 			} 
 			
 			return null;
@@ -238,7 +227,8 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 	}
 
 	@Override
-	public Usuario obtenerUsuarioPorEmail(String email) {
+	public Producto[] obtenerProductosPorNombreParcial(String nombreParcial) {
+		ArrayList<Producto> productos = new ArrayList<Producto>();
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -246,27 +236,27 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			
-			ps = con.prepareStatement(SQL_SELECT_EMAIL);
+			ps = con.prepareStatement(SQL_SELECT_NOMBRE);
 			
-			ps.setString(1, email);
+			ps.setString(1, nombreParcial);
 			
 			rs = ps.executeQuery();
 			
-			Usuario u;
+			Producto p;
 			
 			if(rs.next()) {
-				u = new Usuario(
+				p = new Producto(
 						rs.getLong("id"),
-						rs.getString("dni"),
-						rs.getString("email"),
-						rs.getString("password"),
 						rs.getString("nombre"),
-						rs.getString("apellidos"));
+						rs.getString("descripcion"),
+						rs.getBigDecimal("precio"));
 				
-				return u;
-			} 
+				productos.add(p);
+			}
 			
-			return null;
+			return productos.toArray(new Producto[productos.size()]);
+			
+		
 		} catch (SQLException e) {
 			throw new AccesoDatosException(
 					"Error al acceder a la base de datos", e);
