@@ -16,14 +16,17 @@ import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
 
 public class Main {
+	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		Properties p = new Properties();
 		p.load(new FileReader("src/ejemplocapas.properties"));
 
-		String url = p.getProperty("accesodatos.url");
-		String motor = p.getProperty("accesodatos.motor");
+		final String url = p.getProperty("accesodatos.url");
+		final String motor = p.getProperty("accesodatos.motor");
+		final String user = p.getProperty("accesodatos.usuario");
+		final String password = p.getProperty("accesodatos.password");
 		
-		DAOFactory df = new DAOFactory(motor, url);
+		DAOFactory df = new DAOFactory(motor, url, user, password);
 		DAOUsuario daoUsuario = df.getDAOUsuario();
 		
 		UsuariosComponente uc = new UsuariosComponente(daoUsuario);
@@ -78,7 +81,7 @@ public class Main {
 	
 	public static void mainPruebaUsuarioJDBC(String[] args) {
 		DAOUsuario daoUsuario = new DAOUsuarioJDBC(
-				"jdbc:sqlite:..\\AccesoDatos\\bdd\\ejemplocapas.s3db");
+				"jdbc:sqlite:..\\AccesoDatos\\bdd\\ejemplocapas.s3db", null, null);
 		
 		daoUsuario.alta(new Usuario(
 				0, 

@@ -27,19 +27,24 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 			"SELECT id, dni, email, password, nombre, apellidos "+
 			"FROM usuarios WHERE email=?";
 
-	private final String url;
+	private final String url, user, password;
 	
-	public DAOUsuarioJDBC(String url) {
+	
+	
+	public DAOUsuarioJDBC(String url, String user, String password) {
+		super();
 		this.url = url;
+		this.user = user;
+		this.password = password;
 	}
-	
+
 	@Override
 	public void alta(Usuario usuario) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
 		try {
-			con = DriverManager.getConnection(url);
+			con = DriverManager.getConnection(url, user , password);
 			
 			ps = con.prepareStatement(SQL_INSERT);
 			
@@ -75,7 +80,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 		PreparedStatement ps = null;
 		
 		try {
-			con = DriverManager.getConnection(url);
+			con = DriverManager.getConnection(url, user, password);
 			
 			ps = con.prepareStatement(SQL_DELETE);
 			
@@ -107,7 +112,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 		PreparedStatement ps = null;
 		
 		try {
-			con = DriverManager.getConnection(url);
+			con = DriverManager.getConnection(url, user, password);
 			
 			ps = con.prepareStatement(SQL_UPDATE);
 			
@@ -147,7 +152,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 		ResultSet rs = null;
 		
 		try {
-			con = DriverManager.getConnection(url);
+			con = DriverManager.getConnection(url, user, password);
 			
 			ps = con.prepareStatement(SQL_SELECT);
 			
@@ -192,7 +197,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 		ResultSet rs = null;
 		
 		try {
-			con = DriverManager.getConnection(url);
+			con = DriverManager.getConnection(url, user, password);
 			
 			ps = con.prepareStatement(SQL_SELECT_ID);
 			
@@ -239,7 +244,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 		ResultSet rs = null;
 		
 		try {
-			con = DriverManager.getConnection(url);
+			con = DriverManager.getConnection(url, user, password);
 			
 			ps = con.prepareStatement(SQL_SELECT_EMAIL);
 			
