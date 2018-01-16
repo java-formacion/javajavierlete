@@ -58,7 +58,7 @@ public class Main {
 		pc.mostrarProductos();
 		
 		Producto producto1 = new Producto(
-				2, "Producto2", "Descripción2", new BigDecimal("22.22")
+				producto2.getId(), "Producto2", "Descripción2", new BigDecimal("22.22")
 				);
 
 		daoProducto.baja(producto1);
