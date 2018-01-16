@@ -26,6 +26,8 @@ public class DAOFactory {
 		switch (motor) {
 		case "arraylist":
 			return new DAOProductoArrayList();
+		case "jdbc":
+			return new DAOProductoJDBC(url, usuario, password);
 		default:
 			throw new AccesoDatosException("No conozco el motor");
 		}

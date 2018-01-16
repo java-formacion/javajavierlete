@@ -16,8 +16,18 @@ import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
 
 public class Main {
-	public static void main(String[] args) {
-		DAOProducto daoProducto = new DAOProductoArrayList();
+	public static void main(String[] args) throws FileNotFoundException, IOException {
+		Properties p = new Properties();
+		p.load(new FileReader("src/ejemplocapas.properties"));
+
+		final String url = p.getProperty("accesodatos.url");
+		final String motor = p.getProperty("accesodatos.motor");
+		final String user = p.getProperty("accesodatos.usuario");
+		final String password = p.getProperty("accesodatos.password");
+
+		DAOFactory df = new DAOFactory(motor, url, user, password);
+
+		DAOProducto daoProducto = df.getDAOProducto();
 
 		ProductosComponente pc = new ProductosComponente(daoProducto);
 

@@ -9,11 +9,11 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 
 	private static final String SQL_INSERT = 
 			"INSERT INTO usuarios " +
-			"(dni, email, password, nombre, apellidos)" +
+			"(dni, email, password, nombre, apellidos) " +
 			"VALUES (?, ?, ?, ?, ?)";
 	private static final String SQL_UPDATE =
 			"UPDATE usuarios SET "+
-			"dni=?, email=?, password=?, nombre=?, apellidos=? "+
+			"dni=?, email=?, password=?, nombre=?, apellidos=? " +
 			"WHERE id=?";
 	private static final String SQL_DELETE =
 			"DELETE FROM usuarios WHERE id=?";
@@ -21,10 +21,10 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 	private static final String SQL_SELECT = 
 			"SELECT id, dni, email, password, nombre, apellidos FROM usuarios ";
 	private static final String SQL_SELECT_ID = 
-			"SELECT id, dni, email, password, nombre, apellidos "+
+			"SELECT id, dni, email, password, nombre, apellidos " +
 			"FROM usuarios WHERE id=?";
 	private static final String SQL_SELECT_EMAIL = 
-			"SELECT id, dni, email, password, nombre, apellidos "+
+			"SELECT id, dni, email, password, nombre, apellidos " +
 			"FROM usuarios WHERE email=?";
 
 	private final String url, user, password;
