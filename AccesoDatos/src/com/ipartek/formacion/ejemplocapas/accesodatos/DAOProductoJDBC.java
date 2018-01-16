@@ -48,7 +48,7 @@ public class DAOProductoJDBC implements DAOProducto {
 			
 			ps = con.prepareStatement(sql);
 			
-			sps.ejecutar(ps, producto);
+			sps.ejecutar(ps);
 			
 			int num = ps.executeUpdate();
 			
@@ -73,7 +73,7 @@ public class DAOProductoJDBC implements DAOProducto {
 //	class Alta implements SettersPreparedStatement {
 //
 //		@Override
-//		public void ejecutar(PreparedStatement ps, Producto producto) throws SQLException {
+//		public void ejecutar(PreparedStatement ps) throws SQLException {
 //			ps.setString(1, producto.getNombre());
 //			ps.setString(2, producto.getDescripcion());
 //			ps.setBigDecimal(3, producto.getPrecio());
@@ -89,14 +89,14 @@ public class DAOProductoJDBC implements DAOProducto {
 				new SettersPreparedStatement() {
 					
 					@Override
-					public void ejecutar(PreparedStatement ps, Producto producto) throws SQLException {
+					public void ejecutar(PreparedStatement ps) throws SQLException {
 						ps.setString(1, producto.getNombre());
 						ps.setString(2, producto.getDescripcion());
 						ps.setBigDecimal(3, producto.getPrecio());
 					}
 				});
 //		genericoAltaBajaModificacion(producto, SQL_INSERT, 
-//				(PreparedStatement ps, Producto p) -> {
+//				(PreparedStatement ps) -> {
 //					ps.setString(1, producto.getNombre());
 //					ps.setString(2, producto.getDescripcion());
 //					ps.setBigDecimal(3, producto.getPrecio());
@@ -109,14 +109,13 @@ public class DAOProductoJDBC implements DAOProducto {
 				new SettersPreparedStatement() {
 					
 					@Override
-					public void ejecutar(PreparedStatement ps, Producto producto) throws SQLException {
+					public void ejecutar(PreparedStatement ps) throws SQLException {
 						ps.setLong(1, producto.getId());
 					}
 				});
 		
 //		genericoAltaBajaModificacion(producto, SQL_DELETE,
-//				(PreparedStatement ps, Producto p) -> 
-//					ps.setLong(1, producto.getId()));
+//			(PreparedStatement ps) -> ps.setLong(1, producto.getId()));
 	}
 
 	@Override
@@ -125,7 +124,7 @@ public class DAOProductoJDBC implements DAOProducto {
 				new SettersPreparedStatement() {
 					
 					@Override
-					public void ejecutar(PreparedStatement ps, Producto producto) throws SQLException {
+					public void ejecutar(PreparedStatement ps) throws SQLException {
 						ps.setString(1, producto.getNombre());
 						ps.setString(2, producto.getDescripcion());
 						ps.setBigDecimal(3, producto.getPrecio());
@@ -146,7 +145,7 @@ public class DAOProductoJDBC implements DAOProducto {
 			
 			ps = con.prepareStatement(sql);
 			
-			sps.ejecutar(ps, null);
+			sps.ejecutar(ps);
 			
 			rs = ps.executeQuery();
 			
@@ -190,7 +189,7 @@ public class DAOProductoJDBC implements DAOProducto {
 				new SettersPreparedStatement() {
 					
 					@Override
-					public void ejecutar(PreparedStatement ps, Producto producto) throws SQLException {
+					public void ejecutar(PreparedStatement ps) throws SQLException {
 					}
 				});
 	}
@@ -201,7 +200,7 @@ public class DAOProductoJDBC implements DAOProducto {
 				new SettersPreparedStatement() {
 					
 					@Override
-					public void ejecutar(PreparedStatement ps, Producto producto) throws SQLException {
+					public void ejecutar(PreparedStatement ps) throws SQLException {
 						ps.setLong(1, id);
 					}
 				});
@@ -213,7 +212,7 @@ public class DAOProductoJDBC implements DAOProducto {
 				new SettersPreparedStatement() {
 					
 					@Override
-					public void ejecutar(PreparedStatement ps, Producto producto) throws SQLException {
+					public void ejecutar(PreparedStatement ps) throws SQLException {
 						ps.setString(1, "%" + nombreParcial + "%");
 					}
 				});
