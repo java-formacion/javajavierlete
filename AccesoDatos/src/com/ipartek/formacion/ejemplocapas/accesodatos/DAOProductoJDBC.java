@@ -95,6 +95,12 @@ public class DAOProductoJDBC implements DAOProducto {
 						ps.setBigDecimal(3, producto.getPrecio());
 					}
 				});
+//		genericoAltaBajaModificacion(producto, SQL_INSERT, 
+//				(PreparedStatement ps, Producto p) -> {
+//					ps.setString(1, producto.getNombre());
+//					ps.setString(2, producto.getDescripcion());
+//					ps.setBigDecimal(3, producto.getPrecio());
+//				});
 	}
 	
 	@Override
@@ -107,6 +113,10 @@ public class DAOProductoJDBC implements DAOProducto {
 						ps.setLong(1, producto.getId());
 					}
 				});
+		
+//		genericoAltaBajaModificacion(producto, SQL_DELETE,
+//				(PreparedStatement ps, Producto p) -> 
+//					ps.setLong(1, producto.getId()));
 	}
 
 	@Override
