@@ -6,5 +6,6 @@
 </head>
 <body>
 <h1>LOGIN CORRECTO</h1>
+<h2>Bienvenido <%= request.getParameter("email") %></h2>
 </body>
 </html>

@@ -1,6 +1,8 @@
 package com.ipartek.ejemplos.ejemploservidor.controladores;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,10 +22,14 @@ public class LoginServlet extends HttpServlet {
 		usuario.setEmail(request.getParameter("email"));
 		usuario.setPassword(request.getParameter("password"));
 		
+		String emailEnUrl = URLEncoder.encode(usuario.getEmail(), "UTF-8");
+		String errorEnUrl = URLEncoder.encode("El usuario no es válido", "UTF-8");
+		
 		if(LogicaNegocio.validarUsuario(usuario))
-			response.sendRedirect("ok.html");
+			response.sendRedirect("ok.jsp?email=" + emailEnUrl);
 		else
-			response.sendRedirect("error.html");
+			response.sendRedirect("index.jsp?email=" + emailEnUrl + "&error=" + errorEnUrl);
+			//response.sendRedirect("error.jsp?email=" + emailEnUrl);
 	}
 
 }
