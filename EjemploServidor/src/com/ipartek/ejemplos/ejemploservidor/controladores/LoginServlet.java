@@ -11,7 +11,9 @@ import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
 
 @WebServlet(name = "login", urlPatterns = { "/login" })
+
 public class LoginServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
