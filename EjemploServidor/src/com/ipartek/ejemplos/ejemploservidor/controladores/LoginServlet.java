@@ -5,10 +5,10 @@ import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
@@ -26,10 +26,15 @@ public class LoginServlet extends HttpServlet {
 		//String emailEnUrl = URLEncoder.encode(usuario.getEmail(), "UTF-8");
 		String errorEnUrl = URLEncoder.encode("El usuario no es válido", "UTF-8");
 		
-		Cookie c = new Cookie("email", usuario.getEmail());
-		c.setMaxAge(24*60*60);
+		HttpSession session = request.getSession(true);
 		
-		response.addCookie(c);
+		session.setMaxInactiveInterval(-1);
+		
+		//session.invalidate();
+		
+		session.setAttribute("email", usuario.getEmail());
+		
+		
 		
 		if(LogicaNegocio.validarUsuario(usuario))
 			response.sendRedirect("ok.jsp");
