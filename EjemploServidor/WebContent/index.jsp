@@ -11,14 +11,15 @@
 			<legend>Login</legend>
 			<p>
 				<label for="email">Email</label> <input type="email" id="email"
-					name="email" />
+					name="email"
+					value="<%=request.getParameter("email") == null ? "" : request.getParameter("email")%>" />
 			</p>
 			<p>
-				<label for="password">ContraseÃ±a</label> <input type="password"
+				<label for="password">Contraseña</label> <input type="password"
 					id="password" name="password" />
 			</p>
 			<p>
-				<input type="submit" value="Login" />
+				<input type="submit" value="Login" /> <span class="error"><%=request.getParameter("error") == null ? "" : request.getParameter("error")%></span>
 			</p>
 		</fieldset>
 	</form>

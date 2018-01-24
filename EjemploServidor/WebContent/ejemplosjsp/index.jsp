@@ -1,16 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE>
-
+<!DOCTYPE html>
 <html>
-
 <head>
-	<meta charset="UTF-8">
-	<title>Ejemplo JSP</title>
+<meta charset="UTF-8">
+<title>Ejemplo JSP</title>
 </head>
-
 <body>
-	<%=new java.util.Date()%>
-</body>
 
+	<%=new java.util.Date()%>
+
+</body>
 </html>
