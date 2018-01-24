@@ -6,6 +6,6 @@
 </head>
 <body>
 <h1>ERROR EN EL LOGIN</h1>
-<h2>El email <%= request.getParameter("email") %> y/o la password introducida son incorrectos</h2>
+<h2>El email <%= session.getAttribute("email") %> y/o la password introducida son incorrectos</h2>
 </body>
 </html>

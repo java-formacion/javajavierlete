@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Ejemplo MVC con Servlet y HTML</title>
-</head>
-<body>
-
+<%@ include file="WEB-INF/includes/cabecera.jsp" %>
 <form action="login" method="post">
    <fieldset>
        <legend>Login</legend>
@@ -23,6 +16,4 @@
         </p>
     </fieldset>
 </form>
-
-</body>
-</html>
+<%@ include file="WEB-INF/includes/pie.jsp" %>
