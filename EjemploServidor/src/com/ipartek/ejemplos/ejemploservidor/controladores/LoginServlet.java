@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,14 +23,23 @@ public class LoginServlet extends HttpServlet {
 		usuario.setEmail(request.getParameter("email"));
 		usuario.setPassword(request.getParameter("password"));
 		
-		String emailEnUrl = URLEncoder.encode(usuario.getEmail(), "UTF-8");
+		//String emailEnUrl = URLEncoder.encode(usuario.getEmail(), "UTF-8");
 		String errorEnUrl = URLEncoder.encode("El usuario no es válido", "UTF-8");
 		
+		Cookie c = new Cookie("email", usuario.getEmail());
+		c.setMaxAge(24*60*60);
+		
+		response.addCookie(c);
+		
 		if(LogicaNegocio.validarUsuario(usuario))
-			response.sendRedirect("ok.jsp?email=" + emailEnUrl);
+			response.sendRedirect("ok.jsp");
+			//response.sendRedirect("ok.jsp?email=" + emailEnUrl);
 		else
-			response.sendRedirect("index.jsp?email=" + emailEnUrl + "&error=" + errorEnUrl);
+			response.sendRedirect("index.jsp?error=" + errorEnUrl);
+			//response.sendRedirect("index.jsp?email=" + emailEnUrl + "&error=" + errorEnUrl);
 			//response.sendRedirect("error.jsp?email=" + emailEnUrl);
+		
+		
 	}
 
 }
