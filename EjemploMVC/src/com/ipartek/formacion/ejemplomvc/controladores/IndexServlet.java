@@ -1,6 +1,7 @@
 package com.ipartek.formacion.ejemplomvc.controladores;
 
 import java.io.IOException;
+import java.util.Hashtable;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,12 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ipartek.ejemplos.ejemploservidor.modelo.ModeloException;
+import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
+import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
+
 @WebServlet("/")
 public class IndexServlet extends HttpServlet {
 	private static final String LOGIN_JSP = "WEB-INF/jsps/login.jsp";
 	
 	private static final long serialVersionUID = 1L;
-       
+
+	private static final String BIENVENIDA_JSP = "WEB-INF/jsps/bienvenida.jsp";
+    
+	private enum Estado { LOGIN_CORRECTO, LOGIN_INCORRECTO }; 
+	
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	
@@ -25,9 +34,50 @@ public class IndexServlet extends HttpServlet {
 		case "/":
 			fw(LOGIN_JSP);
 			break;
+		case "/login":
+			switch(login()) {
+			case LOGIN_CORRECTO: fw(BIENVENIDA_JSP); break;
+			case LOGIN_INCORRECTO: fw(LOGIN_JSP); break;
+			}
+			break;
 		default:
 			response.getWriter().println(request.getServletPath());
 		}
+	}
+
+	private Estado login() {
+		Hashtable<String, String> errores = new Hashtable<>();
+		
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		
+		Usuario usuario = new Usuario();
+		
+		try {
+			usuario.setEmail(email);
+		} catch (ModeloException me) {
+			errores.put("email", me.getMessage());
+		}
+		
+		try {
+			usuario.setPassword(password);
+		} catch(ModeloException me) {
+			errores.put("password", me.getMessage());
+		}
+		
+		if(!LogicaNegocio.esValidoUsuario(usuario))
+			errores.put("usuario", "No es válido ese email y contraseña");
+			
+		if(errores.size() > 0) {
+			request.setAttribute("usuario", usuario);
+			request.setAttribute("errores", errores);
+			
+			return Estado.LOGIN_INCORRECTO;
+		}
+		
+		request.getSession(true).setAttribute("usuario", usuario);
+		
+		return Estado.LOGIN_CORRECTO;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
