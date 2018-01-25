@@ -1,7 +1,1 @@
-#las carpetas o ficheros que ignora git
-
-/.classpath
-/.project
-/.settings/
-/bin/
- /build/
+/build/
