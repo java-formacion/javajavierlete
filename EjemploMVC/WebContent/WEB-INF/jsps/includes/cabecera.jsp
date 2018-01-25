@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>TiendaVirtual</title>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
 </head>
 <body>
 <header>
