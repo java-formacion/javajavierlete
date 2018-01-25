@@ -1,33 +1,34 @@
 <%@ include file="includes/cabecera.jsp" %>
 
-<%--
-<jsp:useBean id="usuario" scope="request" 
-	class="com.ipartek.ejemplos.ejemploservidor.modelo.Usuario" />
-	
-<jsp:useBean id="errores" scope="request" 
-	class="java.util.Hashtable" />
+<h2>Login</h2>
 
-<input type="email" name="email" value="<jsp:getProperty name="usuario" property="email" />" />
---%>
-
-<form action="login" method="post">
-   <fieldset>
-       <legend>Login</legend>
-        <p>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" 
-            	value="${usuario.email}"/>
-            <span class="error">${errores.email}</span>
-        </p>
-        <p>
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" />
-            <span class="error">${errores.password}</span>
-        </p>
-        <p>
-            <input type="submit" value="Login" />
-            <span class="error">${errores.usuario}</span>
-        </p>
+<form action="login" method="post" class="form-horizontal">
+   <fieldset class="well">
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+	            <input type="email" id="email" name="email" 
+	            	value="${usuario.email}" class="form-control"/>
+	            <span class="text-danger">${errores.email}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">Contraseña</label>
+            <div class="col-sm-10">
+	            <input type="password" id="password" name="password" 
+	            	class="form-control"/>
+	            <span class="text-danger">${errores.password}</span>
+            </div>
+        </div>
+        <div class="form-group">
+        	<div class="col-sm-offset-2 col-sm-10">
+	            <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </div>
+       	<c:if test="${errores.size() > 0}">
+       	   	<div class="alert alert-danger" role="alert">${errores.usuario}</div>
+        </c:if>
+        
     </fieldset>
 </form>
 
