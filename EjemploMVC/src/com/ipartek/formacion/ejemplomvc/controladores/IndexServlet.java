@@ -1,6 +1,8 @@
 package com.ipartek.formacion.ejemplomvc.controladores;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,17 +14,21 @@ public class IndexServlet extends HttpServlet {
 	private static final String LOGIN_JSP = "WEB-INF/jsps/login.jsp";
 	private static final long serialVersionUID = 1L;
        
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//response.getWriter().println(request.getServletPath());
+		RequestDispatcher loginDispatcher = request.getRequestDispatcher(LOGIN_JSP);
 		
-		request.getRequestDispatcher(LOGIN_JSP).forward(request, response);
-		
+		switch(request.getServletPath()) {
+		case "/":
+			loginDispatcher.forward(request, response);
+			break;
+		default:
+			response.getWriter().println(request.getServletPath());
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		doGet(request, response);
-		
 	}
 
 }
