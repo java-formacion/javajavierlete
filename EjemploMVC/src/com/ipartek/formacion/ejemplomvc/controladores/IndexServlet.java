@@ -13,13 +13,13 @@ import com.ipartek.ejemplos.ejemploservidor.modelo.ModeloException;
 import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
 
-@WebServlet("/")
+@WebServlet("/frontcontroller/*")
 public class IndexServlet extends HttpServlet {
-	private static final String LOGIN_JSP = "WEB-INF/jsps/login.jsp";
+	private static final String LOGIN_JSP = "/WEB-INF/jsps/login.jsp";
 	
 	private static final long serialVersionUID = 1L;
 
-	private static final String BIENVENIDA_JSP = "WEB-INF/jsps/bienvenida.jsp";
+	private static final String BIENVENIDA_JSP = "/WEB-INF/jsps/bienvenida.jsp";
     
 	private enum Estado { LOGIN_CORRECTO, LOGIN_INCORRECTO }; 
 	
@@ -29,12 +29,13 @@ public class IndexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//response.getWriter().println(request.getServletPath());
 		this.request = request; this.response = response;
+		String path = request.getRequestURI().substring(request.getContextPath().length());
 		
-		switch(request.getServletPath()) {
-		case "/":
+		switch(path) {
+		case "/frontcontroller/":
 			fw(LOGIN_JSP);
 			break;
-		case "/login":
+		case "/frontcontroller/login":
 			switch(login()) {
 			case LOGIN_CORRECTO: fw(BIENVENIDA_JSP); break;
 			case LOGIN_INCORRECTO: fw(LOGIN_JSP); break;
