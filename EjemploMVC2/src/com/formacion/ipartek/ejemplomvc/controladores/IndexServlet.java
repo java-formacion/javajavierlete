@@ -13,7 +13,7 @@ import com.formacion.ipartek.ejemplomvc.modelo.ModeloException;
 import com.formacion.ipartek.ejemplomvc.modelo.Usuario;
 import com.ipartek.formacion.ejemploservidorlogicanegocio.LogicaNegocio;
 
-@WebServlet("/")
+@WebServlet("/frontcontroller/*")
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -22,24 +22,27 @@ public class IndexServlet extends HttpServlet {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	
-	private static final String INICIO = "WEB-INF/jsps/dashboard.jsp";
-	private static final String LOGIN = "WEB-INF/jsps/login.jsp";
+	private static final String INICIO = "/WEB-INF/jsps/dashboard.jsp";
+	private static final String LOGIN = "/WEB-INF/jsps/login.jsp";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String path = request.getRequestURI().substring(request.getContextPath().length());
 		
 		this.request = request;
 		this.response = response;
 		
-		switch(request.getServletPath()) {
-			case "/login":
+		switch(path) {
+			case "/frontcontroller/": 
+				forward(LOGIN);
+			break;
+			case "/frontcontroller/login":
 				switch(login()) {
 					case LOGIN_CORRECTO: forward(INICIO); break;
 					case LOGIN_INCORRECTO: forward(LOGIN); break;
 				}
 			break;
-			default:
-				forward(LOGIN);
-			break;
+			
 		}
 		
 	}
