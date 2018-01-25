@@ -1,14 +1,6 @@
 <%@ include file="includes/cabecera.jsp" %>
 
-<%--
-<jsp:useBean id="usuario" scope="request" 
-	class="com.ipartek.ejemplos.ejemploservidor.modelo.Usuario" />
-	
-<jsp:useBean id="errores" scope="request" 
-	class="java.util.Hashtable" />
-
-<input type="email" name="email" value="<jsp:getProperty name="usuario" property="email" />" />
---%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <h2>Login</h2>
 
@@ -35,9 +27,9 @@
 	            <input type="submit" value="Login" class="btn btn-primary" />
             </div>
         </div>
-       	<% if(request.getAttribute("errores") != null) { %>
-           	<div class="alert alert-danger" role="alert">${errores.usuario}</div>
-        <% } %>
+       	<c:if test="${errores.size() > 0}">
+       	   	<div class="alert alert-danger" role="alert">${errores.usuario}</div>
+        </c:if>
         
     </fieldset>
 </form>
