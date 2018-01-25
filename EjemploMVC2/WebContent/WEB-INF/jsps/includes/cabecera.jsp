@@ -17,7 +17,7 @@
 </head>
 <body>
 	
-	<nav class="navbar navbar-expand-sm navbar-dark bg-primary fixed-top">
+	<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
 	  <a class="navbar-brand" href="#">Tienda Virtual</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>

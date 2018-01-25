@@ -67,8 +67,10 @@ public class IndexServlet extends HttpServlet {
 			errores.put("password", me.getMessage());
 		}
 		
-		if(!LogicaNegocio.esValidoUsuario(usuario)) {
-			errores.put("usuario", "El email y/o contraseña son incorrectos");
+		if(errores.size() <= 0) {
+			if(!LogicaNegocio.esValidoUsuario(usuario)) {
+				errores.put("usuario", "El email y/o contraseña son incorrectos");
+			}
 		}
 		
 		if(errores.size() > 0) {
