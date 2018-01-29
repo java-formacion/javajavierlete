@@ -8,6 +8,7 @@
 <title>TiendaVirtual</title>
 
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/jquery-1.12.4.min.js"></script>
 
 </head>
 <body class="container-fluid">

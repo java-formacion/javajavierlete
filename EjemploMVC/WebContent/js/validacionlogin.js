@@ -1,51 +1,26 @@
 'use strict';
 
-var fieldset;
-var form;
-var spanerror;
-var divError;
-
-window.onload = function (){
-	fieldset = document.getElementsByTagName('fieldset')[0];
-	form = document.forms[0];
-	
-	form.onsubmit = function(e){
+$(function (){
+	$('form').submit(function(e){
 		e.preventDefault();
-		
-		var pass = document.getElementById("password");
-		var dato = pass.value;
 		
 		resetErrores();
 		
-		if(esPasswordValida(dato)){
-			alert('OK');
-			form.submit();
+		if(esPasswordValida($('#password').val())){
+			$('form').submit();
 		}
 		else {
-			spanerror = document.getElementById("errorpassword");
-			spanerror.innerHTML = "La contraseña debe cumplir los requisitos de complejidad";
+			$('#errorpassword').html("La contraseña debe cumplir los requisitos de complejidad");
 			
-			divError = document.createElement('div');
-			
-			divError.className = "alert alert-danger";
-			divError.setAttribute('role', 'alert');
-			divError.innerHTML = "Ha habido errores en los campos";
-					
-			fieldset.appendChild(divError);
-			//return false;
+			$('fieldset').append('<div class="alert alert-danger" role="alert">Ha habido errores en los campos</div>');
 		}
-	};
-};
+	});
+});
 
 function resetErrores(){
-	if(spanerror){
-		spanerror.innerHTML = "";
-	}
+	$('span.alert-danger').empty();
 	
-	if(divError){
-		divError.parentNode.removeChild(divError);
-		divError = undefined;
-	}
+	$('div.alert-danger').remove();
 }
 
 function esPasswordValida(dato) {
