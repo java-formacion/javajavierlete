@@ -18,7 +18,7 @@
             <div class="col-sm-10">
 	            <input type="password" id="password" name="password" 
 	            	class="form-control" required="required" />
-	            <span class="text-danger">${errores.password}</span>
+	            <span id="errorpassword" class="text-danger">${errores.password}</span>
             </div>
         </div>
         <div class="form-group">

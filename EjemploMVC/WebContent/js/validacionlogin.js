@@ -1,24 +1,52 @@
 'use strict';
 
-window.onload=function (){
-	var form = document.forms[0];
+var fieldset;
+var form;
+var spanerror;
+var divError;
+
+window.onload = function (){
+	fieldset = document.getElementsByTagName('fieldset')[0];
+	form = document.forms[0];
 	
-	form.onsubmit=function(e){
+	form.onsubmit = function(e){
 		e.preventDefault();
 		
 		var pass = document.getElementById("password");
 		var dato = pass.value;
+		
+		resetErrores();
 		
 		if(esPasswordValida(dato)){
 			alert('OK');
 			form.submit();
 		}
 		else {
-			alert('MAL');
+			spanerror = document.getElementById("errorpassword");
+			spanerror.innerHTML = "La contraseña debe cumplir los requisitos de complejidad";
+			
+			divError = document.createElement('div');
+			
+			divError.className = "alert alert-danger";
+			divError.setAttribute('role', 'alert');
+			divError.innerHTML = "Ha habido errores en los campos";
+					
+			fieldset.appendChild(divError);
 			//return false;
 		}
 	};
 };
+
+function resetErrores(){
+	if(spanerror){
+		spanerror.innerHTML = "";
+	}
+	
+	if(divError){
+		divError.parentNode.removeChild(divError);
+		divError = undefined;
+	}
+}
 
 function esPasswordValida(dato) {
 	return tieneMayuscula(dato) && tieneMinuscula(dato) &&
