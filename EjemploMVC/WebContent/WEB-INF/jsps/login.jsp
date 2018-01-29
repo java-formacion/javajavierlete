@@ -8,7 +8,8 @@
             <label for="email" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
 	            <input type="email" id="email" name="email" 
-	            	value="${usuario.email}" class="form-control"/>
+	            	value="${usuario.email}" class="form-control"
+	            	required="required" />
 	            <span class="text-danger">${errores.email}</span>
             </div>
         </div>
@@ -16,7 +17,7 @@
             <label for="password" class="col-sm-2 control-label">Contraseña</label>
             <div class="col-sm-10">
 	            <input type="password" id="password" name="password" 
-	            	class="form-control"/>
+	            	class="form-control" required="required" />
 	            <span class="text-danger">${errores.password}</span>
             </div>
         </div>
@@ -31,5 +32,7 @@
         
     </fieldset>
 </form>
+
+<script src="js/validacionlogin.js"></script>
 
 <%@ include file="includes/pie.jsp" %>

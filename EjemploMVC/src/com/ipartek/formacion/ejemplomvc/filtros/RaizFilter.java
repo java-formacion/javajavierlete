@@ -20,8 +20,7 @@ public class RaizFilter implements Filter {
 
 		if (path.startsWith("/css") || 
 				path.startsWith("/js") ||
-				path.startsWith("/fonts") ||
-				path.startsWith("/WEB-INF")) {
+				path.startsWith("/fonts")) {
 		    chain.doFilter(request, response); // Goes to default servlet.
 		} else {
 		    request.getRequestDispatcher("/frontcontroller" + path).forward(request, response);
