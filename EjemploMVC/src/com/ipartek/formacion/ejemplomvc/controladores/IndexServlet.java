@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.ipartek.ejemplos.ejemploservidor.modelo.ModeloException;
 import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
+import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 
 @WebServlet("/frontcontroller/*")
 public class IndexServlet extends HttpServlet {
@@ -20,7 +21,8 @@ public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final String BIENVENIDA_JSP = "/WEB-INF/jsps/bienvenida.jsp";
-    
+	private static final String PRODUCTOS_JSP = "/WEB-INF/jsps/productos.jsp";
+	
 	private enum Estado { LOGIN_CORRECTO, LOGIN_INCORRECTO }; 
 	
 	private HttpServletRequest request;
@@ -37,13 +39,19 @@ public class IndexServlet extends HttpServlet {
 			break;
 		case "/frontcontroller/login":
 			switch(login()) {
-			case LOGIN_CORRECTO: fw(BIENVENIDA_JSP); break;
+			case LOGIN_CORRECTO: productosIndex(); fw(PRODUCTOS_JSP); break;
 			case LOGIN_INCORRECTO: fw(LOGIN_JSP); break;
 			}
 			break;
 		default:
 			response.getWriter().println(request.getServletPath());
 		}
+	}
+
+	private void productosIndex() {
+		Producto[] productos = LogicaNegocio.obtenerProductos();
+		
+		request.setAttribute("productos", productos);
 	}
 
 	private Estado login() {

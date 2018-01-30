@@ -8,6 +8,7 @@ import java.util.Properties;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOFactory;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOProducto;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuario;
+import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
 
 public class LogicaNegocio {
@@ -54,5 +55,10 @@ public class LogicaNegocio {
 		//		return "javierlete@email.net".equals(usuario.getEmail()) && 
 //				"Pa$$w0rd".equals(usuario.getPassword());
 		
+	}
+
+	public static Producto[] obtenerProductos() {
+		
+		return daoProducto.obtenerProductos();
 	}
 }

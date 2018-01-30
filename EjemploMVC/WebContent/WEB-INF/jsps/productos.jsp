@@ -1,14 +1,19 @@
 <%@ include file="includes/cabecera.jsp" %>
 
-<table>
+<table class="table">
 	<thead>
 		<tr>
-			<th>ID</th><th>Descripci�n</th><th>Precio</th>
+			<th>ID</th><th>Descripción</th><th>Precio</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-		</tr>
+		<c:forEach var="producto" items="${productos}">	
+			<tr>
+				<td>${producto.id}</td>
+				<td>${producto.descripcion}</td>
+				<td>${producto.precio} €</td>
+			</tr>
+		</c:forEach>
 	</tbody>
 			
 </table>
