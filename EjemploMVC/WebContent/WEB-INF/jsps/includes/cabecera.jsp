@@ -36,4 +36,4 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div id="contenidoprincipal">
+<div id="contenidoprincipal" class="container-fluid">
