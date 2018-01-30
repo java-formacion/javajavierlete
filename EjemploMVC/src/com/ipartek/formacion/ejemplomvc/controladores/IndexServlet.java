@@ -22,6 +22,8 @@ public class IndexServlet extends HttpServlet {
 
 	private static final String BIENVENIDA_JSP = "/WEB-INF/jsps/bienvenida.jsp";
 	private static final String PRODUCTOS_JSP = "/WEB-INF/jsps/productos.jsp";
+
+	private static final String FICHA_JSP = "/WEB-INF/jsps/ficha.jsp";
 	
 	private enum Estado { LOGIN_CORRECTO, LOGIN_INCORRECTO }; 
 	
@@ -43,9 +45,24 @@ public class IndexServlet extends HttpServlet {
 			case LOGIN_INCORRECTO: fw(LOGIN_JSP); break;
 			}
 			break;
+		case "/frontcontroller/productos":
+			String id = request.getParameter("id");
+			if(id == null) {
+				productosIndex(); fw(PRODUCTOS_JSP);
+			}
+			else {
+				fichaIndex(id); fw(FICHA_JSP);
+			}
+					
 		default:
-			response.getWriter().println(request.getServletPath());
+			response.getWriter().println(path);
 		}
+	}
+
+	private void fichaIndex(String id) {
+		Producto producto = LogicaNegocio.obtenerProductoPorId(id);
+		
+		request.setAttribute("producto", producto);
 	}
 
 	private void productosIndex() {
@@ -78,7 +95,7 @@ public class IndexServlet extends HttpServlet {
 		usuarioEntidad = new com.ipartek.formacion.ejemplocapas.entidades.Usuario(0, null, usuario.getEmail(), usuario.getPassword(), null, null);
 		
 		if(!LogicaNegocio.esValidoUsuario(usuarioEntidad))
-			errores.put("usuario", "No es válido ese email y contraseña");
+			errores.put("usuario", "No es vï¿½lido ese email y contraseï¿½a");
 
 		if(errores.size() > 0) {
 			request.setAttribute("usuario", usuario);

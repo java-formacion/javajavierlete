@@ -41,7 +41,7 @@ public class LogicaNegocio {
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new LogicaNegocioException(
-					"Error al intentar leer el fichero de configuración", e);
+					"Error al intentar leer el fichero de configuraciï¿½n", e);
 		}
 	}
 	
@@ -60,5 +60,10 @@ public class LogicaNegocio {
 	public static Producto[] obtenerProductos() {
 		
 		return daoProducto.obtenerProductos();
+	}
+
+	public static Producto obtenerProductoPorId(String id) {
+		
+		return daoProducto.obtenerProductoPorId(Long.parseLong(id));
 	}
 }
