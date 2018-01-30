@@ -34,6 +34,14 @@ public class DAOProductoJDBC implements DAOProducto {
 	
 	public DAOProductoJDBC(String url, String user, String password) {
 		super();
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		this.url = url;
 		this.user = user;
 		this.password = password;
@@ -82,7 +90,7 @@ public class DAOProductoJDBC implements DAOProducto {
 //	}
 	
 	@Override
-	public void alta(Producto producto) {
+	public void alta(final Producto producto) {
 //		Alta sps = new Alta();
 //		genericoAltaBajaModificacion(producto, SQL_INSERT, sps);
 		genericoAltaBajaModificacion(producto, SQL_INSERT, 
@@ -104,7 +112,7 @@ public class DAOProductoJDBC implements DAOProducto {
 	}
 	
 	@Override
-	public void baja(Producto producto) {
+	public void baja(final Producto producto) {
 		genericoAltaBajaModificacion(producto, SQL_DELETE,
 				new SettersPreparedStatement() {
 					
@@ -119,7 +127,7 @@ public class DAOProductoJDBC implements DAOProducto {
 	}
 
 	@Override
-	public void modificacion(Producto producto) {
+	public void modificacion(final Producto producto) {
 		genericoAltaBajaModificacion(producto, SQL_UPDATE, 
 				new SettersPreparedStatement() {
 					
@@ -195,7 +203,7 @@ public class DAOProductoJDBC implements DAOProducto {
 	}
 	
 	@Override
-	public Producto obtenerProductoPorId(long id) {
+	public Producto obtenerProductoPorId(final long id) {
 		return genericoConsultaUno(SQL_SELECT_ID, 
 				new SettersPreparedStatement() {
 					
@@ -207,7 +215,7 @@ public class DAOProductoJDBC implements DAOProducto {
 	}
 
 	@Override
-	public Producto[] obtenerProductosPorNombreParcial(String nombreParcial) {
+	public Producto[] obtenerProductosPorNombreParcial(final String nombreParcial) {
 		return genericoConsultaVarios(SQL_SELECT_NOMBRE_PARCIAL, 
 				new SettersPreparedStatement() {
 					
