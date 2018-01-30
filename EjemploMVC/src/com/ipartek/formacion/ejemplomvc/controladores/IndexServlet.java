@@ -68,7 +68,7 @@ public class IndexServlet extends HttpServlet {
 		
 		if(!LogicaNegocio.esValidoUsuario(usuario))
 			errores.put("usuario", "No es válido ese email y contraseña");
-			
+
 		if(errores.size() > 0) {
 			request.setAttribute("usuario", usuario);
 			request.setAttribute("errores", errores);
