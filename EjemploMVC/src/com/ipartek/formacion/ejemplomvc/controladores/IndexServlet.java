@@ -66,8 +66,11 @@ public class IndexServlet extends HttpServlet {
 			errores.put("password", me.getMessage());
 		}
 		
+		import com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad;
+		usuarioEntidad = new com.ipartek.formacion.ejemplocapas.entidades.Usuario(0, null, usuario.getEmail(), usuario.getPassword(), "Hola", "Hola);
+		
 		if(!LogicaNegocio.esValidoUsuario(usuario))
-			errores.put("usuario", "No es válido ese email y contraseña");
+			errores.put("usuario", "No es vÃ¡lido ese email y contraseÃ±a");
 
 		if(errores.size() > 0) {
 			request.setAttribute("usuario", usuario);
