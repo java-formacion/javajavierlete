@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.ipartek.ejemplos.ejemploservidor.modelo.ModeloException;
 import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
+import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 
 @WebServlet("/frontcontroller/*")
 public class IndexServlet extends HttpServlet {
@@ -20,7 +21,10 @@ public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final String BIENVENIDA_JSP = "/WEB-INF/jsps/bienvenida.jsp";
-    
+	private static final String PRODUCTOS_JSP = "/WEB-INF/jsps/productos.jsp";
+
+	private static final String FICHA_JSP = "/WEB-INF/jsps/ficha.jsp";
+	
 	private enum Estado { LOGIN_CORRECTO, LOGIN_INCORRECTO }; 
 	
 	private HttpServletRequest request;
@@ -37,13 +41,34 @@ public class IndexServlet extends HttpServlet {
 			break;
 		case "/frontcontroller/login":
 			switch(login()) {
-			case LOGIN_CORRECTO: fw(BIENVENIDA_JSP); break;
+			case LOGIN_CORRECTO: productosIndex(); fw(PRODUCTOS_JSP); break;
 			case LOGIN_INCORRECTO: fw(LOGIN_JSP); break;
 			}
 			break;
+		case "/frontcontroller/productos":
+			String id = request.getParameter("id");
+			if(id == null) {
+				productosIndex(); fw(PRODUCTOS_JSP);
+			}
+			else {
+				fichaIndex(id); fw(FICHA_JSP);
+			}
+					
 		default:
-			response.getWriter().println(request.getServletPath());
+			response.getWriter().println(path);
 		}
+	}
+
+	private void fichaIndex(String id) {
+		Producto producto = LogicaNegocio.obtenerProductoPorId(id);
+		
+		request.setAttribute("producto", producto);
+	}
+
+	private void productosIndex() {
+		Producto[] productos = LogicaNegocio.obtenerProductos();
+		
+		request.setAttribute("productos", productos);
 	}
 
 	private Estado login() {
@@ -66,8 +91,11 @@ public class IndexServlet extends HttpServlet {
 			errores.put("password", me.getMessage());
 		}
 		
-		if(!LogicaNegocio.esValidoUsuario(usuario))
-			errores.put("usuario", "No es válido ese email y contraseña");
+		com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad;
+		usuarioEntidad = new com.ipartek.formacion.ejemplocapas.entidades.Usuario(0, null, usuario.getEmail(), usuario.getPassword(), null, null);
+		
+		if(!LogicaNegocio.esValidoUsuario(usuarioEntidad))
+			errores.put("usuario", "No es vï¿½lido ese email y contraseï¿½a");
 
 		if(errores.size() > 0) {
 			request.setAttribute("usuario", usuario);

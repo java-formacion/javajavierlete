@@ -7,7 +7,6 @@ import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
 
 public class DAOUsuarioJDBC implements DAOUsuario {
 
-	//llamadas predefinidas para SQL
 	private static final String SQL_INSERT = 
 			"INSERT INTO usuarios " +
 			"(dni, email, password, nombre, apellidos)" +
@@ -31,15 +30,22 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 	private final String url, user, password;
 	
 	
-	//auto creacion de llamada con super
+	
 	public DAOUsuarioJDBC(String url, String user, String password) {
 		super();
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+		}
+		
 		this.url = url;
 		this.user = user;
 		this.password = password;
 	}
 
-	//creacion de usuario
 	@Override
 	public void alta(Usuario usuario) {
 		Connection con = null;
@@ -60,7 +66,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 			
 			if(num != 1)
 				throw new AccesoDatosException(
-						"La inserción ha devuelto un resultado diferente de 1");
+						"La inserciï¿½n ha devuelto un resultado diferente de 1");
 		} catch (SQLException e) {
 			throw new AccesoDatosException(
 					"Error al acceder a la base de datos", e);
@@ -76,7 +82,6 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 		}
 	}
 
-	//eliminacion de usuario
 	@Override
 	public void baja(Usuario usuario) {
 		Connection con = null;
@@ -109,7 +114,6 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 		}
 	}
 
-	//modificacion de usuario
 	@Override
 	public void modificacion(Usuario usuario) {
 		Connection con = null;
@@ -131,7 +135,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 			
 			if(num != 1)
 				throw new AccesoDatosException(
-						"La actualización ha devuelto un resultado diferente de 1");
+						"La actualizaciï¿½n ha devuelto un resultado diferente de 1");
 		} catch (SQLException e) {
 			throw new AccesoDatosException(
 					"Error al acceder a la base de datos", e);
@@ -147,7 +151,6 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 		}
 	}
 
-	//obtener nombres de usuarios con todos los datos
 	@Override
 	public Usuario[] obtenerUsuarios() {
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
@@ -195,7 +198,6 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 		}
 	}
 
-	//lo mismo que el anterior pero llamando al numero de id
 	@Override
 	public Usuario obtenerUsuarioPorId(long id) {
 		Connection con = null;
@@ -243,7 +245,6 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 		}
 	}
 
-	//lo mismo que el anterior pero por email
 	@Override
 	public Usuario obtenerUsuarioPorEmail(String email) {
 		Connection con = null;

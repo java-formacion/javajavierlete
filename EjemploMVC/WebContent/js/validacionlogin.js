@@ -1,7 +1,7 @@
 'use strict';
 
 $(function (){
-	$('form').submit(function(e){
+	$('input[type=submit]').click(function(e){
 		e.preventDefault();
 		
 		resetErrores();
