@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.formacion.ipartek.ejemplomvc.modelo.ModeloException;
 import com.formacion.ipartek.ejemplomvc.modelo.Usuario;
+import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 import com.ipartek.formacion.ejemploservidorlogicanegocio.LogicaNegocio;
 
 @WebServlet("/frontcontroller/*")
@@ -22,8 +23,9 @@ public class IndexServlet extends HttpServlet {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	
-	private static final String INICIO = "/WEB-INF/jsps/dashboard.jsp";
 	private static final String LOGIN = "/WEB-INF/jsps/login.jsp";
+	private static final String PRODUCTOS = "/WEB-INF/jsps/productos.jsp";
+	private static final String VISTA_PRODUCTO = "/WEB-INF/jsps/producto.jsp";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -33,16 +35,48 @@ public class IndexServlet extends HttpServlet {
 		this.response = response;
 		
 		switch(path) {
-			case "/frontcontroller/": 
-				forward(LOGIN);
+			case "/frontcontroller/":
+				
+				if(request.getSession(true) == null)
+					forward(LOGIN);
+				else {
+					productosIndex();
+					forward(PRODUCTOS);
+				}
+				
 			break;
 			case "/frontcontroller/login":
-				switch(login()) {
-					case LOGIN_CORRECTO: forward(INICIO); break;
-					case LOGIN_INCORRECTO: forward(LOGIN); break;
+				
+				if(request.getSession(true) == null) {
+					switch(login()) {
+						case LOGIN_CORRECTO:
+							productosIndex();
+							forward(PRODUCTOS);
+						break;
+						case LOGIN_INCORRECTO: forward(LOGIN); break;
+					}
 				}
+				else {
+					productosIndex();
+					forward(PRODUCTOS);
+				}
+				
 			break;
-			
+			case "/frontcontroller/productos":
+				
+				String id = request.getParameter("id");
+				
+				if(id == null) {
+					productosIndex();
+					forward(PRODUCTOS);
+				}
+				else {
+					fichaProducto(id);
+					forward(VISTA_PRODUCTO);
+				}
+				
+			break;
+			default: forward(LOGIN); break;
 		}
 		
 	}
@@ -68,9 +102,14 @@ public class IndexServlet extends HttpServlet {
 		}
 		
 		if(errores.size() <= 0) {
-			if(!LogicaNegocio.esValidoUsuario(usuario)) {
+			
+			com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad;
+			usuarioEntidad = new com.ipartek.formacion.ejemplocapas.entidades.Usuario(0, null, usuario.getEmail(), usuario.getPassword(), null, null);
+			
+			if(!LogicaNegocio.esValidoUsuario(usuarioEntidad)) {
 				errores.put("usuario", "El email y/o contraseña son incorrectos");
 			}
+			
 		}
 		
 		if(errores.size() > 0) {
@@ -82,6 +121,20 @@ public class IndexServlet extends HttpServlet {
 		request.getSession(true).setAttribute("usuario", usuario);
 		
 		return Estado.LOGIN_CORRECTO;
+	}
+	
+	private void productosIndex() {
+		Producto[] productos = LogicaNegocio.obtenerProductos();
+		
+		request.setAttribute("productos", productos);
+		
+	}
+	
+	private void fichaProducto(String id) {
+		Producto producto = LogicaNegocio.obtenerProductoPorId(id);
+		
+		request.setAttribute("producto", producto);
+		
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
