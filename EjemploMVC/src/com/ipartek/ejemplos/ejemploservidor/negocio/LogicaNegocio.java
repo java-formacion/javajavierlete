@@ -7,6 +7,6 @@ public class LogicaNegocio {
 	
 	public static boolean esValidoUsuario(Usuario usuario) {
 		return "javierlete@email.net".equals(usuario.getEmail()) && 
-				"contra".equals(usuario.getPassword());
+				"Pa$$w0rd".equals(usuario.getPassword());
 	}
 }
