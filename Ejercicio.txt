@@ -1,0 +1,16 @@
+Numero Factura
+Fecha
+
+NIF/FNI/CIF
+Nombre
+Apellidos
+Direccion
+Codigo Postal
+Localidad
+Provincia
+Pais
+
+Tipo IVA
+Importe
+IVA
+Total
