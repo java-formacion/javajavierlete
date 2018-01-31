@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="EjemploMVC">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="AccesoDatos.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/AccesoDatos/AccesoDatos">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="Entidades.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Entidades/Entidades">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="LogicaNegocio.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/LogicaNegocio/LogicaNegocio">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/EjemploMVC/build/classes"/>
+        <property name="context-root" value="tiendavirtual"/>
+    </wb-module>
+</project-modules>

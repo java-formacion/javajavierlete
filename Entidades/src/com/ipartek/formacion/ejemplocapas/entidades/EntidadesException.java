@@ -2,6 +2,8 @@ package com.ipartek.formacion.ejemplocapas.entidades;
 
 public class EntidadesException extends RuntimeException {
 
+	private static final long serialVersionUID = -5893515295549666713L;
+
 	public EntidadesException() {
 		
 	}
