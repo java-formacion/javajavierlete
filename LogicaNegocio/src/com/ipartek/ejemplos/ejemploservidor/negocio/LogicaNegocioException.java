@@ -27,6 +27,7 @@ public class LogicaNegocioException extends RuntimeException {
 
 	public LogicaNegocioException(Throwable cause) {
 		super(cause);
+		
 	}
 
 	

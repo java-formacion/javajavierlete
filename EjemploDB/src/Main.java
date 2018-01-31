@@ -1,69 +1,85 @@
-
-
-/**
- * Ejemplo de llamadas a SQLite
- * @author java
- *
- */
-
 import java.sql.*;
 
-public class Main {
+/*
+ * SELECT nick, password FROM usuarios;
+ * INSERT INTO usuarios (nick, password) VALUES ('pepe', 'contra');
+ * UPDATE usuarios SET password='contra2' WHERE nick='pepe';
+ * DELETE FROM usuarios WHERE nick='pepe';
+ */
 
+public class Main {
+	private static PreparedStatement psSelect = null;
+	
 	public static void main(String[] args) {
 		// System.out.println("C:\nuevos\trabajos");
-		final String url = "jdbc:sqlite:C:\\desarrolloRedes\\javajavierlete\\EjemploDB\\DB\\ex1.db";
+		final String url = "jdbc:sqlite:bdd\\javierlete.db";
 		// final String url = "jdbc:mysql://localhost:3306/ipartekjava";
 		final String usuario = "root";
 		final String password = "";
 
 		Connection con = null;
-		Statement st = null;
+		PreparedStatement pst = null;
 
 		try {
 			con = DriverManager.getConnection(url, usuario, password);
 
-			st = con.createStatement();
+			String sql = "SELECT nick,pass FROM usuarios";
+			
+			psSelect = con.prepareStatement(sql);
 
-			mostrarRegistros(st);
-
+			mostrarRegistros();
+			
 			String nick = "sqlite";
 			String pass = "pass";
-			String sql = "INSERT INTO usuarios (nick, pass) VALUES ('" + nick + "', '" + pass + "')";
-
-			int numeroRegistrosModificados = st.executeUpdate(sql);
+			sql = "INSERT INTO usuarios (nick, pass) VALUES (?, ?)";
+			
+			pst = con.prepareStatement(sql);
+			
+			pst.setString(1, nick);
+			pst.setString(2, pass);
+			
+			int numeroRegistrosModificados = pst.executeUpdate();
 
 			System.out.println(numeroRegistrosModificados);
 
-			mostrarRegistros(st);
+			mostrarRegistros();
 
 			pass = "nueva password";
-			sql = "UPDATE usuarios SET pass='" + pass + "' WHERE nick='" + nick + "'";
+			sql = "UPDATE usuarios SET pass=? WHERE nick=?";
 
-			numeroRegistrosModificados = st.executeUpdate(sql);
-
-			System.out.println(numeroRegistrosModificados);
-
-			mostrarRegistros(st);
-
-			sql = "DELETE FROM usuarios WHERE nick='" + nick + "'";
-
-			numeroRegistrosModificados = st.executeUpdate(sql);
+			pst = con.prepareStatement(sql);
+			
+			pst.setString(2, nick);
+			pst.setString(1, pass);
+			
+			numeroRegistrosModificados = pst.executeUpdate();
 
 			System.out.println(numeroRegistrosModificados);
 
-			mostrarRegistros(st);
+			mostrarRegistros();
+
+			sql = "DELETE FROM usuarios WHERE nick=?";
+
+			pst = con.prepareStatement(sql);
+			
+			pst.setString(1, nick);
+			
+			numeroRegistrosModificados = pst.executeUpdate();
+
+			System.out.println(numeroRegistrosModificados);
+
+			mostrarRegistros();			
+
 		} catch (SQLException e) {
 
 			System.out.println("Ha habido un error al trabajar con la base de datos");
 			System.out.println(e.getMessage());
 		} finally {
-			if(st != null)
+			if(pst != null)
 				try {
-					st.close();
+					pst.close();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println("Ha habido un problema al cerrar la sentencia");
 				}
 			
 			if (con != null)
@@ -71,20 +87,29 @@ public class Main {
 					con.close();
 				} catch (SQLException e) {
 					System.out.println("HA HABIDO UN ERROR AL CERRAR LA CONEXIÓN");
-					System.out.println(e);
+					System.out.println(e.getMessage());
 				}
 			
 		}
+		
+//		System.out.println(Long.MIN_VALUE);
+//		System.out.println(Long.MAX_VALUE);
+//		System.out.println(Double.MIN_VALUE);
+//		System.out.println(Double.MAX_VALUE);
+	}
+	
+	private static void mostrarRegistros() throws SQLException {
+		mostrarRegistros(psSelect);
 	}
 
-	private static void mostrarRegistros(Statement st) throws SQLException {
-		String sql = "SELECT nick,pass FROM usuarios";
-
-		ResultSet rs = st.executeQuery(sql);
+	private static void mostrarRegistros(PreparedStatement pst) throws SQLException {
+		ResultSet rs = pst.executeQuery();
 
 		ResultSetMetaData rsmd = rs.getMetaData();
 
-		for (int i = 1; i <= rsmd.getColumnCount(); i++)
+		int numeroCampos = rsmd.getColumnCount();
+		
+		for (int i = 1; i <= numeroCampos; i++)
 			System.out.print(rsmd.getColumnName(i) + "\t");
 
 		System.out.println();
@@ -93,7 +118,7 @@ public class Main {
 			// System.out.println(
 			// rs.getString("nick") + "\t" + rs.getString("pass"));
 
-			for (int i = 1; i <= rsmd.getColumnCount(); i++)
+			for (int i = 1; i <= numeroCampos; i++)
 				System.out.print(rs.getString(i) + "\t");
 
 			System.out.println();
