@@ -66,4 +66,9 @@ public class LogicaNegocio {
 		
 		return daoProducto.obtenerProductoPorId(Long.parseLong(id));
 	}
+
+	public static Usuario obtenerUsuarioPorEmail(String email) {
+		
+		return daoUsuario.obtenerUsuarioPorEmail(email);
+	}
 }

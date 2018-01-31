@@ -23,14 +23,17 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">TiendaVirtual</a>
+      <a class="navbar-brand" href="${pageContext.servletContext.contextPath}/">TiendaVirtual</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="#">Informática</a></li>
-		<li><a href="#">Electrónica</a></li>
+        <li><a href="${pageContext.servletContext.contextPath}/productos">Productos</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="${pageContext.servletContext.contextPath}/carrito">Carrito</a></li>
+        <li><a href="#">${usuario.nombre}</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
