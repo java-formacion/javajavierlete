@@ -5,7 +5,7 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>ID</th><th>Descripci&oacute;n</th><th>Precio</th><th></th>
+			<th>ID</th><th>Descripci&oacute;n</th><th>Precio</th><th>Link</th><th>Cantidad</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -15,8 +15,12 @@
 				<td>${producto.descripcion}</td>
 				<td>${producto.precio} &euro;</td>
 				<td><a href="productos?id=${producto.id}">Ver ficha</a>
+				<td>Cantidad</td>
 			</tr>
 		</c:forEach>
+		<tr>
+			<td></td><td></td><td></td><td></td><td><button type="button" class="btn btn-info">Factura</button></td>
+		</tr>
 	</tbody>
 			
 </table>

@@ -78,8 +78,16 @@ public class IndexServlet extends HttpServlet {
 		
 		Producto producto = LogicaNegocio.obtenerProductoPorId(id);
 		
-		ArrayList<Producto> productos = 
-				(ArrayList<Producto>) session.getAttribute("carrito");
+		ArrayList<Producto> productos = (ArrayList<Producto>) session.getAttribute("carrito");
+		
+		/*if(productos.size()!=0) {
+			for(int x=0;x<productos.size();x++) {
+				  if(productos.get(x).getId()==Long.parseLong(id)) {
+					  
+				  }
+			}
+			
+		}*/
 		
 		productos.add(producto);
 	}
