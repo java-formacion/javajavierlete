@@ -7,13 +7,15 @@ import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 public class DAOProductoArrayList implements DAOProducto {
 
 	private ArrayList<Producto> productos = new ArrayList<Producto>();
-
+	
 	@Override
 	public void alta(Producto producto) {
-		if (obtenerProductoPorId(producto.getId()) == null)
+		if(obtenerProductoPorId(producto.getId()) == null)
 			productos.add(producto);
 		else
-			throw new AccesoDatosException("Ya existe ese producto con ID = " + producto.getId());
+			throw new AccesoDatosException(
+					"Ya existe ese producto con ID = " + 
+							producto.getId());
 	}
 
 	@Override
@@ -25,7 +27,7 @@ public class DAOProductoArrayList implements DAOProducto {
 	public void modificacion(Producto producto) {
 		Producto p = obtenerProductoPorId(producto.getId());
 
-		if (p != null) {
+		if(p != null) {
 			p.setNombre(producto.getNombre());
 			p.setDescripcion(producto.getDescripcion());
 			p.setPrecio(producto.getPrecio());
@@ -42,14 +44,14 @@ public class DAOProductoArrayList implements DAOProducto {
 	@Override
 	public Producto obtenerProductoPorId(long id) {
 		Producto p;
-
-		for (int i = 0; i < productos.size(); i++) {
+		
+		for(int i = 0; i < productos.size(); i++) {
 			p = productos.get(i);
-
-			if (p.getId() == id)
+			
+			if(p.getId() == id) 
 				return p;
 		}
-
+		
 		return null;
 	}
 
@@ -57,14 +59,14 @@ public class DAOProductoArrayList implements DAOProducto {
 	public Producto[] obtenerProductosPorNombreParcial(String nombreParcial) {
 		Producto p;
 		ArrayList<Producto> resultados = new ArrayList<Producto>();
-
-		for (int i = 0; i < productos.size(); i++) {
+		
+		for(int i = 0; i < productos.size(); i++) {
 			p = productos.get(i);
-
-			if (p.getNombre().contains(nombreParcial))
+			
+			if(p.getNombre().contains(nombreParcial)) 
 				resultados.add(p);
 		}
-
+		
 		return resultados.toArray(new Producto[resultados.size()]);
 	}
 

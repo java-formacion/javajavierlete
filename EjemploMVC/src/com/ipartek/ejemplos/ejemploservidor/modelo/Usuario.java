@@ -4,13 +4,11 @@ public class Usuario {
 	private String email, password;
 
 	public Usuario(String email, String password) {
-		super();
-		this.email = email;
-		this.password = password;
+		setEmail(email);
+		setPassword(password);
 	}
-
-	public Usuario() {
-	}
+	
+	public Usuario() {}
 
 	@Override
 	public String toString() {
@@ -53,6 +51,15 @@ public class Usuario {
 	}
 
 	public void setEmail(String email) {
+		if(email == null)
+			throw new ModeloException("El email no puede ser nulo");
+		
+		if(email.trim().isEmpty())
+			throw new ModeloException("El email no puede estar vacío");
+		
+		if(!email.matches("\\w+\\@\\w+\\.\\w+"))
+			throw new ModeloException("Debe tener @ y .");
+			
 		this.email = email;
 	}
 
@@ -61,6 +68,12 @@ public class Usuario {
 	}
 
 	public void setPassword(String password) {
+		if(password == null)
+			throw new ModeloException("El password no puede ser nulo");
+		
+		if(password.trim().isEmpty())
+			throw new ModeloException("El password no puede estar vacío");
+		
 		this.password = password;
 	}
 }

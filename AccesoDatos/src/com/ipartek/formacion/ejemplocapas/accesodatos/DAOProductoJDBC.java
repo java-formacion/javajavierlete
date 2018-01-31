@@ -62,7 +62,7 @@ public class DAOProductoJDBC implements DAOProducto {
 			
 			if(num != 1)
 				throw new AccesoDatosException(
-						"La operaciÃ³n ha devuelto un resultado diferente de 1");
+						"La operación ha devuelto un resultado diferente de 1");
 		} catch (SQLException e) {
 			throw new AccesoDatosException(
 					"Error al acceder a la base de datos", e);

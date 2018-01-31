@@ -14,7 +14,7 @@
 		</div>
 	</div>
 	<div class="col-sm-6">
-		ñalskdhf ñlakshdg ñlkja sdñlfh asdñlkj añsdlkfh ñlaskdjg ñlakshd fñlkja sdgñlkh asdñlkfj ñalsdh ñlaksdj fñlkshadg ñlkh adsfñlkj asdglñkh asñdlfk hasñldgh ñalsdkj fñlaksd gñlka sdfñklj asdñlgkh ñasldkjf ñlasdkg ñiaoweh ñoiahsd ñldk xcñlvk nañeihf ñ
+		Ã±alskdhf Ã±lakshdg Ã±lkja sdÃ±lfh asdÃ±lkj aÃ±sdlkfh Ã±laskdjg Ã±lakshd fÃ±lkja sdgÃ±lkh asdÃ±lkfj Ã±alsdh Ã±laksdj fÃ±lkshadg Ã±lkh adsfÃ±lkj asdglÃ±kh asÃ±dlfk hasÃ±ldgh Ã±alsdkj fÃ±laksd gÃ±lka sdfÃ±klj asdÃ±lgkh Ã±asldkjf Ã±lasdkg Ã±iaoweh Ã±oiahsd Ã±ldk xcÃ±lvk naÃ±eihf Ã±
 	</div>
 </div>
 <table class="table">

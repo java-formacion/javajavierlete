@@ -1,63 +1,53 @@
 package com.ipartek.formacion.ejemplocapas.entidades;
 
 public class Usuario {
-
 	private final long id;
 	private String dni;
 	private String email, password;
 	private String nombre, apellidos;
-
+	
 	public long getId() {
 		return id;
 	}
-
 	public String getDni() {
 		return dni;
 	}
-
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
-		if (email == null) {
+		if(email == null)
 			throw new EntidadesException("No se admiten emails nulos");
-		}
-		if (!email.matches("\\w+\\@\\w+\\.\\w+")) {
-			throw new EntidadesException("El email no tiene el formato adecuado");
-		}
+		
+		if(!email.matches("\\w+\\@\\w+\\.\\w+"))
+			throw new EntidadesException(
+					"El email no tiene el formato adecuado");
+			
 		this.email = email;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	public String getNombre() {
 		return nombre;
 	}
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
 	public String getApellidos() {
 		return apellidos;
 	}
-
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
-
 	public Usuario(long id, String dni, String email, String password, String nombre, String apellidos) {
+		super();
 		this.id = id;
 		this.dni = dni;
 		this.email = email;
@@ -65,13 +55,12 @@ public class Usuario {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", dni=" + dni + ", email=" + email + ", password=" + password + ", nombre="
 				+ nombre + ", apellidos=" + apellidos + "]";
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -84,7 +73,6 @@ public class Usuario {
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -123,5 +111,4 @@ public class Usuario {
 			return false;
 		return true;
 	}
-
 }
