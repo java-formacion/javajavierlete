@@ -9,11 +9,11 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 
 	private static final String SQL_INSERT = 
 			"INSERT INTO usuarios " +
-			"(dni, email, password, nombre, apellidos) " +
+			"(dni, email, password, nombre, apellidos)" +
 			"VALUES (?, ?, ?, ?, ?)";
 	private static final String SQL_UPDATE =
 			"UPDATE usuarios SET "+
-			"dni=?, email=?, password=?, nombre=?, apellidos=? " +
+			"dni=?, email=?, password=?, nombre=?, apellidos=? "+
 			"WHERE id=?";
 	private static final String SQL_DELETE =
 			"DELETE FROM usuarios WHERE id=?";
@@ -21,10 +21,10 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 	private static final String SQL_SELECT = 
 			"SELECT id, dni, email, password, nombre, apellidos FROM usuarios ";
 	private static final String SQL_SELECT_ID = 
-			"SELECT id, dni, email, password, nombre, apellidos " +
+			"SELECT id, dni, email, password, nombre, apellidos "+
 			"FROM usuarios WHERE id=?";
 	private static final String SQL_SELECT_EMAIL = 
-			"SELECT id, dni, email, password, nombre, apellidos " +
+			"SELECT id, dni, email, password, nombre, apellidos "+
 			"FROM usuarios WHERE email=?";
 
 	private final String url, user, password;
@@ -33,6 +33,14 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 	
 	public DAOUsuarioJDBC(String url, String user, String password) {
 		super();
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		this.url = url;
 		this.user = user;
 		this.password = password;
@@ -58,7 +66,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 			
 			if(num != 1)
 				throw new AccesoDatosException(
-						"La inserción ha devuelto un resultado diferente de 1");
+						"La inserciÃ³n ha devuelto un resultado diferente de 1");
 		} catch (SQLException e) {
 			throw new AccesoDatosException(
 					"Error al acceder a la base de datos", e);
@@ -127,7 +135,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 			
 			if(num != 1)
 				throw new AccesoDatosException(
-						"La actualización ha devuelto un resultado diferente de 1");
+						"La actualizaciÃ³n ha devuelto un resultado diferente de 1");
 		} catch (SQLException e) {
 			throw new AccesoDatosException(
 					"Error al acceder a la base de datos", e);
