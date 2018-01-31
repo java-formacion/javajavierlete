@@ -1,6 +1,6 @@
 <%@ include file="includes/cabecera.jsp" %>
 
-<h2>LISTADO DE PRODUCTOS</h2>
+<h2>CARRITO DE LA COMPRA</h2>
 
 <table class="table">
 	<thead>
@@ -9,7 +9,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="producto" items="${productos}">	
+		<c:forEach var="producto" items="${carrito}">	
 			<tr>
 				<td>${producto.id}</td>
 				<td>${producto.descripcion}</td>
