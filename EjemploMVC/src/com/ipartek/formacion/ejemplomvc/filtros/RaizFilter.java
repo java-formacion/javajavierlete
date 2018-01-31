@@ -22,7 +22,8 @@ public class RaizFilter implements Filter {
 				path.startsWith("/js") ||
 				path.startsWith("/fonts") ||
 				path.startsWith("/imgs") ||
-				path.startsWith("/fotos")) {
+				path.startsWith("/fotos") ||
+				path.startsWith("/error")) {
 		    chain.doFilter(request, response); // Goes to default servlet.
 		} else {
 		    request.getRequestDispatcher("/frontcontroller" + path).forward(request, response);
