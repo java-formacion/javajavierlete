@@ -33,6 +33,14 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 	
 	public DAOUsuarioJDBC(String url, String user, String password) {
 		super();
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		this.url = url;
 		this.user = user;
 		this.password = password;
