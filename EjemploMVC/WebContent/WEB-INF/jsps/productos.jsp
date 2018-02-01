@@ -1,7 +1,5 @@
 <%@ include file="includes/cabecera.jsp" %>
 
-<h2>LISTADO DE PRODUCTOS</h2>
-
 <table class="table">
 	<thead>
 		<tr>
