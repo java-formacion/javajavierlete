@@ -16,7 +16,14 @@
 				<td>${producto.precio} &euro;</td>
 				<td><a href="productos?id=${producto.id}">Ver ficha</a>
 			</tr>
+			
 		</c:forEach>
+		<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><a href="factura?id=${producto.id}">Realizar compra</a></td>
+			</tr>
 	</tbody>
 			
 </table>

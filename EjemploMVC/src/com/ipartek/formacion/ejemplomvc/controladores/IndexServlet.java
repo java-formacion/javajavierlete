@@ -1,7 +1,9 @@
 package com.ipartek.formacion.ejemplomvc.controladores;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 
 import javax.servlet.ServletException;
@@ -10,7 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
+import org.apache.catalina.ant.SessionsTask;
+
+import com.ipartek.ejemplos.ejemploservidor.modelo.Factura;
 import com.ipartek.ejemplos.ejemploservidor.modelo.ModeloException;
 import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
@@ -28,6 +34,8 @@ public class IndexServlet extends HttpServlet {
 	private static final String FICHA_JSP = "/WEB-INF/jsps/ficha.jsp";
 
 	private static final String CARRITO_JSP = "/WEB-INF/jsps/carrito.jsp";
+	
+	private static final String FACTURA_JSP = "/WEB-INF/jsps/factura.jsp";
 	
 	private enum Estado { LOGIN_CORRECTO, LOGIN_INCORRECTO }; 
 	
@@ -66,6 +74,18 @@ public class IndexServlet extends HttpServlet {
 				agregarProductoACarrito(id);
 			
 			fw(CARRITO_JSP);
+			break;
+		case "/frontcontroller/factura":
+			id = request.getParameter("id");
+			if(id != null) {
+				crearFactura();
+				fw(FACTURA_JSP);
+			}
+				
+			else 
+				
+				fw(PRODUCTOS_JSP);
+				
 			break;
 		default:
 			response.getWriter().println(path);
@@ -139,7 +159,31 @@ public class IndexServlet extends HttpServlet {
 		
 		session.setAttribute("carrito", carrito);
 		
+		
+		
 		return Estado.LOGIN_CORRECTO;
+	}
+	
+	private void crearFactura() {
+		HttpSession session = request.getSession();
+		
+		
+		ArrayList<Producto> carrito= (ArrayList<Producto>) session.getAttribute("carrito");
+		com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad = (com.ipartek.formacion.ejemplocapas.entidades.Usuario) session.getAttribute("usuario");
+		Date d= new Date();
+		double importe = 0;
+		double iva = 21;
+		for(Producto p: carrito) {
+			double precio = p.getPrecio().doubleValue();
+			importe = importe + precio;
+			
+		}
+		
+			double dineroIva = (importe *iva)/100;
+			double total = Math.round((importe + dineroIva)*100d)/100d;
+		Factura f = new Factura(1, 101723, d, usuarioEntidad, carrito, iva, importe, total);
+		request.setAttribute("factura", f);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
