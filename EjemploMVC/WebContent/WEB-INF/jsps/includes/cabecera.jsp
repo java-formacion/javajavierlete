@@ -33,7 +33,16 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="${pageContext.servletContext.contextPath}/carrito">Carrito</a></li>
-        <li><a href="#">${usuario.nombre}</a></li>
+        <c:choose>
+	        <c:when test="${usuario.nombre != null}">
+	        <li><a href="#">${usuario.nombre}</a></li>
+	        <li><a href="#">Logout</a></li>
+	        </c:when>
+	        <c:otherwise>
+	        <li><a href="${pageContext.servletContext.contextPath}/login">Login</a></li>
+	        <li><a href="#">Sign in</a>
+	        </c:otherwise>
+	    </c:choose>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

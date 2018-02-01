@@ -14,7 +14,7 @@
 		</div>
 	</div>
 	<div class="col-sm-6">
-		ñalskdhf ñlakshdg ñlkja sdñlfh asdñlkj añsdlkfh ñlaskdjg ñlakshd fñlkja sdgñlkh asdñlkfj ñalsdh ñlaksdj fñlkshadg ñlkh adsfñlkj asdglñkh asñdlfk hasñldgh ñalsdkj fñlaksd gñlka sdfñklj asdñlgkh ñasldkjf ñlasdkg ñiaoweh ñoiahsd ñldk xcñlvk nañeihf ñ
+		producto es un producto es un producto producido por productores	
 	</div>
 </div>
 <table class="table">

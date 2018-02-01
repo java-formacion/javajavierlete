@@ -43,7 +43,7 @@ public class IndexServlet extends HttpServlet {
 		
 		switch(path) {
 		case "/frontcontroller/":
-			fw(LOGIN_JSP);
+			fw(BIENVENIDA_JSP);
 			break;
 		case "/frontcontroller/login":
 			switch(login()) {

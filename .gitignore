@@ -4,3 +4,12 @@
 /.project
 /.settings/
 /bin/
+/Entidades/nbproject/private/
+/AccesoDatos/nbproject/private/
+/EjemploMVC/nbproject/private/
+/LogicaNegocio/nbproject/private/
+/PresentacionConsola/nbproject/private/
+/EjemploServidor/nbproject/private/
+/EjemploDB/nbproject/private/
+/DBPrueba/nbproject/private/
+/EjemploPOO/nbproject/private/
