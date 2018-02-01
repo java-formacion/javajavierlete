@@ -10,5 +10,6 @@ public interface DAOUsuario {
 	Usuario[] obtenerUsuarios();
 	Usuario obtenerUsuarioPorId(long id);
 	Usuario obtenerUsuarioPorEmail(String email);
+	
 	//boolean existeUsuarioEMail(String email, String password);
 }

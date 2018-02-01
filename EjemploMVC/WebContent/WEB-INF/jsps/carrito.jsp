@@ -19,7 +19,7 @@
 			</tr>
 		</c:forEach>
 		<tr>
-			<td></td><td></td><td></td><td></td><td><button type="button" class="btn btn-info">Factura</button></td>
+			<td></td><td></td><td></td><td></td><td><a href="factura">Factura</a></td>
 		</tr>
 	</tbody>
 			

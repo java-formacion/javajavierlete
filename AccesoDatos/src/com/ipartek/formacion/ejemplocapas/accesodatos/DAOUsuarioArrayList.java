@@ -2,6 +2,8 @@ package com.ipartek.formacion.ejemplocapas.accesodatos;
 
 import java.util.ArrayList;
 
+import org.eclipse.jdt.internal.compiler.parser.RecoveredUnit;
+
 import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
 
 public class DAOUsuarioArrayList implements DAOUsuario {
@@ -62,5 +64,7 @@ public class DAOUsuarioArrayList implements DAOUsuario {
 		
 		return null;
 	}
+	
+	
 
 }
