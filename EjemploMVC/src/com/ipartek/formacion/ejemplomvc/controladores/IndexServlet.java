@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.ipartek.ejemplos.ejemploservidor.modelo.ModeloException;
 import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
+import com.ipartek.formacion.ejemplocapas.entidades.Factura;
 import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 
 @WebServlet("/frontcontroller/*")
@@ -28,6 +29,9 @@ public class IndexServlet extends HttpServlet {
 	private static final String FICHA_JSP = "/WEB-INF/jsps/ficha.jsp";
 
 	private static final String CARRITO_JSP = "/WEB-INF/jsps/carrito.jsp";
+	
+	//Para la factura
+	private static final String FACTURA_JSP = "/WEB-INF/jsps/factura.jsp";
 	
 	private enum Estado { LOGIN_CORRECTO, LOGIN_INCORRECTO }; 
 	
@@ -67,11 +71,20 @@ public class IndexServlet extends HttpServlet {
 			
 			fw(CARRITO_JSP);
 			break;
+		//Para la factura
+		case "/frontcontroller/factura":
+			id = request.getParameter("id");
+			if(id != null) {
+				//generarFactura(id, productos);
+			}
+			fw(FACTURA_JSP);
+			break;
 		default:
 			response.getWriter().println(path);
 			response.getWriter().println(request.getContextPath());
 		}
 	}
+
 
 	private void agregarProductoACarrito(String id) {
 		HttpSession session = request.getSession();

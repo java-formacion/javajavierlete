@@ -17,8 +17,11 @@
 				<td><a href="productos?id=${producto.id}">Ver ficha</a>
 			</tr>
 		</c:forEach>
+		
 	</tbody>
 			
 </table>
-
+<p>
+			<a href="factura?id=${producto.id}" class="btn btn-primary" role="button">Tramitar pedido.</a>
+		</p>
 <%@ include file="includes/pie.jsp" %>

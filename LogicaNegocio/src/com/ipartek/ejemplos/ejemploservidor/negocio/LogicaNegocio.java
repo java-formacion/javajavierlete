@@ -57,6 +57,7 @@ public class LogicaNegocio {
 		
 	}
 
+
 	public static Producto[] obtenerProductos() {
 		
 		return daoProducto.obtenerProductos();
