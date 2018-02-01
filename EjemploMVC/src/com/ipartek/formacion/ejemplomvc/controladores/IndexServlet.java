@@ -16,6 +16,7 @@ import javax.websocket.Session;
 
 import org.apache.catalina.ant.SessionsTask;
 
+import com.ipartek.ejemplos.ejemploservidor.modelo.Carrito;
 import com.ipartek.ejemplos.ejemploservidor.modelo.Factura;
 import com.ipartek.ejemplos.ejemploservidor.modelo.ModeloException;
 import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
@@ -155,10 +156,14 @@ public class IndexServlet extends HttpServlet {
 		
 		session.setAttribute("usuario", usuarioEntidad);
 		
+		
 		ArrayList<Producto> carrito = new ArrayList<Producto>();
-		
+		ArrayList<Carrito> carritos = new ArrayList<Carrito>();
+		Producto p = new Producto(0, null, null, new BigDecimal(0));
+		Carrito c = new Carrito(1, usuarioEntidad, p, 1);
+		carritos.add(c);
 		session.setAttribute("carrito", carrito);
-		
+		session.setAttribute("carritoNew", carritos);
 		
 		
 		return Estado.LOGIN_CORRECTO;

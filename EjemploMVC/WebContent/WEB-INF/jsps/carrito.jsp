@@ -5,7 +5,7 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>ID</th><th>Descripci&oacute;n</th><th>Precio</th><th></th>
+			<th>ID</th><th>Descripci&oacute;n</th><th>Precio</th><th>cantidad</th><th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -14,6 +14,7 @@
 				<td>${producto.id}</td>
 				<td>${producto.descripcion}</td>
 				<td>${producto.precio} &euro;</td>
+				<td></td>
 				<td><a href="productos?id=${producto.id}">Ver ficha</a>
 			</tr>
 			

@@ -31,6 +31,13 @@
 				<td>${producto.precio} &euro;</td>
 			</tr>
 		</c:forEach>
+		<c:forEach var="carrito" items="${carritoNew}">	
+			<tr>
+				<td>${carrito.id}</td>
+				<td></td>
+				<td>${carrito.cantidad} &euro;</td>
+			</tr>
+		</c:forEach>
 		<tr>
 			<td></td>
 			<td>Importe</td>
@@ -45,6 +52,11 @@
 			<td></td>
 			<td>Total</td>
 			<td>${factura.total}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td><a href="productos">Realizar Pago</a></td>
 		</tr>
 	</tbody>
 			
