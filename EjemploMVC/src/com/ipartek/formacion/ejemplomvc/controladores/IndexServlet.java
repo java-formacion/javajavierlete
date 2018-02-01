@@ -2,6 +2,7 @@ package com.ipartek.formacion.ejemplomvc.controladores;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 
 import javax.servlet.ServletException;
@@ -20,7 +21,7 @@ import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 @WebServlet("/frontcontroller/*")
 public class IndexServlet extends HttpServlet {
 	private static final String LOGIN_JSP = "/WEB-INF/jsps/login.jsp";
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private static final String BIENVENIDA_JSP = "/WEB-INF/jsps/bienvenida.jsp";
@@ -29,55 +30,66 @@ public class IndexServlet extends HttpServlet {
 	private static final String FICHA_JSP = "/WEB-INF/jsps/ficha.jsp";
 
 	private static final String CARRITO_JSP = "/WEB-INF/jsps/carrito.jsp";
-	
-	//Para la factura
+
 	private static final String FACTURA_JSP = "/WEB-INF/jsps/factura.jsp";
-	
-	private enum Estado { LOGIN_CORRECTO, LOGIN_INCORRECTO }; 
-	
+
+	private enum Estado {
+		LOGIN_CORRECTO, LOGIN_INCORRECTO
+	};
+
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().println(request.getServletPath());
-		this.request = request; this.response = response;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// response.getWriter().println(request.getServletPath());
+		this.request = request;
+		this.response = response;
 		String path = request.getRequestURI().substring(request.getContextPath().length());
-		
+
 		String id;
-		
-		switch(path) {
+
+		switch (path) {
 		case "/frontcontroller/":
 			fw(LOGIN_JSP);
 			break;
 		case "/frontcontroller/login":
-			switch(login()) {
-			case LOGIN_CORRECTO: productosIndex(); fw(PRODUCTOS_JSP); break;
-			case LOGIN_INCORRECTO: fw(LOGIN_JSP); break;
+			switch (login()) {
+			case LOGIN_CORRECTO:
+				productosIndex();
+				fw(PRODUCTOS_JSP);
+				break;
+			case LOGIN_INCORRECTO:
+				fw(LOGIN_JSP);
+				break;
 			}
 			break;
 		case "/frontcontroller/productos":
 			id = request.getParameter("id");
-			if(id == null) {
-				productosIndex(); fw(PRODUCTOS_JSP);
-			}
-			else {
-				fichaIndex(id); fw(FICHA_JSP);
+			if (id == null) {
+				productosIndex();
+				fw(PRODUCTOS_JSP);
+			} else {
+				fichaIndex(id);
+				fw(FICHA_JSP);
 			}
 			break;
 		case "/frontcontroller/carrito":
 			id = request.getParameter("id");
-			if(id != null) 
+			if (id != null)
 				agregarProductoACarrito(id);
-			
+
 			fw(CARRITO_JSP);
 			break;
-		//Para la factura
+		// Para la factura
 		case "/frontcontroller/factura":
 			id = request.getParameter("id");
-			if(id != null) {
-				//generarFactura(id, productos);
+			if (id != null) {
+				obtenerFactura(id);
+				fw(FACTURA_JSP);
+			} else {
+				fw(PRODUCTOS_JSP);
 			}
-			fw(FACTURA_JSP);
 			break;
 		default:
 			response.getWriter().println(path);
@@ -85,80 +97,104 @@ public class IndexServlet extends HttpServlet {
 		}
 	}
 
-
 	private void agregarProductoACarrito(String id) {
 		HttpSession session = request.getSession();
-		
+
 		Producto producto = LogicaNegocio.obtenerProductoPorId(id);
-		
-		ArrayList<Producto> productos = 
-				(ArrayList<Producto>) session.getAttribute("carrito");
-		
+
+		ArrayList<Producto> productos = (ArrayList<Producto>) session.getAttribute("carrito");
+
 		productos.add(producto);
 	}
 
 	private void fichaIndex(String id) {
 		Producto producto = LogicaNegocio.obtenerProductoPorId(id);
-		
+
 		request.setAttribute("producto", producto);
 	}
 
 	private void productosIndex() {
 		Producto[] productos = LogicaNegocio.obtenerProductos();
-		
+
 		request.setAttribute("productos", productos);
 	}
 
 	private Estado login() {
 		Hashtable<String, String> errores = new Hashtable<>();
-		
+
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		
+
 		Usuario usuario = new Usuario();
-		
+
 		try {
 			usuario.setEmail(email);
 		} catch (ModeloException me) {
 			errores.put("email", me.getMessage());
 		}
-		
+
 		try {
 			usuario.setPassword(password);
-		} catch(ModeloException me) {
+		} catch (ModeloException me) {
 			errores.put("password", me.getMessage());
 		}
-		
+
 		com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad;
-		usuarioEntidad = new com.ipartek.formacion.ejemplocapas.entidades.Usuario(0, null, usuario.getEmail(), usuario.getPassword(), null, null);
-		
-		if(!LogicaNegocio.esValidoUsuario(usuarioEntidad))
+		usuarioEntidad = new com.ipartek.formacion.ejemplocapas.entidades.Usuario(0, null, usuario.getEmail(),
+				usuario.getPassword(), null, null);
+
+		if (!LogicaNegocio.esValidoUsuario(usuarioEntidad))
 			errores.put("usuario", "No es válido ese email y contrase�a");
 
-		if(errores.size() > 0) {
+		if (errores.size() > 0) {
 			request.setAttribute("usuario", usuario);
 			request.setAttribute("errores", errores);
-			
+
 			return Estado.LOGIN_INCORRECTO;
 		}
-		
+
 		HttpSession session = request.getSession(true);
-		
+
 		usuarioEntidad = LogicaNegocio.obtenerUsuarioPorEmail(usuario.getEmail());
-		
+
 		session.setAttribute("usuario", usuarioEntidad);
-		
+
 		ArrayList<Producto> carrito = new ArrayList<Producto>();
-		
+
 		session.setAttribute("carrito", carrito);
-		
+
 		return Estado.LOGIN_CORRECTO;
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void obtenerFactura(String id) {
+		
+		HttpSession session = request.getSession();
+
+//		ArrayList<Producto> carrito = (ArrayList<Producto>) session.getAttribute("carrito");
+//		
+//		com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad = (com.ipartek.formacion.ejemplocapas.entidades.Usuario) session
+//				.getAttribute("usuario");
+//		
+//		Date d = new Date();
+//		double precioTotal = 0;
+//		int iva = 21;
+//		for (Producto p : carrito) {
+//			double precio = p.getPrecio().doubleValue();
+//			precioTotal = precioTotal + precio;
+//		}
+//
+//		double totalConIva = (precioTotal * iva) / 100;
+//		double total = Math.round((precioTotal + totalConIva) * 100d) / 100d;
+//		Factura f = new Factura(1, 101723, d, usuarioEntidad, carrito, iva, precioTotal, total);
+//		request.setAttribute("factura", f);
+		
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
-	
+
 	private void fw(String ruta) throws ServletException, IOException {
 		request.getRequestDispatcher(ruta).forward(request, response);
 	}
