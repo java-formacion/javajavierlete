@@ -33,6 +33,8 @@ public class IndexServlet extends HttpServlet {
 	private static final String CARRITO_JSP = "/WEB-INF/jsps/carrito.jsp";
 	
 	private static final String LOGOUT_JSP = "/WEB-INF/jsps/logout.jsp";
+	
+	private static final String SIGNIN_JSP = "/WEB-INF/jsps/signin.jsp";
 
 	private enum Estado {
 		LOGIN_CORRECTO, LOGIN_INCORRECTO, LOGIN_NULL
@@ -92,6 +94,9 @@ public class IndexServlet extends HttpServlet {
 			HttpSession session=request.getSession();  
             session.invalidate();  
 			fw (LOGOUT_JSP); //jsp no existe, retorno temporal a bienvenida
+			break;
+		case "/frontcontroller/signin":
+			fw (SIGNIN_JSP);
 			break;
 		default:
 			response.getWriter().println(path);
