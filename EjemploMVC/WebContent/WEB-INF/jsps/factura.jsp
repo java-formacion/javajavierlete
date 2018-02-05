@@ -30,9 +30,7 @@
 				<td>${factura.fecha}</td>
 				<td>${factura.iva}</td>
 			</tr>
-			<tr>
-				<td></td><td></td><td></td><td colspan="2">total: </td>
-			</tr>
+			
 	</tbody>
 </table>
 
@@ -53,7 +51,7 @@
 			</tr>
 		</c:forEach>
 		<tr>
-			<td></td><td></td><td></td><td></td><td><a href="factura">Factura</a></td>
+				<td></td><td></td><td></td><td colspan="2">total: </td>
 		</tr>
 	</tbody>
 			

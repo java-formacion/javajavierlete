@@ -21,7 +21,7 @@ import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
 import com.ipartek.formacion.ejemplocapas.entidades.Factura;
 import com.ipartek.formacion.ejemplocapas.entidades.Producto;
-import com.ipartek.formacion.ejemplocapas.entidades.carrito;
+import com.ipartek.formacion.ejemplocapas.entidades.Carrito;
 
 import javafx.scene.control.Alert;
 
@@ -44,9 +44,9 @@ public class IndexServlet extends HttpServlet {
 	
 	private int idFactura=0;
 	private int idcarrito=0;
-	private carrito c;
 	
 	private ArrayList<Producto> productos;
+	private ArrayList<Carrito> carritos;
 	
 	
 	private HttpServletRequest request;
@@ -125,37 +125,47 @@ public class IndexServlet extends HttpServlet {
 		
 		productos = (ArrayList<Producto>) session.getAttribute("carrito");
 		
-		//TODO Seguir aqui
-		idcarrito++;
 		
-		
-		if(productos.isEmpty()) {
-			for(int x=0;x<productos.size();x++) {
-				  if(productos.get(x).getId()==Long.parseLong(id)) {
-					  c= new carrito(productos.get(x).getId(), 1);
-					  productos.add(producto);
-				  }
-			}
-		}else {
-			int r=0;
-			for(int x=0;x<productos.size();x++) {
-				  if(productos.get(x).getId()==Long.parseLong(id)) {
-					  if(c.getIdProducto()==productos.get(x).getId()) {
-						  c.setCantidad(c.getCantidad()+1);
-					  };
-					  r++;
-				  }
-			}
-			if(r==0) {
-				productos.add(producto);
-			}
-		}
-		
-		
+		cantidadesProducto(id,productos,producto,session);
 		
 	}
 	
 	
+	
+
+
+
+	private void cantidadesProducto(String id, ArrayList<Producto> productos2, Producto producto, HttpSession sesion) {
+		
+		/* si no encontramos el mismo producto en el array de productos del carrito 
+		 * no agregamos el mimos producto sino le sumamos la cantidad.
+		 */
+		carritos = (ArrayList<Carrito>) sesion.getAttribute("Cantidad");
+		
+		if(productos.size()==0) {
+			System.out.println("entra");
+			productos.add(producto);
+			
+			/*Carrito c= new Carrito((long)idcarrito, id, 1);
+			System.out.println((long)idcarrito+" , "+id+" , "+1);
+			carritos.add(c);*/
+			
+		
+		}else {
+			int a=0;
+			for (int i = 0; i < productos.size(); i++) {
+				if(productos.get(i).getId()==Long.parseLong(id)) {
+					LogicaNegocio.SumarCantidadAlProducto(productos.get(i).getId());
+					a++;break;
+				}	
+			}
+			if(a==0) {
+				productos.add(producto);
+			}
+			
+		}
+		
+	}
 
 	private void fichaIndex(String id) {
 		Producto producto = LogicaNegocio.obtenerProductoPorId(id);

@@ -17,6 +17,7 @@ public class DAOUsuarioArrayList implements DAOUsuario {
 					"Ya existe un usuario con el email " + 
 							usuario.getEmail());
 		usuarios.add(usuario);
+		
 	}
 
 	@Override
