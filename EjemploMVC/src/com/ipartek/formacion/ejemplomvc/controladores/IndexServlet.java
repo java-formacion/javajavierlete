@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.Session;
+
 import com.ipartek.ejemplos.ejemploservidor.modelo.ModeloException;
 import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
@@ -28,6 +30,8 @@ public class IndexServlet extends HttpServlet {
 	private static final String FICHA_JSP = "/WEB-INF/jsps/ficha.jsp";
 
 	private static final String CARRITO_JSP = "/WEB-INF/jsps/carrito.jsp";
+	
+	private static final String LOGOUT_JSP = "/WEB-INF/jsps/bienvenida.jsp";
 
 	private enum Estado {
 		LOGIN_CORRECTO, LOGIN_INCORRECTO, LOGIN_NULL
@@ -79,6 +83,10 @@ public class IndexServlet extends HttpServlet {
 
 			fw(CARRITO_JSP);
 			//id = null;
+			break;
+		case "/frontcontroller/logout":
+			Session.invalidate=true;
+			fw (LOGOUT_JSP); //jsp no existe, retorno temporal a bienvenida
 			break;
 		default:
 			response.getWriter().println(path);

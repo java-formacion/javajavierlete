@@ -36,7 +36,7 @@
         <c:choose>
 	        <c:when test="${usuario.nombre != null}">
 	        <li><a href="#">${usuario.nombre}</a></li>
-	        <li><a href="#">Logout</a></li>
+	        <li><a href="${pageContext.servletContext.contextPath}/logout">Logout</a></li>
 	        </c:when>
 	        <c:otherwise>
 	        <li><a href="${pageContext.servletContext.contextPath}/login">Login</a></li>

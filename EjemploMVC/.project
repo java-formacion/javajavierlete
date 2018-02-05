@@ -3,9 +3,10 @@
 	<name>EjemploMVC</name>
 	<comment></comment>
 	<projects>
-		<project>AccesoDatos</project>
 		<project>Entidades</project>
 		<project>LogicaNegocio</project>
+		<project>Servers</project>
+		<project>AccesoDatos</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
