@@ -1,4 +1,4 @@
-package com.ipartek.ejemplos.ejemploservidor.modelo;
+package com.ipartek.formacion.ejemplocapas.entidades;
 
 import java.util.ArrayList;
 
@@ -9,8 +9,8 @@ public class Carrito {
 
 	
 	private final long id;
-	Usuario u;
-	Producto p;
+	private Usuario u;
+	private Producto p;
 	private int cantidad;
 	
 	public Carrito(long id, Usuario u, Producto p, int cantidad) {
@@ -20,6 +20,7 @@ public class Carrito {
 		this.p = p;
 		this.cantidad = cantidad;
 	}
+	
 
 	public Usuario getU() {
 		return u;
@@ -29,11 +30,11 @@ public class Carrito {
 		this.u = u;
 	}
 
-	public Producto getP() {
+	public Producto getProducto() {
 		return p;
 	}
 
-	public void setP(Producto p) {
+	public void setProducto(Producto p) {
 		this.p = p;
 	}
 

@@ -17,44 +17,9 @@
 <p><label for="provincia" class="col-sm-1 control-label">Provincia:</label> Bizkaia</p>
 <p><label for="pais" class="col-sm-1 control-label">Pais:</label> España</p>
 </div>
-<table class="table">
-	<thead>
-		<tr>
-			<th>Id_Producto</th><th>Nombre</th><th>Cantidad</th><th>Precio</th><th></th>
-		</tr>
-	</thead>
-	<tbody>
-		<c:forEach var="carrito" items="${carritoNew}">	
-			<tr>
-				<td>${carrito.producto.id}</td>
-				<td>${carrito.producto.nombre}</td>
-				<td>${carrito.cantidad}</td>
-				<td>${carrito.producto.precio} &euro;</td>
-			</tr>
-		</c:forEach>
-		<tr>
-			<td></td>
-			<td>Importe</td>
-			<td>${factura.importe}</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>IVA</td>
-			<td>${factura.iva}%</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Total</td>
-			<td>${factura.total}</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td></td>
-			<td><a href="facturaCreada?id=${producto.id}">Realizar Pago</a></td>
-		</tr>
-	</tbody>
-			
-</table>
+
+
+<h1>Factura creada con exito</h1>
 
 
 <%@ include file="includes/pie.jsp" %>

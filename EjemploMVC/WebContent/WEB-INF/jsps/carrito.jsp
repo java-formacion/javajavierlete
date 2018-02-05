@@ -2,6 +2,7 @@
 
 <h2>CARRITO DE LA COMPRA</h2>
 
+
 <table class="table">
 	<thead>
 		<tr>
@@ -9,12 +10,12 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="producto" items="${carrito}">	
+		<c:forEach var="carrito" items="${carritoNew}">	
 			<tr>
-				<td>${producto.id}</td>
-				<td>${producto.descripcion}</td>
-				<td>${producto.precio} &euro;</td>
-				<td></td>
+				<td>${carrito.producto.id}</td>
+				<td>${carrito.producto.descripcion}</td>
+				<td>${carrito.producto.precio} &euro;</td>
+				<td>${carrito.cantidad}</td>
 				<td><a href="productos?id=${producto.id}">Ver ficha</a>
 			</tr>
 			

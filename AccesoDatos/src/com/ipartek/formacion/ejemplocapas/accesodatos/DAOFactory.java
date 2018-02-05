@@ -28,6 +28,15 @@ public class DAOFactory {
 		}
 	}
 	
+	public DAOFactura getDAOfactura() {
+		switch(motor) {
+		//case "arraylist": return new DAOProductoArrayList();
+		case "jdbc":return new DAOFacturaJDBC(url, usuario, password);
+		default: throw new AccesoDatosException("No conozco el motor");
+		}
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "DAOFactory [motor=" + motor + ", url=" + url + "]";

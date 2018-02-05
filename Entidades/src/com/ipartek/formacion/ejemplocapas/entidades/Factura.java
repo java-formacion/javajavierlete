@@ -1,4 +1,4 @@
-package com.ipartek.ejemplos.ejemploservidor.modelo;
+package com.ipartek.formacion.ejemplocapas.entidades;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -13,12 +13,12 @@ public class Factura {
 	private long numeroFactura;
 	private Date fecha;
 	private com.ipartek.formacion.ejemplocapas.entidades.Usuario u;
-	ArrayList<Producto> carrito = new ArrayList<Producto>();
+	ArrayList<Carrito> carrito = new ArrayList<Carrito>();
 	private double iva;
 	private double importe;
 	private double total;
 	
-	public Factura(long id, long numeroFactura, Date fecha, Usuario u, ArrayList<Producto> carrito, double iva,
+	public Factura(long id, long numeroFactura, Date fecha, Usuario u, ArrayList<Carrito> carrito, double iva,
 			double importe, double total) {
 		super();
 		this.id = id;
@@ -55,11 +55,11 @@ public class Factura {
 		this.u = u;
 	}
 
-	public ArrayList<Producto> getCarrito() {
+	public ArrayList<Carrito> getCarrito() {
 		return carrito;
 	}
 
-	public void setCarrito(ArrayList<Producto> carrito) {
+	public void setCarrito(ArrayList<Carrito> carrito) {
 		this.carrito = carrito;
 	}
 
