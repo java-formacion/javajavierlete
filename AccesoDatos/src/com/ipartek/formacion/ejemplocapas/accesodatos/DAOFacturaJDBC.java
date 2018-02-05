@@ -13,7 +13,7 @@ public class DAOFacturaJDBC implements DAOFactura{
 
 	private static final String SQL_INSERT = 
 			"INSERT INTO Factura " +
-			"(id_factura, id_carrito, num_factura, iva, importe, total, fecha) " +
+			"(id_factura, id_carrito, num_factura, iva, importe, total, fecha)" +
 			"VALUES (?,?,?,?,?,?,?)";
 	
 	private final String url, user, password;

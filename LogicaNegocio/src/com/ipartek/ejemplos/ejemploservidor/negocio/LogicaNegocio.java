@@ -81,7 +81,7 @@ public class LogicaNegocio {
 	public static void insertarFactura(Factura f) {
 		
 		daofactura.alta(f);
-		System.out.println(f.getId()+f.getIva()+f.getImporte()+f.getTotal());
+	
 		
 	}
 	

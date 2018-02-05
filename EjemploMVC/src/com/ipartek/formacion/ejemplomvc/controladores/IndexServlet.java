@@ -97,7 +97,9 @@ public class IndexServlet extends HttpServlet {
 			id = request.getParameter("id");
 			if(id != null) {
 				HttpSession session = request.getSession();
-				com.ipartek.formacion.ejemplocapas.entidades.Factura f = (com.ipartek.formacion.ejemplocapas.entidades.Factura) session.getAttribute("factura");
+				com.ipartek.formacion.ejemplocapas.entidades.Factura f = (com.ipartek.formacion.ejemplocapas.entidades.Factura) session.getAttribute("facturaS");
+				System.out.println(f.toString());
+				System.out.println(f.getId() + " " + f.getImporte() + " " + f.getIva());
 				LogicaNegocio.insertarFactura(f);
 				fw(FACTURA_CREADA_JSP);
 			}
