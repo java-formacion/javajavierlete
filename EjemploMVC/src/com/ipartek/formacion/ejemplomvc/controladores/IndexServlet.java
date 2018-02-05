@@ -46,7 +46,7 @@ public class IndexServlet extends HttpServlet {
 	private int idcarrito=0;
 	
 	private ArrayList<Producto> productos;
-	private ArrayList<Carrito> carritos;
+	private ArrayList<Carrito> carritos = new ArrayList<Carrito>();
 	
 	
 	private HttpServletRequest request;
@@ -126,7 +126,7 @@ public class IndexServlet extends HttpServlet {
 		productos = (ArrayList<Producto>) session.getAttribute("carrito");
 		
 		
-		cantidadesProducto(id,productos,producto,session);
+		cantidadesProducto(id,productos,producto);
 		
 	}
 	
@@ -135,14 +135,19 @@ public class IndexServlet extends HttpServlet {
 
 
 
-	private void cantidadesProducto(String id, ArrayList<Producto> productos2, Producto producto, HttpSession sesion) {
+	private void cantidadesProducto(String id, ArrayList<Producto> productos2, Producto producto) {
 		
 		/* si no encontramos el mismo producto en el array de productos del carrito 
 		 * no agregamos el mimos producto sino le sumamos la cantidad.
 		 */
-		carritos = (ArrayList<Carrito>) sesion.getAttribute("Cantidad");
-		
+		//protected List<EventSeat> modelData = new ArrayList<EventSeat>();
 		if(productos.size()==0) {
+			
+			idcarrito++;
+			Long idC=(long) idcarrito;
+			Long idP=Long.parseLong(id);
+			Carrito c = new Carrito(idC, idP, 1);
+			carritos.add(c);
 			System.out.println("entra");
 			productos.add(producto);
 			
@@ -150,19 +155,27 @@ public class IndexServlet extends HttpServlet {
 			System.out.println((long)idcarrito+" , "+id+" , "+1);
 			carritos.add(c);*/
 			
-		
 		}else {
 			int a=0;
 			for (int i = 0; i < productos.size(); i++) {
 				if(productos.get(i).getId()==Long.parseLong(id)) {
-					LogicaNegocio.SumarCantidadAlProducto(productos.get(i).getId());
+					for (Carrito c: carritos) {
+						if(c.getIdProducto()==productos.get(i).getId()) {
+							c.setCantidad(c.getCantidad()+1);
+						}
+					}
 					a++;break;
 				}	
 			}
 			if(a==0) {
+				idcarrito++;
+				Long idC=(long) idcarrito;
+				Long idP=Long.parseLong(id);
+				Carrito c = new Carrito(idC, idP, 1);
+				carritos.add(c);
 				productos.add(producto);
+				
 			}
-			
 		}
 		
 	}

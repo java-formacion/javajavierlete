@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import com.ipartek.formacion.ejemplocapas.accesodatos.DAOCarrito;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOFactory;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOProducto;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuario;
@@ -17,7 +16,6 @@ public class LogicaNegocio {
 	
 	private static DAOUsuario daoUsuario;
 	private static DAOProducto daoProducto;
-	private static DAOCarrito daoCarrito;
 	
 	static {
 		try {
@@ -75,18 +73,4 @@ public class LogicaNegocio {
 		return daoUsuario.obtenerUsuarioPorEmail(email);
 	}
 	
-	public static Carrito[] obtenerCarritos() {
-		return daoCarrito.obetnerCarritos();
-	}
-	public static Carrito obtenerCarritosPorId(Long idCarrito) {
-		return daoCarrito.obetenerCarritoPorId(idCarrito);
-	}
-	
-	public static Long obtenerCantidadPorIdproducto(Long idProducto) {
-		return daoCarrito.obtenerCantidadProductoPorIdProducto(idProducto);
-	}
-	
-	public static void SumarCantidadAlProducto(Long idProducto) {
-		daoCarrito.sumarCantidadAlProducto(idProducto);
-	}
 }

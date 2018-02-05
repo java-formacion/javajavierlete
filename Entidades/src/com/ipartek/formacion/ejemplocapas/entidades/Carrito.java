@@ -4,25 +4,16 @@ public class Carrito {
 
 	private long idCarrito;
 	private long idProducto;
-	private long idUsuario;
 	private int cantidad;
 	
 
-	public Carrito(long idCarrito, long idProducto, long idUsuario, int cantidad) {
-		super();
+	public Carrito(long idCarrito, long idProducto, int cantidad) {
 		this.idCarrito = idCarrito;
 		this.idProducto = idProducto;
-		this.idUsuario = idUsuario;
 		this.cantidad = cantidad;
 	}
 
-	public long getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(long idUsuario) {
-		this.idUsuario = idUsuario;
-	}
+	
 
 	public long getIdProducto() {
 		return idProducto;
