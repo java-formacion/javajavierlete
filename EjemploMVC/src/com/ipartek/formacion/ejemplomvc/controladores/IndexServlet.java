@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
 
 import org.apache.catalina.Session;
 
@@ -31,7 +32,7 @@ public class IndexServlet extends HttpServlet {
 
 	private static final String CARRITO_JSP = "/WEB-INF/jsps/carrito.jsp";
 	
-	private static final String LOGOUT_JSP = "/WEB-INF/jsps/bienvenida.jsp";
+	private static final String LOGOUT_JSP = "/WEB-INF/jsps/logout.jsp";
 
 	private enum Estado {
 		LOGIN_CORRECTO, LOGIN_INCORRECTO, LOGIN_NULL
@@ -52,6 +53,9 @@ public class IndexServlet extends HttpServlet {
 		switch (path) {
 		case "/frontcontroller/":
 			fw(BIENVENIDA_JSP);
+			break;
+		case "/frontcontroller/hola":
+			response.getWriter().println("HOLAAAAA");
 			break;
 		case "/frontcontroller/login":
 			switch (login()) {
@@ -85,7 +89,8 @@ public class IndexServlet extends HttpServlet {
 			//id = null;
 			break;
 		case "/frontcontroller/logout":
-			Session.invalidate=true;
+			HttpSession session=request.getSession();  
+            session.invalidate();  
 			fw (LOGOUT_JSP); //jsp no existe, retorno temporal a bienvenida
 			break;
 		default:
