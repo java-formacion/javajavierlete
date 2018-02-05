@@ -2,15 +2,19 @@
 <%@page import="java.util.Date"%>
 
 
-<h4>Factura nº  ${factura.numeroFactura }  con fecha: ${factura.fecha }   </h4>
+<h4>Factura nº:${factura.id}</h4>
+<h4>Fecha:${factura.fecha}</h4>
 
-<br><br>
+<br>
+
 <h4>Cliente:</h4>
+
+<br>
 
 <table class="table">
 	<thead>
 		<tr>
-			<th>Producto</th><th>Cantidad</th><th>Precio</th><th></th>
+			<th>Producto</th><th>Nombre</th><th>Precio</th><th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -22,22 +26,18 @@
 			</tr>
 		</c:forEach>
 		<tr>
-			<td></td>
-			<td>Importe</td>
+			<td colspan="2" style="text-align:right">Importe:</td>
 			<td>${factura.importe}</td>
 		</tr>
 		<tr>
-			<td></td>
-			<td>IVA</td>
+			<td colspan="2" style="text-align:right">IVA:</td>
 			<td>${factura.iva}%</td>
 		</tr>
 		<tr>
-			<td></td>
-			<td>Total</td>
+			<td colspan="2" style="text-align:right">Total:</td>
 			<td>${factura.total}</td>
 		</tr>
 	</tbody>
-			
 </table>
 
 

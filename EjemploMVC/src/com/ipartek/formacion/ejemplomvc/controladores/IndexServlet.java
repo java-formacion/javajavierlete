@@ -81,11 +81,10 @@ public class IndexServlet extends HttpServlet {
 
 			fw(CARRITO_JSP);
 			break;
-		// Para la factura
 		case "/frontcontroller/factura":
 			id = request.getParameter("id");
 			if (id != null) {
-				obtenerFactura(id);
+				generarFactura(id);
 				fw(FACTURA_JSP);
 			} else {
 				fw(PRODUCTOS_JSP);
@@ -166,28 +165,31 @@ public class IndexServlet extends HttpServlet {
 		return Estado.LOGIN_CORRECTO;
 	}
 
-	private void obtenerFactura(String id) {
-		
+	private void generarFactura(String id) {
+
 		HttpSession session = request.getSession();
 
-//		ArrayList<Producto> carrito = (ArrayList<Producto>) session.getAttribute("carrito");
-//		
-//		com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad = (com.ipartek.formacion.ejemplocapas.entidades.Usuario) session
-//				.getAttribute("usuario");
-//		
-//		Date d = new Date();
-//		double precioTotal = 0;
-//		int iva = 21;
-//		for (Producto p : carrito) {
-//			double precio = p.getPrecio().doubleValue();
-//			precioTotal = precioTotal + precio;
-//		}
-//
-//		double totalConIva = (precioTotal * iva) / 100;
-//		double total = Math.round((precioTotal + totalConIva) * 100d) / 100d;
-//		Factura f = new Factura(1, 101723, d, usuarioEntidad, carrito, iva, precioTotal, total);
-//		request.setAttribute("factura", f);
-		
+		// ArrayList<Producto> carrito = (ArrayList<Producto>)
+		// session.getAttribute("carrito");
+
+		// com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad =
+		// (com.ipartek.formacion.ejemplocapas.entidades.Usuario) session
+		// .getAttribute("usuario");
+
+		// Date fecha = new Date();
+		// double importe = 0;
+		// int iva = 21;
+		// for (Producto producto : carrito) {
+		// double precio = producto.getPrecio().doubleValue();
+		// importe = importe + precio;
+		// }
+		//
+		// double total = (importe * iva) / 100;
+		//
+		// Factura factura = new Factura(1, 21, total, fecha);
+		//
+		// request.setAttribute("factura", factura);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
