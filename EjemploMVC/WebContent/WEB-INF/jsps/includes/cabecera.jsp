@@ -40,7 +40,7 @@
 	        </c:when>
 	        <c:otherwise>
 	        <li><a href="${pageContext.servletContext.contextPath}/login">Login</a></li>
-	        <li><a href="${pageContext.servletContext.contextPath}/signin">Sign in</a>
+	        <li><a href="${pageContext.servletContext.contextPath}/signin">Sign in</a></li>
 	        </c:otherwise>
 	    </c:choose>
       </ul>

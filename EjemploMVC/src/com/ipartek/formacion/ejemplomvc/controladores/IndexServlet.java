@@ -31,9 +31,9 @@ public class IndexServlet extends HttpServlet {
 	private static final String FICHA_JSP = "/WEB-INF/jsps/ficha.jsp";
 
 	private static final String CARRITO_JSP = "/WEB-INF/jsps/carrito.jsp";
-	
+
 	private static final String LOGOUT_JSP = "/WEB-INF/jsps/logout.jsp";
-	
+
 	private static final String SIGNIN_JSP = "/WEB-INF/jsps/signin.jsp";
 
 	private enum Estado {
@@ -58,6 +58,9 @@ public class IndexServlet extends HttpServlet {
 			break;
 		case "/frontcontroller/hola":
 			response.getWriter().println("HOLAAAAA");
+			break;
+		case "/frontcontroller/signin":
+			fw(SIGNIN_JSP);
 			break;
 		case "/frontcontroller/login":
 			switch (login()) {
@@ -88,16 +91,14 @@ public class IndexServlet extends HttpServlet {
 				agregarProductoACarrito(id);
 
 			fw(CARRITO_JSP);
-			//id = null;
+			// id = null;
 			break;
 		case "/frontcontroller/logout":
-			HttpSession session=request.getSession();  
-            session.invalidate();  
-			fw (LOGOUT_JSP); //jsp no existe, retorno temporal a bienvenida
+			HttpSession session = request.getSession();
+			session.invalidate();
+			fw(LOGOUT_JSP); // jsp no existe, retorno temporal a bienvenida
 			break;
-		case "/frontcontroller/signin":
-			fw (SIGNIN_JSP);
-			break;
+		
 		default:
 			response.getWriter().println(path);
 			response.getWriter().println(request.getContextPath());
