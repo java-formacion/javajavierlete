@@ -177,6 +177,9 @@ public class IndexServlet extends HttpServlet {
 				
 			}
 		}
+		for(Carrito c: carritos) {
+			System.out.println(c.getCantidad());
+		}
 		
 	}
 
