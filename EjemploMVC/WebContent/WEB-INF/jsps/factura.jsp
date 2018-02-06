@@ -60,7 +60,7 @@
 		<tr>
 			<td>${factura.totalSinIva}</td>
 			<td>${factura.totalConIva}</td>
-			<td class="button"><a href="#">Finalizar pedido</a></td>
+			<td><a href="productosComprados">Finalizar pedido</a></td>
 		</tr>
 	</tbody>
 			

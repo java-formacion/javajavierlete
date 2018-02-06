@@ -41,6 +41,8 @@ public class IndexServlet extends HttpServlet {
 	private static final String CARRITO_JSP = "/WEB-INF/jsps/carrito.jsp";
 
 	private static final String FACTURA_JSP = "/WEB-INF/jsps/factura.jsp";
+	
+	private static final String PRODUCTOSGUARDADOS_JSP= "/WEB-INF/jsps/productosComprados.jsp";
 
 	private enum Estado {
 		LOGIN_CORRECTO, LOGIN_INCORRECTO
@@ -56,7 +58,8 @@ public class IndexServlet extends HttpServlet {
 	private HttpServletResponse response;
 
 	private static final double iva = 21;
-
+	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// response.getWriter().println(request.getServletPath());
@@ -65,7 +68,7 @@ public class IndexServlet extends HttpServlet {
 		String path = request.getRequestURI().substring(request.getContextPath().length());
 
 		String id;
-
+		
 		switch (path) {
 		case "/frontcontroller/":
 			fw(LOGIN_JSP);
@@ -105,21 +108,42 @@ public class IndexServlet extends HttpServlet {
 			}else {
 				fw(CARRITO_JSP);
 			}
-
+			break;
+		case "/frontcontroller/productosComprados":
+			HttpSession session = request.getSession(true);
+			Factura factura=(Factura) session.getAttribute("factura");
+			double totalConIva=(double) session.getAttribute("totalConIva");
+			double TotalSinIva=(double) session.getAttribute("totalSinIva");
+			GuardarFacturaEnBD(factura,totalConIva,TotalSinIva);
+			borrarSesiones(session);
+			fw(PRODUCTOSGUARDADOS_JSP);
+			break;
 		default:
 			response.getWriter().println(path);
 			response.getWriter().println(request.getContextPath());
 		}
 	}
 
+	private void GuardarFacturaEnBD(Factura factura, double totalConIva, double totalSinIva) {
+		
+		System.out.println("Datos enviados a la bd");
+	}
+
+	private void borrarSesiones(HttpSession session) {
+		request.setAttribute("factura", null);
+		session.setAttribute("carritos", null);
+		session.setAttribute("totalConIva", null);
+		session.setAttribute("totalSinIva", null);
+	}
+
 	private boolean crearFactura() {
 
 		idFactura++;
-
+		HttpSession session = request.getSession(true);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 
-		HttpSession session = request.getSession(true);
+		
 		com.ipartek.formacion.ejemplocapas.entidades.Usuario u = (com.ipartek.formacion.ejemplocapas.entidades.Usuario) session
 				.getAttribute("usuario");
 
