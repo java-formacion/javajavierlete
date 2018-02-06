@@ -34,7 +34,7 @@ public class IndexServlet extends HttpServlet {
 
 	private static final String LOGOUT_JSP = "/WEB-INF/jsps/logout.jsp";
 
-	private static final String SIGNIN_JSP = "/WEB-INF/jsps/signin.jsp";
+	private static final String SIGNUP_JSP = "/WEB-INF/jsps/signup.jsp";
 
 	private enum Estado {
 		LOGIN_CORRECTO, LOGIN_INCORRECTO, LOGIN_NULL
@@ -56,8 +56,8 @@ public class IndexServlet extends HttpServlet {
 		case "/frontcontroller/":
 			fw(BIENVENIDA_JSP);
 			break;
-		case "/frontcontroller/signin":
-			fw(SIGNIN_JSP);
+		case "/frontcontroller/signup":
+			fw(SIGNUP_JSP);
 			break;
 		case "/frontcontroller/login":
 			switch (login()) {
