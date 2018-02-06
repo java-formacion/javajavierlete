@@ -14,26 +14,22 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Productos comprados</h3>
-<h4>Iva de los productos 21%</h4>
+<h3>Datos de la factura</h3>
 <table class="table">
 	<thead>
 		<tr>
-			<th>ID factura</th><th>Id usuario</th><th>Fecha factura</th><th>IVA</th>
+			<th>Fecha factura</th><th>IVA</th>
 		</tr>
 	</thead>
 	<tbody>
-		
 			<tr>
-				<td>${factura.id}</td>
-				<td>${factura.idUsuario}</td>
 				<td>${factura.fecha}</td>
 				<td>${factura.iva}</td>
 			</tr>
-			
 	</tbody>
 </table>
 
+<h3>Productos comprados</h3>
 <table class="table">
 	<thead>
 		<tr>
@@ -41,17 +37,30 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="producto" items="${carrito}">	
+		<c:forEach var="carrito" items="${factura.c}">	
 			<tr>
-				<td>${producto.id}</td>
-				<td>${producto.descripcion}</td>
-				<td>${producto.precio} &euro;</td>
-				<td><a href="productos?id=${producto.id}">Ver ficha</a>
-				<td>Cantidad</td>
+				<td>${carrito.p.id}</td>
+				<td>${carrito.p.descripcion}</td>
+				<td>${carrito.p.precio}</td>
+				<td><a href="productos?id=${carrito.p.id}">ver ficha</a></td>
+				<td>${carrito.cantidad}</td>
 			</tr>
 		</c:forEach>
+	</tbody>
+			
+</table>
+
+<table class="table">
+	<thead>
 		<tr>
-				<td></td><td></td><td></td><td colspan="2">total: </td>
+			<th>Total sin iva</th><th>Total con iva</th><th>Ir a factura</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>${factura.totalSinIva}</td>
+			<td>${factura.totalConIva}</td>
+			<td class="button"><a href="#">Finalizar pedido</a></td>
 		</tr>
 	</tbody>
 			

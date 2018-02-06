@@ -9,20 +9,33 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="producto" items="${carrito}">	
+		<c:forEach var="carrito" items="${carritos}">	
 			<tr>
-				<td>${producto.id}</td>
-				<td>${producto.descripcion}</td>
-				<td>${producto.precio} &euro;</td>
-				<td><a href="productos?id=${producto.id}">Ver ficha</a>
-				<td></td>
+				<td>${carrito.p.id}</td>
+				<td>${carrito.p.descripcion}</td>
+				<td>${carrito.p.precio}</td>
+				<td><a href="productos?id=${carrito.p.id}">ver ficha</a></td>
+				<td>${carrito.cantidad}</td>
 			</tr>
 		</c:forEach>
-		<tr>
-			<td></td><td></td><td></td><td></td><td><a href="factura">Factura</a></td>
-		</tr>
 	</tbody>
 			
+</table>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Total sin iva</th><th>Total con iva</th><th>Ir a factura</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>${totalSinIva}</td>
+			<td>${totalConIva}</td>
+			<td class="button"><a href="factura">Factura</a></td>
+		</tr>
+	</tbody>
+	
 </table>
 
 <%@ include file="includes/pie.jsp" %>
