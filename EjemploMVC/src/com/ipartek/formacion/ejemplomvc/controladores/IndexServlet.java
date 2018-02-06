@@ -40,7 +40,7 @@ public class IndexServlet extends HttpServlet {
 		String path = request.getRequestURI().substring(request.getContextPath().length());
 		
 		String id;
-		
+		String def;
 		switch(path) {
 		case "/frontcontroller/":
 			fw(LOGIN_JSP);
@@ -61,9 +61,21 @@ public class IndexServlet extends HttpServlet {
 			}
 			break;
 		case "/frontcontroller/carrito":
+			// && id.substring(id.length()-1).equals("a")
 			id = request.getParameter("id");
-			if(id != null) 
+			boolean idR;
+			try {
+				idR = id.substring(id.length()-1).equals("a");
+			} catch (Exception e) {
+				idR=false;
+			}
+			if(id != null && idR==true){
+				id = id.replace("a", "");
 				agregarProductoACarrito(id);
+			}else if(id != null && idR==false){
+				borrarProductoACarrito(id);
+			}
+				
 			
 			fw(CARRITO_JSP);
 			break;
@@ -84,6 +96,17 @@ public class IndexServlet extends HttpServlet {
 		productos.add(producto);
 	}
 
+	private void borrarProductoACarrito(String id) {
+		HttpSession session = request.getSession();
+		
+		Producto producto = LogicaNegocio.obtenerProductoPorId(id);
+		
+		ArrayList<Producto> productos = 
+				(ArrayList<Producto>) session.getAttribute("carrito");
+		
+		productos.remove(producto);
+		response.setHeader("Refresh", "0; http://localhost:8080/carrito");
+	}
 	private void fichaIndex(String id) {
 		Producto producto = LogicaNegocio.obtenerProductoPorId(id);
 		

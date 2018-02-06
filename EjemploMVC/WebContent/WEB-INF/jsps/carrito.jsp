@@ -15,6 +15,7 @@
 				<td>${producto.descripcion}</td>
 				<td>${producto.precio} &euro;</td>
 				<td><a href="productos?id=${producto.id}">Ver ficha</a>
+				<td><a href="carrito?id=${producto.id}">x</a>
 			</tr>
 		</c:forEach>
 	</tbody>

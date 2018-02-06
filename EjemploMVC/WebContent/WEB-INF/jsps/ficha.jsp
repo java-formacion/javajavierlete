@@ -8,7 +8,7 @@
 				<h3>${producto.descripcion}</h3>
 				<p>${producto.precio}&euro;</p>
 				<p>
-					<a href="carrito?id=${producto.id}" class="btn btn-primary" role="button">Carrito <span class="glyphicon glyphicon-shopping-cart"></span></a>
+					<a href="carrito?id=${producto.id}a" class="btn btn-primary" role="button">Carrito <span class="glyphicon glyphicon-shopping-cart"></span></a>
 				</p>
 			</div>
 		</div>
