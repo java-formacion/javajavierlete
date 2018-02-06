@@ -56,9 +56,6 @@ public class IndexServlet extends HttpServlet {
 		case "/frontcontroller/":
 			fw(BIENVENIDA_JSP);
 			break;
-		case "/frontcontroller/hola":
-			response.getWriter().println("HOLAAAAA");
-			break;
 		case "/frontcontroller/signin":
 			fw(SIGNIN_JSP);
 			break;
@@ -98,7 +95,6 @@ public class IndexServlet extends HttpServlet {
 			session.invalidate();
 			fw(LOGOUT_JSP); // jsp no existe, retorno temporal a bienvenida
 			break;
-		
 		default:
 			response.getWriter().println(path);
 			response.getWriter().println(request.getContextPath());

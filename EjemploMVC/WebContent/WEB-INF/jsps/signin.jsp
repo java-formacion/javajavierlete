@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="password" class="col-sm-2 control-label">Contrase�a</label>
+            <label for="password" class="col-sm-2 control-label">Contrase&ntildea</label>
             <div class="col-sm-10">
 	            <input type="password" id="password" name="password" 
 	            	class="form-control" required="required" />
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="password" class="col-sm-2 control-label">Confirma Contrase�a</label>
+            <label for="password" class="col-sm-2 control-label">Confirma Contrase&ntildea</label>
             <div class="col-sm-10">
 	            <input type="password" id="password" name="password" 
 	            	class="form-control" required="required" />
@@ -64,7 +64,7 @@
         
     </fieldset>
 </form>
-<% // A�adir valores para  dni, confirmacion de contrase�a, nombre y apellidos %>
+<% // Añadir valores para  dni, confirmacion de contraseña, nombre y apellidos %>
 <script src="js/validacionlogin.js"></script>
 
 <%@ include file="includes/pie.jsp" %>
