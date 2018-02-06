@@ -13,8 +13,8 @@ public class DAOFacturaJDBC implements DAOFactura{
 
 	private static final String SQL_INSERT = 
 			"INSERT INTO Factura " +
-			"(id_factura, id_carrito, num_factura, iva, importe, total, fecha)" +
-			"VALUES (?,?,?,?,?,?,?)";
+			"(id_carrito, num_factura, iva, importe, total, fecha)" +
+			"VALUES (?,?,?,?,?,?)";
 	
 	private final String url, user, password;
 	
@@ -73,14 +73,15 @@ public class DAOFacturaJDBC implements DAOFactura{
 					
 					@Override
 					public void ejecutar(PreparedStatement ps) throws SQLException {
+						
 						java.sql.Date fecha = new java.sql.Date(factura.getFecha().getTime());
-						ps.setLong(1, factura.getId());
-						ps.setLong(2, factura.getCarrito().get(0).getId());
-						ps.setLong(3, factura.getNumeroFactura());
-						ps.setDouble(4, factura.getIva());
-						ps.setDouble(5, factura.getImporte());
-						ps.setDouble(6, factura.getTotal());
-						ps.setDate(7,fecha);
+						
+						ps.setLong(1, factura.getCarrito().get(0).getId());
+						ps.setLong(2, factura.getNumeroFactura());
+						ps.setDouble(3, factura.getIva());
+						ps.setDouble(4, factura.getImporte());
+						ps.setDouble(5, factura.getTotal());
+						ps.setDate(6,fecha);
 					}
 				});
 		

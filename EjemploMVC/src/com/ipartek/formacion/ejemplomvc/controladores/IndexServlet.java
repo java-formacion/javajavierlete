@@ -2,10 +2,12 @@ package com.ipartek.formacion.ejemplomvc.controladores;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 
+import javax.print.attribute.standard.DateTimeAtCompleted;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,10 +19,15 @@ import javax.websocket.Session;
 import org.apache.catalina.ant.SessionsTask;
 
 
-import com.ipartek.ejemplos.ejemploservidor.modelo.ModeloException;
-import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
 import com.ipartek.formacion.ejemplocapas.entidades.Producto;
+import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
+import com.ipartek.formacion.ejemplocapas.entidades.Factura;
+import com.ipartek.formacion.ejemplocapas.accesodatos.DAOFactura;
+import com.ipartek.formacion.ejemplocapas.accesodatos.DAOFacturaJDBC;
+import com.ipartek.formacion.ejemplocapas.entidades.Carrito;
+import com.ipartek.ejemplos.ejemploservidor.modelo.*;
+
 
 @WebServlet("/frontcontroller/*")
 public class IndexServlet extends HttpServlet {
@@ -97,9 +104,7 @@ public class IndexServlet extends HttpServlet {
 			id = request.getParameter("id");
 			if(id != null) {
 				HttpSession session = request.getSession();
-				com.ipartek.formacion.ejemplocapas.entidades.Factura f = (com.ipartek.formacion.ejemplocapas.entidades.Factura) session.getAttribute("facturaS");
-				System.out.println(f.toString());
-				System.out.println(f.getId() + " " + f.getImporte() + " " + f.getIva());
+				Factura f = (Factura) session.getAttribute("facturaS");
 				LogicaNegocio.insertarFactura(f);
 				fw(FACTURA_CREADA_JSP);
 			}
@@ -115,6 +120,7 @@ public class IndexServlet extends HttpServlet {
 		}
 	}
 
+	/*
 	private void agregarProductoACarrito(String id) {
 		HttpSession session = request.getSession();
 		
@@ -125,23 +131,30 @@ public class IndexServlet extends HttpServlet {
 		
 		productos.add(producto);
 	}
+	*/
 	
+	/**
+	 * Funcion para agregar productos a mi carrito
+	 * mi carrito es una clase que contiene un id, usuario, producto y la cantidad
+	 * de producto que quiere del mismo.
+	 * @param id
+	 */
 	private void agregarProductoACarritoBorja(String id) {
 		HttpSession session = request.getSession();
 		
 		com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad;
 		Producto producto = LogicaNegocio.obtenerProductoPorId(id);
 		
-		ArrayList<com.ipartek.formacion.ejemplocapas.entidades.Carrito> carritos = 
-				(ArrayList<com.ipartek.formacion.ejemplocapas.entidades.Carrito>) session.getAttribute("carritoNew");
+		ArrayList<Carrito> carritos = 
+				(ArrayList<Carrito>) session.getAttribute("carritoNew");
 		
-		usuarioEntidad = (com.ipartek.formacion.ejemplocapas.entidades.Usuario) session.getAttribute("usuario");
-		com.ipartek.formacion.ejemplocapas.entidades.Carrito c;
+		usuarioEntidad = (Usuario) session.getAttribute("usuario");
+		Carrito c;
 		int cantidad = 1;
 		
 		boolean enc = false;
 		if (carritos.size() == 0) {
-			c = new com.ipartek.formacion.ejemplocapas.entidades.Carrito(0, usuarioEntidad, producto, cantidad);
+			c = new Carrito(0, usuarioEntidad, producto, cantidad);
 			carritos.add(c);
 		}
 		else {
@@ -159,7 +172,7 @@ public class IndexServlet extends HttpServlet {
 			
 		}
 		if (enc){
-			c = new com.ipartek.formacion.ejemplocapas.entidades.Carrito(0, usuarioEntidad, producto, cantidad);
+			c = new Carrito(0, usuarioEntidad, producto, cantidad);
 			carritos.add(c);
 		}
 		
@@ -167,25 +180,39 @@ public class IndexServlet extends HttpServlet {
 	}
 	
 
+	/**
+	 * Funcion obtener cada producto por id
+	 * @param id
+	 */
 	private void fichaIndex(String id) {
 		Producto producto = LogicaNegocio.obtenerProductoPorId(id);
 		
 		request.setAttribute("producto", producto);
 	}
 
+	/**
+	 * Funcion para obtener todos los productos existentes
+	 */
 	private void productosIndex() {
 		Producto[] productos = LogicaNegocio.obtenerProductos();
 		
 		request.setAttribute("productos", productos);
 	}
 
+	/**
+	 * Comprueba que el usuario y la password sean correctas.
+	 * Si son correctas crea al usuario y le almacena en una sesion
+	 * y aparte tambien crea un carrito vacio.
+	 * @return
+	 */
 	private Estado login() {
 		Hashtable<String, String> errores = new Hashtable<>();
 		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		Usuario usuario = new Usuario();
+		com.ipartek.ejemplos.ejemploservidor.modelo.Usuario usuario = new com.ipartek.ejemplos.ejemploservidor.modelo.Usuario();
+		
 		
 		try {
 			usuario.setEmail(email);
@@ -199,8 +226,8 @@ public class IndexServlet extends HttpServlet {
 			errores.put("password", me.getMessage());
 		}
 		
-		com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad;
-		usuarioEntidad = new com.ipartek.formacion.ejemplocapas.entidades.Usuario(0, null, usuario.getEmail(), usuario.getPassword(), null, null);
+		Usuario usuarioEntidad;
+		usuarioEntidad = new Usuario(0, null, usuario.getEmail(), usuario.getPassword(), null, null);
 		
 		if(!LogicaNegocio.esValidoUsuario(usuarioEntidad))
 			errores.put("usuario", "No es válido ese email y contrase�a");
@@ -219,29 +246,34 @@ public class IndexServlet extends HttpServlet {
 		session.setAttribute("usuario", usuarioEntidad);
 		
 		
-		ArrayList<Producto> carrito = new ArrayList<Producto>();
-		ArrayList<com.ipartek.formacion.ejemplocapas.entidades.Carrito> carritos = new ArrayList<com.ipartek.formacion.ejemplocapas.entidades.Carrito>();
-		//Producto p = new Producto(0, null, null, new BigDecimal(0));
-		//Carrito c = new Carrito(0, usuarioEntidad, p, 0);
-		//carritos.add(c);
-		session.setAttribute("carrito", carrito);
+		ArrayList<Carrito> carritos = new ArrayList<Carrito>();
 		session.setAttribute("carritoNew", carritos);
 		
 		
 		return Estado.LOGIN_CORRECTO;
 	}
 	
+	/**
+	 * Funcion para crear la factura.
+	 * Recibe el carrito por sesion con los datos del usuario, producto y cantidad
+	 * te hace los calculos del importe, iva, total, fecha...
+	 * y crea una sesion factura
+	 */
+	
 	private void crearFactura() {
 		HttpSession session = request.getSession();
 		
 		
-		//ArrayList<Producto> carrito= (ArrayList<Producto>) session.getAttribute("carrito");
-		ArrayList<com.ipartek.formacion.ejemplocapas.entidades.Carrito> carritos = (ArrayList<com.ipartek.formacion.ejemplocapas.entidades.Carrito>) session.getAttribute("carritoNew");
-		com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad = (com.ipartek.formacion.ejemplocapas.entidades.Usuario) session.getAttribute("usuario");
-		Date d= new Date();
+		
+		ArrayList<Carrito> carritos = (ArrayList<Carrito>) session.getAttribute("carritoNew");
+		Date  d= new Date();
+		
+		
+		
+		
 		double importe = 0;
 		double iva = 21;
-		for(com.ipartek.formacion.ejemplocapas.entidades.Carrito c: carritos) {
+		for(Carrito c: carritos) {
 			double precio = c.getProducto().getPrecio().doubleValue();
 			importe = importe + (precio * c.getCantidad());
 			
@@ -249,11 +281,11 @@ public class IndexServlet extends HttpServlet {
 		
 			double dineroIva = (importe *iva)/100;
 			double total = Math.round((importe + dineroIva)*100d)/100d;
-			com.ipartek.formacion.ejemplocapas.entidades.Factura f = new com.ipartek.formacion.ejemplocapas.entidades.Factura(1, 101723, d, usuarioEntidad, carritos, iva, importe, total);
+			Factura f = new Factura(0,101725, d, carritos, iva, importe, total);
 		
 		session.setAttribute("facturaS", f);
 		request.setAttribute("factura", f);
-		
+				
 		
 	}
 

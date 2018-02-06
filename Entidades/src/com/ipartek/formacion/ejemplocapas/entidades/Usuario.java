@@ -56,6 +56,7 @@ public class Usuario {
 		this.apellidos = apellidos;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", dni=" + dni + ", email=" + email + ", password=" + password + ", nombre="
