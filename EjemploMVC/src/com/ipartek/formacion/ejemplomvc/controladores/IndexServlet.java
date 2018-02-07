@@ -2,6 +2,8 @@ package com.ipartek.formacion.ejemplomvc.controladores;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Hashtable;
 
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import com.ipartek.ejemplos.ejemploservidor.modelo.ModeloException;
 import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
+import com.ipartek.formacion.ejemplocapas.entidades.Factura;
 import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 
 @WebServlet("/frontcontroller/*")
@@ -28,12 +31,14 @@ public class IndexServlet extends HttpServlet {
 	private static final String FICHA_JSP = "/WEB-INF/jsps/ficha.jsp";
 
 	private static final String CARRITO_JSP = "/WEB-INF/jsps/carrito.jsp";
+	private static final String FACTURA_JSP = "/WEB-INF/jsps/factura.jsp";
 	
 	private enum Estado { LOGIN_CORRECTO, LOGIN_INCORRECTO }; 
 	
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	
+	HttpSession session;
+	ArrayList<Producto> productos;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//response.getWriter().println(request.getServletPath());
 		this.request = request; this.response = response;
@@ -61,7 +66,6 @@ public class IndexServlet extends HttpServlet {
 			}
 			break;
 		case "/frontcontroller/carrito":
-			// && id.substring(id.length()-1).equals("a")
 			id = request.getParameter("id");
 			boolean idR;
 			try {
@@ -72,6 +76,8 @@ public class IndexServlet extends HttpServlet {
 			if(id != null && idR==true){
 				id = id.replace("a", "");
 				agregarProductoACarrito(id);
+
+				response.setHeader("Refresh", "0; http://localhost:8080/carrito");
 			}else if(id != null && idR==false){
 				borrarProductoACarrito(id);
 			}
@@ -79,18 +85,33 @@ public class IndexServlet extends HttpServlet {
 			
 			fw(CARRITO_JSP);
 			break;
+		case "/frontcontroller/factura":
+			id = request.getParameter("id");
+			createFactura();	
+			
+			fw(FACTURA_JSP);
+			break;
 		default:
 			response.getWriter().println(path);
 			response.getWriter().println(request.getContextPath());
 		}
 	}
 
+	private void createFactura() {
+		Date date = Calendar.getInstance().getTime();
+		Factura factura = new factura("#a111", date, )
+		for (Producto producto : productos) {
+			
+		}
+		
+	}
+
 	private void agregarProductoACarrito(String id) {
-		HttpSession session = request.getSession();
+		session = request.getSession();
 		
 		Producto producto = LogicaNegocio.obtenerProductoPorId(id);
 		
-		ArrayList<Producto> productos = 
+		productos = 
 				(ArrayList<Producto>) session.getAttribute("carrito");
 		
 		productos.add(producto);
@@ -117,6 +138,7 @@ public class IndexServlet extends HttpServlet {
 		Producto[] productos = LogicaNegocio.obtenerProductos();
 		
 		request.setAttribute("productos", productos);
+		
 	}
 
 	private Estado login() {
@@ -161,6 +183,7 @@ public class IndexServlet extends HttpServlet {
 		ArrayList<Producto> carrito = new ArrayList<Producto>();
 		
 		session.setAttribute("carrito", carrito);
+		
 		
 		return Estado.LOGIN_CORRECTO;
 	}

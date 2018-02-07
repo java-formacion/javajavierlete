@@ -18,8 +18,11 @@
 				<td><a href="carrito?id=${producto.id}">x</a>
 			</tr>
 		</c:forEach>
+		
 	</tbody>
 			
 </table>
-
+<p>
+			<a href="factura?id=${usuario.id}" class="btn btn-primary" role="button">Factura</a>
+		</p>
 <%@ include file="includes/pie.jsp" %>

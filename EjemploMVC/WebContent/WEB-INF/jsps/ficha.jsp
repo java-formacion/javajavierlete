@@ -16,7 +16,7 @@
 	<div class="col-sm-6">
 		ñalskdhf ñlakshdg ñlkja sdñlfh asdñlkj añsdlkfh ñlaskdjg ñlakshd fñlkja sdgñlkh asdñlkfj ñalsdh ñlaksdj fñlkshadg ñlkh adsfñlkj asdglñkh asñdlfk hasñldgh ñalsdkj fñlaksd gñlka sdfñklj asdñlgkh ñasldkjf ñlasdkg ñiaoweh ñoiahsd ñldk xcñlvk nañeihf ñ
 	</div>
-</div>
+</div>/
 <table class="table">
 	<tbody>
 		<tr>
