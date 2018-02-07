@@ -5,7 +5,7 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>ID</th><th>Descripci&oacute;n</th><th>Precio</th><th>Link</th><th>Cantidad</th>
+			<th>ID</th><th>Descripci&oacute;n</th><th>Precio</th><th>Link</th><th>Cantidad</th><th>Sumar cantidad</th><th>Restar cantidad</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -16,7 +16,9 @@
 				<td>${carrito.p.precio}</td>
 				<td><a href="productos?id=${carrito.p.id}">ver ficha</a></td>
 				<td>${carrito.cantidad}</td>
-				<td><a href="carrito?idProducto=${producto.id}" class="btn btn-danger" role="button">Eliminar <span class="glyphicon glyphicon-trash"></span></a></td>
+				<td><a href="carrito?idProductoSumarCantidad=${carrito.p.id}" class="btn"><span class="glyphicon glyphicon-plus"></span></a></td>
+				<td><a href="carrito?idProductoRestarCantidad=${carrito.p.id}"><span class="glyphicon glyphicon-minus"></span></a></td>
+				<td><a href="carrito?idProducto=${carrito.p.id}" class="btn btn-danger" role="button">Eliminar <span class="glyphicon glyphicon-trash"></span></a></td>
 			</tr>
 		</c:forEach>
 	</tbody>

@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import org.apache.jasper.tagplugins.jstl.core.Remove;
+
 import com.ipartek.ejemplos.ejemploservidor.modelo.ModeloException;
 import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 
@@ -68,6 +70,8 @@ public class IndexServlet extends HttpServlet {
 
 		String id;
 		String idProducto;
+		String idProductoSumarCantidad;
+		String idProductoRestarCantidad;
 
 		switch (path) {
 		case "/frontcontroller/":
@@ -98,17 +102,30 @@ public class IndexServlet extends HttpServlet {
 
 			id = request.getParameter("id");
 			idProducto = request.getParameter("idProducto");
-			if (idProducto != null) {
-				//borrarProducto(idProducto);
-				System.out.println(idProducto);
-			} else {
-				if (id != null) {
-
-					agregarProductoACarrito(id);
-					response.setHeader("Refresh", "0; http://localhost:9080/tiendavirtual/carrito");
-				}
+			idProductoSumarCantidad = request.getParameter("idProductoSumarCantidad");
+			idProductoRestarCantidad = request.getParameter("idProductoRestarCantidad");
+			//System.out.println(id + " , " + idProducto + " , " + idProductoSumarCantidad + " , " + idProductoRestarCantidad);
+			if (idProductoRestarCantidad != null) {
+				
+				restarCantidadAProducto(idProductoRestarCantidad);
+				idProductoRestarCantidad = null;
+				response.setHeader("Refresh", "0; http://localhost:9080/tiendavirtual/carrito");
 			}
-
+			if (idProductoSumarCantidad != null) {
+				sumarCantidadAlProducto(idProductoSumarCantidad);
+				idProductoSumarCantidad = null;
+				response.setHeader("Refresh", "0; http://localhost:9080/tiendavirtual/carrito");
+			}
+			if (idProducto != null) {
+				borrarProducto(idProducto);
+				idProducto = null;
+				// System.out.println(idProducto);
+			}
+			if (id != null) {
+				agregarProductoACarrito(id);
+				response.setHeader("Refresh", "0; http://localhost:9080/tiendavirtual/carrito");
+			}
+		
 			fw(CARRITO_JSP);
 			break;
 
@@ -133,6 +150,57 @@ public class IndexServlet extends HttpServlet {
 			response.getWriter().println(path);
 			response.getWriter().println(request.getContextPath());
 		}
+
+	}
+
+	private void sumarCantidadAlProducto(String idProductoSumarCantidad) {
+		HttpSession session = request.getSession();
+
+		Producto producto = LogicaNegocio.obtenerProductoPorId(idProductoSumarCantidad);
+
+		productos = (ArrayList<Producto>) session.getAttribute("carrito");
+
+		if (productos.size() != 0) {
+			for (int i = 0; i < productos.size(); i++) {
+				if (productos.get(i).getId() == Long.parseLong(idProductoSumarCantidad)) {
+					sumarCantidad(productos.get(i));
+					break;
+				}
+			}
+		}
+		sumarProductoConIva(carritos, session);
+		sumarProductosSinIva(carritos, session);
+
+	}
+
+	private void restarCantidadAProducto(String idProductoRestarCantidad) {
+		HttpSession session = request.getSession();
+
+		Producto producto = LogicaNegocio.obtenerProductoPorId(idProductoRestarCantidad);
+
+		productos = (ArrayList<Producto>) session.getAttribute("carrito");
+
+		if (productos.size() != 0) {
+			int a = 0;
+			for (int i = 0; i < productos.size(); i++) {
+				if (productos.get(i).getId() == Long.parseLong(idProductoRestarCantidad)) {
+					for (Carrito c : carritos) {
+						if (c.getP().getId() == producto.getId()) {
+							c.setCantidad(c.getCantidad() - 1);
+							int cantidad = c.getCantidad();
+							if (cantidad <= 0) {
+								borrarProducto(idProductoRestarCantidad);
+							}
+							break;
+						}
+					}
+				}
+			}
+
+		}
+		sumarProductoConIva(carritos, session);
+		sumarProductosSinIva(carritos, session);
+
 	}
 
 	private void borrarProducto(String idProducto) {
@@ -141,21 +209,25 @@ public class IndexServlet extends HttpServlet {
 		Producto producto = LogicaNegocio.obtenerProductoPorId(idProducto);
 
 		productos = (ArrayList<Producto>) session.getAttribute("carrito");
-		
-		productos.remove(producto);
-		
+
 		for (int i = 0; i < productos.size(); i++) {
 			if (productos.get(i).getId() == Long.parseLong(idProducto)) {
-				for (int a=0; a < carritos.size(); a++) {
-					
-					if(carritos.get(a).getP().getId()== producto.getId()) {
+				for (int a = 0; a < carritos.size(); a++) {
+					if (carritos.get(a).getP().getId() == producto.getId()) {
 						carritos.remove(carritos.get(a));
 					}
 				}
 				break;
 			}
 		}
-		
+		if (carritos.size() == 0) {
+			System.out.println("vacio");
+		} else {
+			System.out.println("lleno");
+		}
+		sumarProductoConIva(carritos, session);
+		sumarProductosSinIva(carritos, session);
+		productos.remove(producto);
 	}
 
 	private void GuardarFacturaEnBD(Factura factura, double totalConIva, double totalSinIva) {
@@ -213,8 +285,8 @@ public class IndexServlet extends HttpServlet {
 			int a = 0;
 			for (int i = 0; i < productos.size(); i++) {
 				if (productos.get(i).getId() == Long.parseLong(id)) {
-
 					sumarCantidad(productos.get(i));
+					System.out.println("entra1");
 					a++;
 					break;
 				}
@@ -243,21 +315,29 @@ public class IndexServlet extends HttpServlet {
 
 	private void sumarProductoConIva(ArrayList<Carrito> carritos2, HttpSession session) {
 		double totalConIva = 0;
-		for (Carrito c : carritos2) {
-			double p = c.getP().getPrecio().doubleValue();
-			double canti = c.getCantidad();
-			double sumaPIva = p * iva / 100;
-			totalConIva = totalConIva + (p * canti) + sumaPIva;
+		if (carritos2.size() != 0) {
+			for (Carrito c : carritos2) {
+				double p = c.getP().getPrecio().doubleValue();
+				double canti = c.getCantidad();
+				double sumaPIva = p * iva / 100;
+				totalConIva = totalConIva + (p * canti) + sumaPIva;
+				session.setAttribute("totalConIva", totalConIva);
+			}
+		} else {
 			session.setAttribute("totalConIva", totalConIva);
 		}
 	}
 
 	private void sumarProductosSinIva(ArrayList<Carrito> carritos2, HttpSession session) {
 		double totalSinIva = 0;
-		for (Carrito c : carritos2) {
-			double p = c.getP().getPrecio().doubleValue();
-			double canti = c.getCantidad();
-			totalSinIva = totalSinIva + (p * canti);
+		if (carritos2.size() != 0) {
+			for (Carrito c : carritos2) {
+				double p = c.getP().getPrecio().doubleValue();
+				double canti = c.getCantidad();
+				totalSinIva = totalSinIva + (p * canti);
+				session.setAttribute("totalSinIva", totalSinIva);
+			}
+		} else {
 			session.setAttribute("totalSinIva", totalSinIva);
 		}
 	}
