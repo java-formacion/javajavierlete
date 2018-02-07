@@ -36,6 +36,14 @@ public class DAOFactory {
 		}
 	}
 	
+	public DAOCarrito getDAOCarrito() {
+		switch(motor) {
+		//case "arraylist": return new DAOProductoArrayList();
+		case "jdbc":return new DAOCarritoJDBC(url, usuario, password);
+		default: throw new AccesoDatosException("No conozco el motor");
+		}
+	}
+	
 	
 	@Override
 	public String toString() {

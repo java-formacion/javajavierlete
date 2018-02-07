@@ -2,9 +2,11 @@ package com.ipartek.formacion.ejemplomvc.controladores;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
 import javax.print.attribute.standard.DateTimeAtCompleted;
@@ -22,6 +24,7 @@ import org.apache.catalina.ant.SessionsTask;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
 import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
+import com.sun.media.jfxmedia.events.NewFrameEvent;
 import com.ipartek.formacion.ejemplocapas.entidades.Factura;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOFactura;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOFacturaJDBC;
@@ -82,6 +85,7 @@ public class IndexServlet extends HttpServlet {
 			if(id != null) {
 				//agregarProductoACarrito(id);
 				agregarProductoACarritoBorja(id);
+				
 			}
 				
 			
@@ -106,6 +110,11 @@ public class IndexServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				Factura f = (Factura) session.getAttribute("facturaS");
 				LogicaNegocio.insertarFactura(f);
+				
+				for (Carrito c : f.getCarrito()) {
+					LogicaNegocio.insertarCarrito(c);
+				}
+				
 				fw(FACTURA_CREADA_JSP);
 			}
 				
@@ -151,10 +160,13 @@ public class IndexServlet extends HttpServlet {
 		usuarioEntidad = (Usuario) session.getAttribute("usuario");
 		Carrito c;
 		int cantidad = 1;
+		//sin hacer aun. habria que comprobar en la base de datos cual es el ultimo id_carrito
+		// y sumarle 1
+		int idCarrito = 4;
 		
 		boolean enc = false;
 		if (carritos.size() == 0) {
-			c = new Carrito(0, usuarioEntidad, producto, cantidad);
+			c = new Carrito(idCarrito, usuarioEntidad, producto, cantidad);
 			carritos.add(c);
 		}
 		else {
@@ -172,7 +184,7 @@ public class IndexServlet extends HttpServlet {
 			
 		}
 		if (enc){
-			c = new Carrito(0, usuarioEntidad, producto, cantidad);
+			c = new Carrito(idCarrito, usuarioEntidad, producto, cantidad);
 			carritos.add(c);
 		}
 		
@@ -267,10 +279,6 @@ public class IndexServlet extends HttpServlet {
 		
 		ArrayList<Carrito> carritos = (ArrayList<Carrito>) session.getAttribute("carritoNew");
 		Date  d= new Date();
-		
-		
-		
-		
 		double importe = 0;
 		double iva = 21;
 		for(Carrito c: carritos) {
@@ -281,7 +289,7 @@ public class IndexServlet extends HttpServlet {
 		
 			double dineroIva = (importe *iva)/100;
 			double total = Math.round((importe + dineroIva)*100d)/100d;
-			Factura f = new Factura(0,101725, d, carritos, iva, importe, total);
+			Factura f = new Factura(-1,101726, d, carritos, iva, importe, total);
 		
 		session.setAttribute("facturaS", f);
 		request.setAttribute("factura", f);

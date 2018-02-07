@@ -6,13 +6,14 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>ID</th><th>Descripci&oacute;n</th><th>Precio</th><th>cantidad</th><th></th>
+			<th>ID</th><th>Nombre</th><th>Descripci&oacute;n</th><th>Precio</th><th>cantidad</th><th></th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach var="carrito" items="${carritoNew}">	
 			<tr>
 				<td>${carrito.producto.id}</td>
+				<td>${carrito.producto.nombre}</td>
 				<td>${carrito.producto.descripcion}</td>
 				<td>${carrito.producto.precio} &euro;</td>
 				<td>${carrito.cantidad}</td>
@@ -21,6 +22,8 @@
 			
 		</c:forEach>
 		<tr>
+				<td></td>
+				<td></td>
 				<td></td>
 				<td></td>
 				<td></td>

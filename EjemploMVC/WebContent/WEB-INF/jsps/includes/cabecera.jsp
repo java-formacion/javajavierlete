@@ -7,7 +7,9 @@
 <meta charset="UTF-8">
 <title>TiendaVirtual</title>
 
+
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/estilos.css">
 <script src="js/jquery-1.12.4.min.js"></script>
 
 </head>

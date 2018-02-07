@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import com.ipartek.formacion.ejemplocapas.accesodatos.DAOCarrito;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOFactory;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOFactura;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOProducto;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuario;
+import com.ipartek.formacion.ejemplocapas.entidades.Carrito;
 import com.ipartek.formacion.ejemplocapas.entidades.Factura;
 import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 import com.ipartek.formacion.ejemplocapas.entidades.Usuario;
@@ -18,6 +20,7 @@ public class LogicaNegocio {
 	private static DAOUsuario daoUsuario;
 	private static DAOProducto daoProducto;
 	private static DAOFactura daofactura;
+	private static DAOCarrito daoCarrito;
 	
 	static {
 		try {
@@ -39,6 +42,8 @@ public class LogicaNegocio {
 			daoUsuario = df.getDAOUsuario();
 			
 			daofactura = df.getDAOfactura();
+			
+			daoCarrito = df.getDAOCarrito();
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -85,6 +90,12 @@ public class LogicaNegocio {
 		
 	}
 	
+	public static void insertarCarrito(Carrito c) {
+		
+		daoCarrito.alta(c);
+	
+		
+	}
 	
 	
 }

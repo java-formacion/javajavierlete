@@ -1,25 +1,24 @@
 package com.ipartek.formacion.ejemplocapas.accesodatos;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import com.ipartek.formacion.ejemplocapas.entidades.Carrito;
 import com.ipartek.formacion.ejemplocapas.entidades.Factura;
-import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 
-public class DAOFacturaJDBC implements DAOFactura{
-
+public class DAOCarritoJDBC implements DAOCarrito {
+	
 	private static final String SQL_INSERT = 
-			"INSERT INTO Factura " +
-			"(id_carrito, num_factura, iva, importe, total, fecha)" +
-			"VALUES (?,?,?,?,?,?)";
+			"INSERT INTO Carrito " +
+			"(id_carrito, id_usuario, id_producto, cantidad)" +
+			"VALUES (?,?,?,?)";
 	
 	private final String url, user, password;
 	
 	
-	public DAOFacturaJDBC(String url, String user, String password) {
+	public DAOCarritoJDBC(String url, String user, String password) {
 		super();
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -32,7 +31,7 @@ public class DAOFacturaJDBC implements DAOFactura{
 		this.password = password;
 	}
 
-	public void genericoAltaBajaModificacion(Factura factura, String sql, SettersPreparedStatement sps) {
+	public void genericoAltaBajaModificacion(Carrito carrito, String sql, SettersPreparedStatement sps) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
@@ -63,44 +62,41 @@ public class DAOFacturaJDBC implements DAOFactura{
 		}
 	}
 	
-	
+
 	@Override
-	public void alta(final Factura factura) {
-		// TODO Auto-generated method stub
+	public void alta(final Carrito carrito) {
 		
-		genericoAltaBajaModificacion(factura, SQL_INSERT, 
+		genericoAltaBajaModificacion(carrito, SQL_INSERT, 
 				new SettersPreparedStatement() {
 					
 					@Override
 					public void ejecutar(PreparedStatement ps) throws SQLException {
 						
-						java.sql.Date fecha = new java.sql.Date(factura.getFecha().getTime());
 					
-						ps.setLong(1, factura.getCarrito().get(0).getId());
-						ps.setLong(2, factura.getNumeroFactura());
-						ps.setDouble(3, factura.getIva());
-						ps.setDouble(4, factura.getImporte());
-						ps.setDouble(5, factura.getTotal());
-						ps.setDate(6,fecha);
+						ps.setLong(1, carrito.getId());
+						ps.setLong(2, carrito.getU().getId());
+						ps.setDouble(3, carrito.getProducto().getId());
+						ps.setDouble(4, carrito.getCantidad());
+						
 					}
 				});
 		
 	}
 
 	@Override
-	public void baja(Factura factura) {
+	public void baja(Carrito carrito) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void modificacion(Factura factura) {
+	public void modificacion(Carrito carrito) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Factura[] obtenerProductos() {
+	public Carrito[] obtenerCarritos() {
 		// TODO Auto-generated method stub
 		return null;
 	}
