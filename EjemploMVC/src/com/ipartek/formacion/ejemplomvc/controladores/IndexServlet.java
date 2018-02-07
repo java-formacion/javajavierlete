@@ -169,26 +169,25 @@ public class IndexServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 
-		// ArrayList<Producto> carrito = (ArrayList<Producto>)
-		// session.getAttribute("carrito");
+		ArrayList<Producto> carrito = (ArrayList<Producto>) session.getAttribute("carrito");
 
-		// com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad =
-		// (com.ipartek.formacion.ejemplocapas.entidades.Usuario) session
-		// .getAttribute("usuario");
+		com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioEntidad = (com.ipartek.formacion.ejemplocapas.entidades.Usuario) session
+				.getAttribute("usuario");
 
-		// Date fecha = new Date();
-		// double importe = 0;
-		// int iva = 21;
-		// for (Producto producto : carrito) {
-		// double precio = producto.getPrecio().doubleValue();
-		// importe = importe + precio;
-		// }
-		//
-		// double total = (importe * iva) / 100;
-		//
-		// Factura factura = new Factura(1, 21, total, fecha);
-		//
-		// request.setAttribute("factura", factura);
+		Date fecha = new Date();
+
+		int iva = 21;
+		double importe = 0.0;
+		for (Producto producto : carrito) {
+			double precio = producto.getPrecio().doubleValue();
+			importe = importe + precio;
+		}
+		
+		double total = (importe * iva) / 100;
+		
+		Factura factura = new Factura(1, 21, total, fecha);
+		
+		request.setAttribute("factura", factura);
 
 	}
 

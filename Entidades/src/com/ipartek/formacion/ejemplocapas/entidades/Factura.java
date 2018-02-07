@@ -1,16 +1,15 @@
 package com.ipartek.formacion.ejemplocapas.entidades;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Factura {
 	
-	private final long id;
+	private final int id;
 	private int iva;
 	private double precio;
 	private Date fecha;
 	
-	public Factura(long id, int iva, double precio, Date fecha) {
-		super();
+	public Factura(int id, int iva, double precio, Date fecha) {
 		this.id = id;
 		this.iva = iva;
 		this.precio = precio;

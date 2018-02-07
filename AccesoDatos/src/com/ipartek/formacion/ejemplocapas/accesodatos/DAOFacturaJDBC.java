@@ -6,24 +6,23 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.ipartek.formacion.ejemplocapas.entidades.Factura;
-import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 
 public class DAOFacturaJDBC implements DAOFactura{
 	private static final String SQL_INSERT = 
 			"INSERT INTO Factura " +
-			"(IVA, precioTotal, fechaFacturacion) " +
+			"(iva, precio, fecha) " +
 			"VALUES (?, ?, ?)";
 	private static final String SQL_UPDATE =
 			"UPDATE Factura SET "+
-			"IVA=?, precioTotal=?, fechaFacturacion=? "+
+			"iva=?, precio=?, fecha=? "+
 			"WHERE id=?";
 	private static final String SQL_DELETE =
 			"DELETE FROM Factura WHERE id=?";
 	
 	private static final String SQL_SELECT = 
-			"SELECT id, IVA, precioTotal, fechaFacturacion FROM Factura ";
+			"SELECT id, iva, precio, fecha FROM Factura ";
 	private static final String SQL_SELECT_ID = 
-			"SELECT id, IVA, precioTotal, fechaFacturacion "+
+			"SELECT id, iva, precio, fecha "+
 			"FROM Factura WHERE id=?";
 	
 	private final String url, user, password;
@@ -78,9 +77,9 @@ public class DAOFacturaJDBC implements DAOFactura{
 					
 					@Override
 					public void ejecutar(PreparedStatement ps) throws SQLException {
-						ps.setInt(1, factura.getIVA());
-						ps.setFloat(2, factura.getPrecioTotal());
-						ps.setDate(3, factura.getFechaFactura());
+						ps.setInt(1, factura.getIva());
+						ps.setDouble(2, factura.getPrecio());
+						ps.setDate(3, factura.getFecha());
 					}
 				});
 		
