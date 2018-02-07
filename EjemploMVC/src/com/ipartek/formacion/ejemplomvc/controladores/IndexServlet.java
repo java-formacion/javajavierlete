@@ -85,9 +85,8 @@ public class IndexServlet extends HttpServlet {
 			if(id != null) {
 				//agregarProductoACarrito(id);
 				agregarProductoACarritoBorja(id);
-				
+			response.setHeader("Refresh", "0; http://localhost:8080/tiendavirtual/carrito");
 			}
-				
 			
 			fw(CARRITO_JSP);
 			break;
@@ -189,6 +188,7 @@ public class IndexServlet extends HttpServlet {
 		}
 		
 		}
+		
 	}
 	
 
@@ -303,5 +303,6 @@ public class IndexServlet extends HttpServlet {
 	
 	private void fw(String ruta) throws ServletException, IOException {
 		request.getRequestDispatcher(ruta).forward(request, response);
+		
 	}
 }
