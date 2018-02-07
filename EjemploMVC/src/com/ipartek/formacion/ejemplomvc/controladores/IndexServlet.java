@@ -41,8 +41,8 @@ public class IndexServlet extends HttpServlet {
 	private static final String CARRITO_JSP = "/WEB-INF/jsps/carrito.jsp";
 
 	private static final String FACTURA_JSP = "/WEB-INF/jsps/factura.jsp";
-	
-	private static final String PRODUCTOSGUARDADOS_JSP= "/WEB-INF/jsps/productosComprados.jsp";
+
+	private static final String PRODUCTOSGUARDADOS_JSP = "/WEB-INF/jsps/productosComprados.jsp";
 
 	private enum Estado {
 		LOGIN_CORRECTO, LOGIN_INCORRECTO
@@ -58,8 +58,7 @@ public class IndexServlet extends HttpServlet {
 	private HttpServletResponse response;
 
 	private static final double iva = 21;
-	
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// response.getWriter().println(request.getServletPath());
@@ -68,7 +67,8 @@ public class IndexServlet extends HttpServlet {
 		String path = request.getRequestURI().substring(request.getContextPath().length());
 
 		String id;
-		
+		String idProducto;
+
 		switch (path) {
 		case "/frontcontroller/":
 			fw(LOGIN_JSP);
@@ -95,26 +95,37 @@ public class IndexServlet extends HttpServlet {
 			}
 			break;
 		case "/frontcontroller/carrito":
+
 			id = request.getParameter("id");
-			if (id != null)
-				agregarProductoACarrito(id);
+			idProducto = request.getParameter("idProducto");
+			if (idProducto != null) {
+				//borrarProducto(idProducto);
+				System.out.println(idProducto);
+			} else {
+				if (id != null) {
+
+					agregarProductoACarrito(id);
+					response.setHeader("Refresh", "0; http://localhost:9080/tiendavirtual/carrito");
+				}
+			}
 
 			fw(CARRITO_JSP);
 			break;
-		case "/frontcontroller/factura":
 
+		case "/frontcontroller/factura":
 			if (crearFactura()) {
 				fw(FACTURA_JSP);
-			}else {
+			} else {
 				fw(CARRITO_JSP);
 			}
 			break;
+
 		case "/frontcontroller/productosComprados":
 			HttpSession session = request.getSession(true);
-			Factura factura=(Factura) session.getAttribute("factura");
-			double totalConIva=(double) session.getAttribute("totalConIva");
-			double TotalSinIva=(double) session.getAttribute("totalSinIva");
-			GuardarFacturaEnBD(factura,totalConIva,TotalSinIva);
+			Factura factura = (Factura) session.getAttribute("factura");
+			double totalConIva = (double) session.getAttribute("totalConIva");
+			double TotalSinIva = (double) session.getAttribute("totalSinIva");
+			GuardarFacturaEnBD(factura, totalConIva, TotalSinIva);
 			borrarSesiones(session);
 			fw(PRODUCTOSGUARDADOS_JSP);
 			break;
@@ -124,9 +135,32 @@ public class IndexServlet extends HttpServlet {
 		}
 	}
 
-	private void GuardarFacturaEnBD(Factura factura, double totalConIva, double totalSinIva) {
+	private void borrarProducto(String idProducto) {
+		HttpSession session = request.getSession();
+
+		Producto producto = LogicaNegocio.obtenerProductoPorId(idProducto);
+
+		productos = (ArrayList<Producto>) session.getAttribute("carrito");
 		
-		System.out.println("Datos enviados a la bd");
+		productos.remove(producto);
+		
+		for (int i = 0; i < productos.size(); i++) {
+			if (productos.get(i).getId() == Long.parseLong(idProducto)) {
+				for (int a=0; a < carritos.size(); a++) {
+					
+					if(carritos.get(a).getP().getId()== producto.getId()) {
+						carritos.remove(carritos.get(a));
+					}
+				}
+				break;
+			}
+		}
+		
+	}
+
+	private void GuardarFacturaEnBD(Factura factura, double totalConIva, double totalSinIva) {
+
+		System.out.println("datos guardados");
 	}
 
 	private void borrarSesiones(HttpSession session) {
@@ -143,13 +177,12 @@ public class IndexServlet extends HttpServlet {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 
-		
 		com.ipartek.formacion.ejemplocapas.entidades.Usuario u = (com.ipartek.formacion.ejemplocapas.entidades.Usuario) session
 				.getAttribute("usuario");
 
 		ArrayList<Carrito> c = (ArrayList<Carrito>) session.getAttribute("carritos");
-		
-		if (c==null) {
+
+		if (c == null) {
 			return false;
 		} else {
 			double totalSinIva = (double) session.getAttribute("totalSinIva");
@@ -174,19 +207,14 @@ public class IndexServlet extends HttpServlet {
 		productos = (ArrayList<Producto>) session.getAttribute("carrito");
 
 		if (productos.size() == 0) {
-
 			AnadirCarritoInicio(id, producto, session);
 			productos.add(producto);
-
 		} else {
 			int a = 0;
 			for (int i = 0; i < productos.size(); i++) {
 				if (productos.get(i).getId() == Long.parseLong(id)) {
-					for (Carrito c : carritos) {
-						if (c.getP().getId() == productos.get(i).getId()) {
-							c.setCantidad(c.getCantidad() + 1);
-						}
-					}
+
+					sumarCantidad(productos.get(i));
 					a++;
 					break;
 				}
@@ -200,10 +228,16 @@ public class IndexServlet extends HttpServlet {
 		session.setAttribute("carritos", carritos);
 		sumarProductosSinIva(carritos, session);
 		sumarProductoConIva(carritos, session);
-		/*
-		 * System.out.println("----------------"); for (Carrito c : carritos) {
-		 * System.out.println(c.getIdProducto() + " --> " + c.getCantidad()); }
-		 */
+
+	}
+
+	private void sumarCantidad(Producto producto) {
+
+		for (Carrito c : carritos) {
+			if (c.getP().getId() == producto.getId()) {
+				c.setCantidad(c.getCantidad() + 1);
+			}
+		}
 
 	}
 

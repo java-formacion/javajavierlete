@@ -16,6 +16,7 @@
 				<td>${carrito.p.precio}</td>
 				<td><a href="productos?id=${carrito.p.id}">ver ficha</a></td>
 				<td>${carrito.cantidad}</td>
+				<td><a href="carrito?idProducto=${producto.id}" class="btn btn-danger" role="button">Eliminar <span class="glyphicon glyphicon-trash"></span></a></td>
 			</tr>
 		</c:forEach>
 	</tbody>
