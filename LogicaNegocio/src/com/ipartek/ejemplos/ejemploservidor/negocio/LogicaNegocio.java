@@ -41,7 +41,7 @@ public class LogicaNegocio {
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new LogicaNegocioException(
-					"Error al intentar leer el fichero de configuraci�n", e);
+					"Error al intentar leer el fichero de configuración", e);
 		}
 	}
 	
