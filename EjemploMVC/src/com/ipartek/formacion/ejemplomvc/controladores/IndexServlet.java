@@ -36,6 +36,7 @@ public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final String BIENVENIDA_JSP = "/WEB-INF/jsps/bienvenida.jsp";
+	
 	private static final String PRODUCTOS_JSP = "/WEB-INF/jsps/productos.jsp";
 
 	private static final String FICHA_JSP = "/WEB-INF/jsps/ficha.jsp";
@@ -104,28 +105,30 @@ public class IndexServlet extends HttpServlet {
 			idProducto = request.getParameter("idProducto");
 			idProductoSumarCantidad = request.getParameter("idProductoSumarCantidad");
 			idProductoRestarCantidad = request.getParameter("idProductoRestarCantidad");
-			//System.out.println(id + " , " + idProducto + " , " + idProductoSumarCantidad + " , " + idProductoRestarCantidad);
+			
 			if (idProductoRestarCantidad != null) {
-				
 				restarCantidadAProducto(idProductoRestarCantidad);
 				idProductoRestarCantidad = null;
 				response.setHeader("Refresh", "0; http://localhost:9080/tiendavirtual/carrito");
 			}
+			
 			if (idProductoSumarCantidad != null) {
 				sumarCantidadAlProducto(idProductoSumarCantidad);
 				idProductoSumarCantidad = null;
 				response.setHeader("Refresh", "0; http://localhost:9080/tiendavirtual/carrito");
 			}
+			
 			if (idProducto != null) {
 				borrarProducto(idProducto);
 				idProducto = null;
-				// System.out.println(idProducto);
+				response.setHeader("Refresh", "0; http://localhost:9080/tiendavirtual/carrito");
 			}
+
 			if (id != null) {
 				agregarProductoACarrito(id);
 				response.setHeader("Refresh", "0; http://localhost:9080/tiendavirtual/carrito");
 			}
-		
+
 			fw(CARRITO_JSP);
 			break;
 
@@ -196,8 +199,8 @@ public class IndexServlet extends HttpServlet {
 					}
 				}
 			}
-
 		}
+		
 		sumarProductoConIva(carritos, session);
 		sumarProductosSinIva(carritos, session);
 
@@ -215,16 +218,12 @@ public class IndexServlet extends HttpServlet {
 				for (int a = 0; a < carritos.size(); a++) {
 					if (carritos.get(a).getP().getId() == producto.getId()) {
 						carritos.remove(carritos.get(a));
+						break;
 					}
 				}
-				break;
 			}
 		}
-		if (carritos.size() == 0) {
-			System.out.println("vacio");
-		} else {
-			System.out.println("lleno");
-		}
+
 		sumarProductoConIva(carritos, session);
 		sumarProductosSinIva(carritos, session);
 		productos.remove(producto);
@@ -233,6 +232,7 @@ public class IndexServlet extends HttpServlet {
 	private void GuardarFacturaEnBD(Factura factura, double totalConIva, double totalSinIva) {
 
 		System.out.println("datos guardados");
+		
 	}
 
 	private void borrarSesiones(HttpSession session) {
@@ -267,7 +267,6 @@ public class IndexServlet extends HttpServlet {
 			request.setAttribute("factura", factura);
 			return true;
 		}
-
 	}
 
 	private void agregarProductoACarrito(String id) {
@@ -349,7 +348,6 @@ public class IndexServlet extends HttpServlet {
 				.getAttribute("usuario");
 		Carrito c = new Carrito(idcarrito, p, u, 1);
 		carritos.add(c);
-
 	}
 
 	private void fichaIndex(String id) {
