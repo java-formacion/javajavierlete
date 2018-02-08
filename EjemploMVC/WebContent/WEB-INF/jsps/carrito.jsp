@@ -16,8 +16,8 @@
 				<td>${carrito.producto.nombre}</td>
 				<td>${carrito.producto.descripcion}</td>
 				<td>${carrito.producto.precio} &euro;</td>
-				<td>${carrito.cantidad}</td>
-				<td><a href="productos?id=${producto.id}">Ver ficha</a>
+				<td><button class="btn" type="button" name="cmenos"  style="background-color: transparent;"><span class="glyphicon glyphicon-minus"></span></button>${carrito.cantidad}<button class="btn" type="button" name="cmas" style="background-color: transparent;"><span class="glyphicon glyphicon-plus"></span></button></td>
+				<td><a href="productos?id=${carrito.producto.id}">Ver ficha</a>
 			</tr>
 			
 		</c:forEach>
