@@ -23,7 +23,7 @@
 		<div class="form-group">
 			<label for="password2" class="col-sm-2 control-label">Confirma Contrase&ntildea</label>
 			<div class="col-sm-10">
-				<input type="password2" id="password2" name="password2"
+				<input type="password" id="password2" name="password2"
 					class="form-control" required="required" /> <span
 					id="errorpassword" class="text-danger">${errores.password}</span>
 			</div>
