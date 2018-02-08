@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import com.ipartek.formacion.ejemplocapas.accesodatos.AccesoDatosException;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOFactory;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOProducto;
 import com.ipartek.formacion.ejemplocapas.accesodatos.DAOUsuario;
@@ -41,7 +42,7 @@ public class LogicaNegocio {
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new LogicaNegocioException(
-					"Error al intentar leer el fichero de configuración", e);
+					"Error al intentar leer el fichero de configuraci�n", e);
 		}
 	}
 	
@@ -70,5 +71,17 @@ public class LogicaNegocio {
 	public static Usuario obtenerUsuarioPorEmail(String email) {
 		
 		return daoUsuario.obtenerUsuarioPorEmail(email);
+	}
+
+	public static void altaUsuario(Usuario usuario) {
+
+		if(obtenerUsuarioPorEmail(usuario.getEmail()) != null){
+			throw new LogicaNegocioException("Ya existe un usuario con ese Email");
+		}
+		try {
+			daoUsuario.alta(usuario);
+		} catch(AccesoDatosException ade) {
+			throw new LogicaNegocioException("No se puede crear el usuario", ade);
+		}
 	}
 }

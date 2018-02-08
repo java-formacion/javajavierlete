@@ -10,13 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionEvent;
+//import javax.servlet.http.HttpSessionEvent;
 
-import org.apache.catalina.Session;
+//import org.apache.catalina.Session;
 
 import com.ipartek.ejemplos.ejemploservidor.modelo.ModeloException;
 import com.ipartek.ejemplos.ejemploservidor.modelo.Usuario;
 import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocio;
+import com.ipartek.ejemplos.ejemploservidor.negocio.LogicaNegocioException;
 import com.ipartek.formacion.ejemplocapas.entidades.Producto;
 
 @WebServlet("/frontcontroller/*")
@@ -35,6 +36,8 @@ public class IndexServlet extends HttpServlet {
 	private static final String LOGOUT_JSP = "/WEB-INF/jsps/logout.jsp";
 
 	private static final String SIGNUP_JSP = "/WEB-INF/jsps/signup.jsp";
+	
+	private static final String FORMUSUARIO_JSP = "/WEB-INF/jsps/formusuarios.jsp";
 
 	private enum Estado {
 		LOGIN_CORRECTO, LOGIN_INCORRECTO, LOGIN_NULL
@@ -81,6 +84,58 @@ public class IndexServlet extends HttpServlet {
 				fichaIndex(id);
 				fw(FICHA_JSP);
 			}
+			break;
+		case "/frontcontroller/formusuario":
+			request.setAttribute("mensaje", "ALTA");
+			request.setAttribute("op", "alta");
+			
+			fw(FORMUSUARIO_JSP);
+			
+			break;
+		case "/frontcontroller/usuarioaccion":
+			//request.setAttribute("mensaje", "SUBMIT");
+			
+			String idUsuario = request.getParameter("id");
+			String dniUsuario = request.getParameter("dni");
+			String emailUsuario = request.getParameter("email");
+			String passwordUsuario = request.getParameter("password");
+			String password2Usuario = request.getParameter("password2");
+			String nombreUsuario = request.getParameter("nombre");
+			String apellidosUsuario = request.getParameter("apellidos");
+			
+			long idLong;
+			try {
+				idLong = Long.parseLong(idUsuario);
+			} catch(NumberFormatException nfe) {
+				idLong = 0;
+			}
+			
+			com.ipartek.formacion.ejemplocapas.entidades.Usuario usuarioForm;
+			usuarioForm = new com.ipartek.formacion.ejemplocapas.entidades.Usuario(
+					idLong, dniUsuario, 
+					emailUsuario, passwordUsuario, 
+					nombreUsuario, apellidosUsuario);
+			
+			String op = request.getParameter("op");
+			
+			request.setAttribute("op", op);
+			
+			switch(op)
+			{
+			case "alta":
+				try {
+					LogicaNegocio.altaUsuario(usuarioForm);
+				} catch(LogicaNegocioException lne) {
+					request.setAttribute("mensaje", lne.getMessage());
+				}
+				
+				break;
+			default:
+					
+			}
+			
+			fw(FORMUSUARIO_JSP);
+			
 			break;
 		case "/frontcontroller/carrito":
 			id = request.getParameter("id");
