@@ -1,18 +1,19 @@
 package com.ipartek.ejemplos.ejemploservidor.modelo;
 
-public class Usuario {
+public class cUsuario {
+
 	private String email, password;
 
-	public Usuario(String email, String password) {
+	public cUsuario(String email, String password) {
 		setEmail(email);
 		setPassword(password);
 	}
 	
-	public Usuario() {}
+	public cUsuario() {}
 
 	@Override
 	public String toString() {
-		return "Usuario [email=" + email + ", password=" + password + "]";
+		return "cUsuario [email=" + email + ", password=" + password + "]";
 	}
 
 	@Override
@@ -32,7 +33,7 @@ public class Usuario {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Usuario other = (Usuario) obj;
+		cUsuario other = (cUsuario) obj;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -76,4 +77,5 @@ public class Usuario {
 		
 		this.password = password;
 	}
+	
 }
