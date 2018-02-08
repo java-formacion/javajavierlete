@@ -8,7 +8,7 @@
 	<div class="col-sm-10">
 	<p>
 		<label for="dni" class="col-sm-2 control-label" >DNI</label>
-		<input type="text" id="dni" name="dni" class="form-control" value="${usuario.dni}"/>
+		<input type="text" id="dni" name="dni" value="${usuario.dni}"/>
 	</p>
 	<p>
 		<label for="email" class="col-sm-2 control-label">Email</label>
