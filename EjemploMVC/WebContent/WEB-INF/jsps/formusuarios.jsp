@@ -2,36 +2,48 @@
 
 <h2>${mensaje}</h2>
 
-<form action="usuarioaccion" method="post">
+<form action="usuarioaccion" method="post" class="form-horizontal">
+	<fieldset class="well">
+	<div class="form-group">
+	<div class="col-sm-10">
 	<p>
-		<label for="dni">DNI</label>
-		<input type="text" id="dni" name="dni" value="${usuario.dni}"/>
+		<label for="dni" class="col-sm-2 control-label" >DNI</label>
+		<input type="text" id="dni" name="dni" class="form-control" value="${usuario.dni}"/>
 	</p>
 	<p>
-		<label for="email">Email</label>
+		<label for="email" class="col-sm-2 control-label">Email</label>
 		<input type="email" id="email" name="email" value="${usuario.email}"/>
 	</p>
 	<p>
-		<label for="password">Password</label>
+		<label for="password" class="col-sm-2 control-label">Password</label>
 		<input type="password" id="password" name="password" />
 	</p>
 	<p>
-		<label for="password2">Password (Repetir)</label>
+		<label for="password2" class="col-sm-2 control-label">Password (Repetir)</label>
 		<input type="password" id="password2" name="password2" />
 	</p>
 	<p>
-		<label for="nombre">Nombre</label>
+		<label for="nombre" class="col-sm-2 control-label">Nombre</label>
 		<input type="text" id="nombre" name="nombre" value="${usuario.nombre}" />
 	</p>
 	<p>
-		<label for="apellidos">Apellidos</label>
+		<label for="apellidos" class="col-sm-2 control-label">Apellidos</label>
 		<input type="text" id="apellidos" name="apellidos" value="${usuario.apellidos}" />
 	</p>
 	<p>
-		<input type="submit" value="Confirmar" />
-		<input type="hidden" name="op" value="${op}" />
-		<input type="hidden" name="id" value="${usuario.id}" />
+	</div>
+		</div>
+	<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<input type="submit" value="Confirmar" class="btn btn-primary" />
+				<input type="hidden" name="op" value="${op}" />
+				<input type="hidden" name="id" value="${usuario.id}" />
+			</div>
+		</div>
+		
 	</p>
+	</fieldset>
+	
 </form>
 
 <script src="formusuarios.js"></script>
