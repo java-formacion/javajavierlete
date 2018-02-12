@@ -1,0 +1,38 @@
+@charset "ISO-8859-1";
+
+.navbar-default {
+	
+	background-color: #337ab7;
+	
+	
+}
+
+.navbar-default .navbar-brand {
+	
+   	color: white;
+    
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: silver;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: white;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: silver;
+}
+
+#cuadroResultado{
+	
+	background-color: white;
+	border-width=1px;
+	border-color: black;
+	border-style: solid;
+	border-bottom-style: none;
+	border-right-style: none;
+	
+}
