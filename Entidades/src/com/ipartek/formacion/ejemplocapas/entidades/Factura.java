@@ -1,5 +1,6 @@
 package com.ipartek.formacion.ejemplocapas.entidades;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,6 +28,9 @@ public class Factura {
 		this.totalSinIva = totalSinIva;
 		this.totalConIva = totalConIva;
 	}
+
+
+
 
 
 	public Usuario getU() {

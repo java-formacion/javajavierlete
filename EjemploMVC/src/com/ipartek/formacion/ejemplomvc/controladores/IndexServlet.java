@@ -261,7 +261,7 @@ public class IndexServlet extends HttpServlet {
 			double totalConIva = (double) session.getAttribute("totalConIva");
 
 			Factura factura = new Factura(idFactura, u, c, date, iva, totalSinIva, totalConIva);
-
+			
 			// set a string session attribute
 			// session.setAttribute(FACTURA_JSP, factura);
 			request.setAttribute("factura", factura);
