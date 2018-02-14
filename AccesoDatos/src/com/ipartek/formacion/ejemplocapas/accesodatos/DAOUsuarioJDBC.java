@@ -66,7 +66,7 @@ public class DAOUsuarioJDBC implements DAOUsuario {
 			
 			if(num != 1)
 				throw new AccesoDatosException(
-						"La inserci�n ha devuelto un resultado diferente de 1");
+						"La inserción ha devuelto un resultado diferente de 1");
 		} catch (SQLException e) {
 			throw new AccesoDatosException(
 					"Error al acceder a la base de datos", e);
