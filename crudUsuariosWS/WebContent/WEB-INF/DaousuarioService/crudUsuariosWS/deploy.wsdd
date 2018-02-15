@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from DaousuarioService WSDL service -->
+
+  <service name="Daousuario" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://crudUsuariosWS"/>
+      <parameter name="wsdlServiceElement" value="DaousuarioService"/>
+      <parameter name="schemaQualified" value="http://crudUsuariosWS"/>
+      <parameter name="wsdlServicePort" value="Daousuario"/>
+      <parameter name="className" value="crudUsuariosWS.Daousuario"/>
+      <parameter name="wsdlPortType" value="Daousuario"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://crudUsuariosWS" name="insertarUsuario" qname="operNS:insertarUsuario" soapAction="">
+        <parameter xmlns:pns="http://crudUsuariosWS" xmlns:tns="http://crudUsuariosWS" qname="pns:usuario" type="tns:Usuario"/>
+      </operation>
+      <operation xmlns:operNS="http://crudUsuariosWS" name="borrarUsuario" qname="operNS:borrarUsuario" soapAction="">
+        <parameter xmlns:pns="http://crudUsuariosWS" xmlns:tns="http://crudUsuariosWS" qname="pns:usuario" type="tns:Usuario"/>
+      </operation>
+      <operation xmlns:operNS="http://crudUsuariosWS" name="modificarUsuario" qname="operNS:modificarUsuario" soapAction="">
+        <parameter xmlns:pns="http://crudUsuariosWS" xmlns:tns="http://crudUsuariosWS" qname="pns:usuario" type="tns:Usuario"/>
+      </operation>
+      <operation xmlns:operNS="http://crudUsuariosWS" xmlns:retNS="http://crudUsuariosWS" xmlns:rtns="http://crudUsuariosWS" name="mostrarUsuarios" qname="operNS:mostrarUsuarios" returnQName="retNS:mostrarUsuariosReturn" returnType="rtns:Usuario" soapAction="">
+      </operation>
+      <parameter name="allowedMethods" value="modificarUsuario insertarUsuario borrarUsuario mostrarUsuarios"/>
+
+      <typeMapping xmlns:ns="http://crudUsuariosWS" qname="ns:Usuario" type="java:crudUsuariosWS.Usuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>

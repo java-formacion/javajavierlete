@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.ipartek.services.servicioTodosPartidos;
+import com.ipartek.services.PartidoService;
 
 import eu.dataaccess.footballpool.InfoSoapBindingStub;
 import eu.dataaccess.footballpool.InfoSoapType;
@@ -24,11 +24,18 @@ import eu.dataaccess.footballpool.TTeamInfo;
 @WebServlet("/prueba")
 public class Servletprueba extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+       PartidoService ps;
    
     public Servletprueba() {
         super();
         
+    }
+    
+    @Override
+    public void init() throws ServletException {
+    	// TODO Auto-generated method stub
+    	
+    	ps = new PartidoService();
     }
 
 	
@@ -40,14 +47,19 @@ public class Servletprueba extends HttpServlet {
 			
 		}
 		*/
-		InfoSoapType soap = new InfoSoapTypeProxy();
-		TGameInfo[] partidosEuro = soap.allGames();
 		
+		
+		
+		TGameInfo[] partidosEuro = ps.getPartidos();
+		
+		//opcion 1: 
 		//HttpSession session = request.getSession();
-		request.setAttribute("partidos", partidosEuro);
 		//session.setAttribute("partidos", partidosEuro);
+		//response.sendRedirect("WEB-INF/index.jsp")
 		
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		//opcion 2:
+		request.setAttribute("partidos", partidosEuro);
+		request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
 		
 		
 	}

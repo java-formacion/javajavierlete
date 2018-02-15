@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://crudUsuariosWS" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://crudUsuariosWS" xmlns:intf="http://crudUsuariosWS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://crudUsuariosWS" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="insertarUsuario">
+    <complexType>
+     <sequence>
+      <element name="usuario" type="impl:Usuario"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="Usuario">
+    <sequence>
+     <element name="apellido" nillable="true" type="xsd:string"/>
+     <element name="email" nillable="true" type="xsd:string"/>
+     <element name="id" type="xsd:int"/>
+     <element name="nombre" nillable="true" type="xsd:string"/>
+     <element name="telefono" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <element name="insertarUsuarioResponse">
+    <complexType/>
+   </element>
+   <element name="borrarUsuario">
+    <complexType>
+     <sequence>
+      <element name="usuario" type="impl:Usuario"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="borrarUsuarioResponse">
+    <complexType/>
+   </element>
+   <element name="modificarUsuario">
+    <complexType>
+     <sequence>
+      <element name="usuario" type="impl:Usuario"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="modificarUsuarioResponse">
+    <complexType/>
+   </element>
+   <element name="mostrarUsuarios">
+    <complexType/>
+   </element>
+   <element name="mostrarUsuariosResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="mostrarUsuariosReturn" type="impl:Usuario"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="insertarUsuarioRequest">
+
+      <wsdl:part element="impl:insertarUsuario" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="mostrarUsuariosRequest">
+
+      <wsdl:part element="impl:mostrarUsuarios" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="insertarUsuarioResponse">
+
+      <wsdl:part element="impl:insertarUsuarioResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="modificarUsuarioRequest">
+
+      <wsdl:part element="impl:modificarUsuario" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="borrarUsuarioRequest">
+
+      <wsdl:part element="impl:borrarUsuario" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="borrarUsuarioResponse">
+
+      <wsdl:part element="impl:borrarUsuarioResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="modificarUsuarioResponse">
+
+      <wsdl:part element="impl:modificarUsuarioResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="mostrarUsuariosResponse">
+
+      <wsdl:part element="impl:mostrarUsuariosResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Daousuario">
+
+      <wsdl:operation name="insertarUsuario">
+
+         <wsdl:input message="impl:insertarUsuarioRequest" name="insertarUsuarioRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:insertarUsuarioResponse" name="insertarUsuarioResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="borrarUsuario">
+
+         <wsdl:input message="impl:borrarUsuarioRequest" name="borrarUsuarioRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:borrarUsuarioResponse" name="borrarUsuarioResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modificarUsuario">
+
+         <wsdl:input message="impl:modificarUsuarioRequest" name="modificarUsuarioRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:modificarUsuarioResponse" name="modificarUsuarioResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mostrarUsuarios">
+
+         <wsdl:input message="impl:mostrarUsuariosRequest" name="mostrarUsuariosRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:mostrarUsuariosResponse" name="mostrarUsuariosResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="DaousuarioSoapBinding" type="impl:Daousuario">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="insertarUsuario">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="insertarUsuarioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="insertarUsuarioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="borrarUsuario">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="borrarUsuarioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="borrarUsuarioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modificarUsuario">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="modificarUsuarioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="modificarUsuarioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="mostrarUsuarios">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="mostrarUsuariosRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="mostrarUsuariosResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="DaousuarioService">
+
+      <wsdl:port binding="impl:DaousuarioSoapBinding" name="Daousuario">
+
+         <wsdlsoap:address location="http://localhost:8080/crudUsuariosWS/services/Daousuario"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
