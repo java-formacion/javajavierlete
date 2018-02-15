@@ -1,0 +1,34 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from PruebaService WSDL service -->
+
+  <service name="Prueba" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://prueba"/>
+      <parameter name="wsdlServiceElement" value="PruebaService"/>
+      <parameter name="schemaQualified" value="http://prueba"/>
+      <parameter name="wsdlServicePort" value="Prueba"/>
+      <parameter name="className" value="prueba.PruebaSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="Prueba"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="resta" qname="operNS:resta" xmlns:operNS="http://prueba" returnQName="retNS:restaReturn" xmlns:retNS="http://prueba" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:n1" xmlns:pns="http://prueba" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:n2" xmlns:pns="http://prueba" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="suma" qname="operNS:suma" xmlns:operNS="http://prueba" returnQName="retNS:sumaReturn" xmlns:retNS="http://prueba" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:n1" xmlns:pns="http://prueba" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:n2" xmlns:pns="http://prueba" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="suma resta"/>
+
+  </service>
+</deployment>
