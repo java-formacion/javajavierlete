@@ -55,7 +55,7 @@ public class ServletPartidos extends HttpServlet {
 		request.getSession().setAttribute("partido", partidos);
 		
 		
-		//obcion 2:
+		//obcion 2: Esta opcion es mejor en este caso!!!!
 		//request.setAttribute("partido", partidos);
 		//request.getRequestDispatcher("WEB-INF/partidos.jsp").forward(request, response);
 		
