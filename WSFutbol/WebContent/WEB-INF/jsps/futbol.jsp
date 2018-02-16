@@ -24,10 +24,7 @@ $( document ).ready(function() {
 </head>
 
 <body class="container-fluid">
-<% for(TGameInfo partido: partidos){ %>
-<%= partido.getTeam1(). getSName() %>
-<%} %>
-	<!--  <h1 class="text-center">Partidos de Copa</h1>
+	<h1 class="text-center">Partidos de Copa</h1>
 		
 	<div class="row">
 		<c:forEach var="partido" items="${partido}">
@@ -101,7 +98,6 @@ $( document ).ready(function() {
 	<div>
 	
 	</div>
-	-->
 </body>
 
 

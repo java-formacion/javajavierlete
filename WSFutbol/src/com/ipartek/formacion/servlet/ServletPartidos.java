@@ -52,18 +52,19 @@ public class ServletPartidos extends HttpServlet {
 		TGameInfo[] partidos = partidoService.getPartidos();
 		
 		//Opcion 1:
-		//request.getSession().setAttribute("partido", partidos);
+		request.getSession().setAttribute("partido", partidos);
 		
 		
 		//obcion 2:
-		request.setAttribute("partido", partidos);
-		request.getRequestDispatcher("WEB-INF/partidos.jsp").forward(request, response);
+		//request.setAttribute("partido", partidos);
+		//request.getRequestDispatcher("WEB-INF/partidos.jsp").forward(request, response);
 		
-		//fw(Partidos_JSP);
+		fw(Partidos_JSP,request,response);
 	}
-	/*private void fw(String ruta) throws ServletException, IOException {
+	private void fw(String ruta,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println(ruta);
 		request.getRequestDispatcher(ruta).forward(request, response);
-	}*/
+	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
