@@ -27,7 +27,7 @@ public class Daousuario {
 			"SELECT id, nombre, apellido, email, telefono FROM Usuarios where id=?";
 	
 	
-	private static String url="jdbc:sqlite:C:\\sqliteCRUDUsuariosWS\\crudUsuariosWS.db";
+	private static String url="jdbc:sqlite:C:\\BDD\\sqliteCRUDUsuariosWS.s3db";
 	private static String user="";
 	private static String password="";
 	

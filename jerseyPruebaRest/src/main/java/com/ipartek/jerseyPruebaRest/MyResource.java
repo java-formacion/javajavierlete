@@ -24,7 +24,7 @@ public class MyResource {
      * @return String that will be returned as a text/plain response.
      */
 	
-	private static String url="jdbc:sqlite:C:\\sqliteCRUDUsuariosWS\\crudUsuariosWS.db";
+	private static String url="jdbc:sqlite:C:\\BDD\\sqliteCRUDUsuariosWS.s3db";
 	private static String user="";
 	private static String password="";
 	
@@ -45,13 +45,13 @@ public class MyResource {
     }
     
     @GET
-    @Path("/{id}")
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Usuario getUsuario(@PathParam("id") String id) {
+    public Usuario getUsuario(@PathParam("id") int id) {
     	
     	
         	try {
-				return daou.mostrarUsuario(Integer.parseInt(id));
+				return daou.mostrarUsuario(id);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -93,11 +93,11 @@ public class MyResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     
-    public void borrarUsuario(@PathParam("id") String id) {
+    public void borrarUsuario(@PathParam("id") int id) {
     	
     	Usuario u = null;
 		try {
-			u = daou.mostrarUsuario(Integer.parseInt(id));
+			u = daou.mostrarUsuario((id));
 		} catch (NumberFormatException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
