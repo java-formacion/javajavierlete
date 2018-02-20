@@ -25,9 +25,9 @@ public class MyResource {
      * @return String that will be returned as a text/plain response.
      */
 	
-	private static String url="jdbc:sqlite:C:\\BDD\\taller.db";
-	private static String user="";
-	private static String password="";
+	private static String url="jdbc:mysql://localhost:3306/taller";
+	private static String user="root";
+	private static String password="root";
 	
 	DaoUsuario daou = new DaoUsuario(url, user, password);
 	DaoCoche daoc = new DaoCoche(url, user, password);

@@ -12,25 +12,32 @@ public class DaoCoche {
 
 
 	private static final String SQL_INSERT = 
-			"INSERT INTO Coche " +
-			"(marca, modelo, cv, matricula, anios)" +
-			"VALUES (?, ?, ?, ?,?)";
+			"INSERT INTO coche " +
+			"(marca, modelo, cv, matricula, anios, Usuario_id)" +
+			"VALUES (?, ?, ?, ?,?,?)";
 	private static final String SQL_UPDATE =
-			"UPDATE Coche SET "+
+			"UPDATE coche SET "+
 			"marca=?, modelo=?, cv=?, matricula=?, anios=? "+
 			"WHERE id=?";
 	private static final String SQL_DELETE =
-			"DELETE FROM Coche WHERE id=?";
+			"DELETE FROM coche WHERE id=?";
 	
-	private static final String SQL_SELECT = 
-			"SELECT id, marca, modelo, cv, matricula, anios FROM Coche ";
-	private static final String SQL_SELECTID = 
-			"SELECT id, marca, modelo, cv, matricula, anios FROM Coche where id=?";
+	private static final String SQL_SELECTANIDADA_USUARIO = 
+			"SELECT coche.id, coche.marca, coche.modelo, coche.cv, coche.matricula,\r\n" + 
+			"coche.anios, usuario.id, usuario.nombre, usuario.apellido, \r\n" + 
+			"usuario.email, usuario.telefono  From coche INNER JOIN\r\n" + 
+			"usuario ON usuario.id = coche.Usuario_id";
+	
+	private static final String SQL_ANIDADA_COCHE_ID = 
+			"SELECT coche.id, coche.marca, coche.modelo, coche.cv, coche.matricula,\r\n" + 
+					"coche.anios, usuario.id, usuario.nombre, usuario.apellido, \r\n" + 
+					"usuario.email, usuario.telefono  From coche INNER JOIN\r\n" + 
+					"usuario ON usuario.id = coche.Usuario_id where coche.id=?";
 	
 	
-	private static String url="jdbc:sqlite:C:\\BDD\\taller.db";
-	private static String user="";
-	private static String password="";
+	private static String url="jdbc:mysql://localhost:3306/taller";
+	private static String user="root";
+	private static String password="root";
 	
 	protected static Connection con = null;
 	protected static PreparedStatement ps = null;
@@ -44,7 +51,7 @@ public class DaoCoche {
 		super();
 		
 		try {
-			Class.forName("org.sqlite.JDBC");
+			Class.forName("com.mysql.jdbc.Driver");
 			
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -87,20 +94,28 @@ public class DaoCoche {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			
-			ps = con.prepareStatement(SQL_SELECT);
+			ps = con.prepareStatement(SQL_SELECTANIDADA_USUARIO);
 			
 			rs = ps.executeQuery();
 			
 			Coche c;
-			
+			Usuario u;
 			while(rs.next()) {
+				
+				u = new Usuario(
+						rs.getInt("usuario.id"),
+						rs.getString("usuario.nombre"),
+						rs.getString("usuario.apellido"),
+						rs.getString("usuario.email"),
+						rs.getString("usuario.telefono"));
 				c = new Coche(
-						rs.getInt("id"),
-						rs.getString("marca"),
-						rs.getString("modelo"),
-						rs.getString("cv"),
-						rs.getString("matricula"),
-						rs.getString("anios"));
+						rs.getInt("coche.id"),
+						rs.getString("coche.marca"),
+						rs.getString("coche.modelo"),
+						rs.getString("coche.cv"),
+						rs.getString("coche.matricula"),
+						rs.getString("coche.anios"),
+						u);
 				
 				coches.add(c);
 			}
@@ -140,24 +155,33 @@ public class DaoCoche {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			
-			ps = con.prepareStatement(SQL_SELECTID);
+			ps = con.prepareStatement(SQL_ANIDADA_COCHE_ID);
 			ps.setInt(1, id);
 			
 			rs = ps.executeQuery();
 			
 			Coche c;
-			
-			if(rs.next()) {
-				c = new Coche(
-						rs.getInt("id"),
-						rs.getString("marca"),
-						rs.getString("modelo"),
-						rs.getString("cv"),
-						rs.getString("matricula"),
-						rs.getString("anios"));
-				return c;
+			Usuario u;
+			while(rs.next()) {
 				
-			}else return null;
+				u = new Usuario(
+						rs.getInt("usuario.id"),
+						rs.getString("usuario.nombre"),
+						rs.getString("usuario.apellido"),
+						rs.getString("usuario.email"),
+						rs.getString("usuario.telefono"));
+				c = new Coche(
+						rs.getInt("coche.id"),
+						rs.getString("coche.marca"),
+						rs.getString("coche.modelo"),
+						rs.getString("coche.cv"),
+						rs.getString("coche.matricula"),
+						rs.getString("coche.anios"),
+						u);
+				
+				return c;
+			}
+				
 			
 		} catch (SQLException e) {
 			throw new Exception(
@@ -174,6 +198,7 @@ public class DaoCoche {
 				throw new Exception("Ha habido un error al cerrar", e);
 			}
 		}
+		return null;
 		
 	}
 	
@@ -184,6 +209,7 @@ public class DaoCoche {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
+		Usuario u = c.getU();
 		try {
 			con = DriverManager.getConnection(url, user , password);
 			
@@ -194,6 +220,8 @@ public class DaoCoche {
 			ps.setString(3, c.getCv());
 			ps.setString(4, c.getMatricula());
 			ps.setString(5, c.getAnios());
+			ps.setInt(6, u.getId());
+			
 			
 			
 			int num = ps.executeUpdate();

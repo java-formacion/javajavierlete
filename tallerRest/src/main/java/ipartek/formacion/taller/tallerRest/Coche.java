@@ -22,7 +22,7 @@ public class Coche {
 	}
 
 
-	public Coche(int id, String marca, String modelo, String cv, String matricula, String anios) {
+	public Coche(int id, String marca, String modelo, String cv, String matricula, String anios, Usuario U) {
 		super();
 		this.id = id;
 		this.marca = marca;
@@ -30,6 +30,7 @@ public class Coche {
 		this.cv = cv;
 		this.matricula = matricula;
 		this.anios = anios;
+		this.u = U;
 	}
 	
 	

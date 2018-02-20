@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.enterprise.inject.New;
 
 
 public class DaoUsuario {
@@ -13,25 +16,30 @@ public class DaoUsuario {
 	
 	
 	private static final String SQL_INSERT = 
-			"INSERT INTO Usuario " +
+			"INSERT INTO usuario " +
 			"(nombre, apellido, email, telefono)" +
 			"VALUES (?, ?, ?, ?)";
 	private static final String SQL_UPDATE =
-			"UPDATE Usuario SET "+
+			"UPDATE usuario SET "+
 			"nombre=?, apellido=?, email=?, telefono=? "+
 			"WHERE id=?";
 	private static final String SQL_DELETE =
-			"DELETE FROM Usuario WHERE id=?";
+			"DELETE FROM usuario WHERE id=?";
 	
 	private static final String SQL_SELECT = 
-			"SELECT id, nombre, apellido, email, telefono FROM Usuario ";
+			"SELECT usuario.id, usuario.nombre, usuario.apellido, usuario.email, usuario.telefono,coche.id,\r\n" + 
+			"coche.marca, coche.modelo, coche.cv, coche.matricula, coche.anios FROM usuario INNER JOIN\r\n" + 
+			"coche on coche.Usuario_id = usuario.id order by usuario.id";
 	private static final String SQL_SELECTID = 
-			"SELECT id, nombre, apellido, email, telefono FROM Usuario where id=?";
+			"SELECT id, nombre, apellido, email, telefono FROM usuario where id=?";
+	
+	private static final String SQL_SELECT_COCHES_USUARIOID =
+			"SELECT id, marca, modelo, cv, matricula, anios FROM coche where Usuario_id = ?";
 	
 	
-	private static String url="jdbc:sqlite:C:\\BDD\\taller.db";
-	private static String user="";
-	private static String password="";
+	private static String url="jdbc:mysql://localhost:3306/taller";
+	private static String user="root";
+	private static String password="root";
 	
 	protected static Connection con = null;
 	protected static PreparedStatement ps = null;
@@ -45,7 +53,7 @@ public class DaoUsuario {
 		super();
 		
 		try {
-			Class.forName("org.sqlite.JDBC");
+			Class.forName("com.mysql.jdbc.Driver");
 			
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -93,16 +101,61 @@ public class DaoUsuario {
 			rs = ps.executeQuery();
 			
 			Usuario u;
-			
+			Coche c;
+			int cont = 1;
 			while(rs.next()) {
-				u = new Usuario(
-						rs.getInt("id"),
-						rs.getString("nombre"),
-						rs.getString("apellido"),
-						rs.getString("email"),
-						rs.getString("telefono"));
 				
-				usuarios.add(u);
+				c= new Coche();
+				c.setId(rs.getInt("coche.id"));
+				c.setMarca(rs.getString("coche.marca"));
+				c.setModelo(rs.getString("coche.modelo"));
+				c.setCv(rs.getString("coche.cv"));
+				c.setMatricula(rs.getString("coche.matricula"));
+				c.setAnios(rs.getString("coche.anios"));
+				
+				List<Coche> coches = new ArrayList<Coche>();
+				coches.add(c);
+				
+				
+				
+				u = new Usuario(
+						rs.getInt("usuario.id"),
+						rs.getString("usuario.nombre"),
+						rs.getString("usuario.apellido"),
+						rs.getString("usuario.email"),
+						rs.getString("usuario.telefono"),
+						coches.toArray(new Coche[coches.size()]));
+				
+				if( cont == 1) {
+					usuarios.add(u);
+					cont++;
+				}
+				else {
+				for (int i = 0; i< usuarios.size(); i++) {
+					
+					if(usuarios.get(i).getId() == u.getId()) {
+					List<Coche> cocheUser = new ArrayList<Coche>();
+					
+					for (Coche coche : usuarios.get(i).getCoches()) {
+						
+						
+						cocheUser.add(coche);
+						if(coche.getId() != c.getId()) {
+							cocheUser.add(c);
+						}
+					}
+					
+					
+					usuarios.get(i).setCoches(cocheUser.toArray(new Coche[coches.size()]));
+					
+					System.out.println(usuarios.get(i).getCoches().length);
+					break;
+					}
+					else usuarios.add(u);
+					
+				}
+				}
+				
 			}
 			
 			
@@ -146,7 +199,7 @@ public class DaoUsuario {
 			rs = ps.executeQuery();
 			
 			Usuario u;
-			
+			Coche c;
 			if(rs.next()) {
 				u = new Usuario(
 						rs.getInt("id"),
@@ -154,8 +207,28 @@ public class DaoUsuario {
 						rs.getString("apellido"),
 						rs.getString("email"),
 						rs.getString("telefono"));
-				return u;
 				
+				ps= con.prepareStatement(SQL_SELECT_COCHES_USUARIOID);
+				ps.setInt(1, id);
+				rs = ps.executeQuery();
+				
+				List<Coche> coches = new ArrayList<Coche>();
+				while(rs.next()) {
+					c = new Coche();
+					c.setId(rs.getInt("id"));
+					c.setMarca(rs.getString("marca"));
+					c.setModelo(rs.getString("modelo"));
+					c.setCv(rs.getString("cv"));
+					c.setMatricula(rs.getString("matricula"));
+					c.setAnios(rs.getString("anios"));
+							
+					coches.add(c);
+					
+				}
+				
+				u.setCoches(coches.toArray(new Coche[coches.size()]));
+				
+				return u;
 			}else return null;
 			
 		} catch (SQLException e) {
