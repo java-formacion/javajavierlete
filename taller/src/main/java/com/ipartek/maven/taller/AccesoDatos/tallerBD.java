@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
 import com.ipartek.maven.taller.entidades.Coche;
 import com.ipartek.maven.taller.entidades.Mecanico;
 import com.ipartek.maven.taller.entidades.Usuario;
@@ -21,6 +23,8 @@ public class tallerBD {
 	private PreparedStatement ps = null;
 	private ResultSet rs = null;
 
+	
+	//conexion
 	public void CrearConexion() throws SQLException {
 
 		try {
@@ -50,28 +54,37 @@ public class tallerBD {
 		}
 	}
 
-	public boolean obtenerIdUsuarioPordni(String dni) {
+	
+	
+	//usuario
+	
+	public int obtenerUsuarioPordni(String dni) {
 		try {
-			CrearConexion();
-			rs = st.executeQuery("select idUsuario from usuarios where dni=?");
-			ps.setString(1, dni);
-			if (rs.next()) {
-				return true;
-			}
-
+				CrearConexion();
+				String sql="select idUsuario from usuarios where dni=?";
+				ps = con.prepareStatement(sql);
+				ps.setString(1, dni);
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					int idUsuario = rs.getInt(1);
+					return idUsuario;
+				} else {
+					return 0;
+				}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
+			return -1;
 		} finally {
 			cerrarConexion();
 		}
-		return false;
-	}
 
+	}
+	
 	public int insertUsuario(Usuario usu) {
 		try {
-			if (!obtenerIdUsuarioPordni(usu.getDni())) {
+			if (!SiExisteUsuarioPasandoDni(usu.getDni())) {
 				CrearConexion();
 				ps = con.prepareStatement("INSERT INTO usuarios(nombre,apellidos,dni,telefono) values (?,?,?,?)");
 				ps.setString(1, usu.getNombre());
@@ -79,12 +92,12 @@ public class tallerBD {
 				ps.setString(3, usu.getDni());
 				ps.setString(4, usu.getTelefono());
 				ps.executeUpdate();
-				return 1;
+				return 0;
 			}
-			return 0;
+			return -1;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return -1;
+			return -2;
 		} finally {
 			cerrarConexion();
 		}
@@ -114,6 +127,25 @@ public class tallerBD {
 			cerrarConexion();
 		}
 		return usu;
+	}
+
+	public int updateUsuario(int id, Usuario usu) {
+		try {
+			CrearConexion();
+			ps = con.prepareStatement("UPDATE usuarios SET nombre=?, apellidos=?, dni=?,telefono=? WHERE idUsuario=?");
+			ps.setString(1, usu.getNombre());
+			ps.setString(2, usu.getApellidos());
+			ps.setString(3, usu.getDni());
+			ps.setString(4, usu.getTelefono());
+			ps.setInt(5, id);
+			ps.executeUpdate();
+			return 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			cerrarConexion();
+		}
 	}
 
 	public Usuario[] obtenerUsuarios() {
@@ -163,36 +195,15 @@ public class tallerBD {
 		}
 	}
 
-	public int updateUsuario(int id, Usuario usu) {
+	public boolean SiExisteUsuarioPasandoDni(String dni) {
 		try {
 			CrearConexion();
-			ps = con.prepareStatement("UPDATE usuarios SET nombre=?, apellidos=?, dni=?,telefono=? WHERE idUsuario=?");
-			ps.setString(1, usu.getNombre());
-			ps.setString(2, usu.getApellidos());
-			ps.setString(3, usu.getDni());
-			ps.setString(4, usu.getTelefono());
-			ps.setInt(5, id);
-			ps.executeUpdate();
-			return 1;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return -1;
-		} finally {
-			cerrarConexion();
-		}
-	}
-
-	public Coche obtenerCoche(int id) {
-		Coche co = new Coche();
-		try {
-			CrearConexion();
-			rs = st.executeQuery("select * from coches where idCoche=?");
-			ps.setInt(1, id);
+			String sql="select idUsuario from usuarios where dni=?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, dni);
+			rs = ps.executeQuery();
 			if (rs.next()) {
-				co.setId(rs.getInt(1));
-				co.setMarca(rs.getString(2));
-				co.setModelo(rs.getString(3));
-				co.setMatricula(rs.getString(4));
+				return true;
 			}
 
 		} catch (SQLException e) {
@@ -202,18 +213,47 @@ public class tallerBD {
 		} finally {
 			cerrarConexion();
 		}
-		return co;
+		return false;
+	}
+
+	
+	//Coches
+	
+	public Coche[] obtenerCoche(int id) {
+		ArrayList<Coche> coches = new ArrayList<Coche>();
+		
+		try {
+			CrearConexion();
+			rs = st.executeQuery("select * from coches where idCoche=?");
+			ps.setInt(1, id);
+			if (rs.next()) {
+				Coche co = new Coche();
+				co.setId(rs.getInt(1));
+				co.setMarca(rs.getString(2));
+				co.setModelo(rs.getString(3));
+				co.setMatricula(rs.getString(4));
+				coches.add(co);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} finally {
+			cerrarConexion();
+		}
+		return coches.toArray(new Coche[coches.size()]);
 	}
 
 	public int insertarCoche(Coche co, int idUsuario) {
 		try {
 			CrearConexion();
-			ps = con.prepareStatement("INSERT INTO coches values (?,?,?,?)");
+			ps = con.prepareStatement("INSERT INTO coches (marca,modelo,matricula,idUsuario) values (?,?,?,?)");
 			ps.setString(1, co.getMarca());
 			ps.setString(2, co.getModelo());
 			ps.setString(3, co.getMatricula());
 			ps.setInt(4, idUsuario);
-			ps.executeQuery();
+			ps.executeUpdate();
 			return 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -257,15 +297,62 @@ public class tallerBD {
 		}
 	}
 
-	public Mecanico obtenerMecanico(int id) {
-		Mecanico me = null;
+	public int eliminarTodosLosCoches() {
+		try {
+			CrearConexion();
+			ps = con.prepareStatement("delete from coches");
+			ps.executeQuery();
+			return 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		} finally {
+			cerrarConexion();
+		}
+	}
+	
+	public int obtenerIdCochePorMatricula(String matricula) {
+		try {
+			
+				CrearConexion();
+				String sql="select idCoche from coches where matricula=?";
+				ps = con.prepareStatement(sql);
+				ps.setString(1, matricula);
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					int idCoche = rs.getInt(1);
+					return idCoche;
+				} else {
+					return 0;
+				}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		} finally {
+			cerrarConexion();
+		}
+	}
+	
+	
+	
+	
+	
+	
+	//Mecanicos
+	
+	public Mecanico[] obtenerMecanico(int id) {
+		ArrayList<Mecanico> mecanicos = new ArrayList<Mecanico>();
 		try {
 			CrearConexion();
 			rs = st.executeQuery("select * from mecanicos where idMecanico=?");
 			ps.setInt(1, id);
 			if (rs.next()) {
-				me = new Mecanico(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+				Mecanico  me = new Mecanico(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
 						obtenerCochesPorIdMecanico(rs.getInt(1)));
+				mecanicos.add(me);
 			}
 
 		} catch (SQLException e) {
@@ -275,9 +362,31 @@ public class tallerBD {
 		} finally {
 			cerrarConexion();
 		}
-		return me;
+		return mecanicos.toArray(new Mecanico[mecanicos.size()]);
 	}
 
+	public Mecanico[] obtenerTodosMecanico() {
+		ArrayList<Mecanico> mecanicos= new ArrayList<Mecanico>();
+		try {
+			CrearConexion();
+			rs = st.executeQuery("select * from mecanicos");
+			while (rs.next()) {
+				Mecanico me = new Mecanico(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+						obtenerCochesPorIdMecanico(rs.getInt(1)));
+				mecanicos.add(me);
+				
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} finally {
+			cerrarConexion();
+		}
+		return mecanicos.toArray(new Mecanico[mecanicos.size()]);
+	}
+	
 	public ArrayList<Coche> obtenerCochesPorIdMecanico(int id) {
 		ArrayList<Coche> coches = new ArrayList<Coche>();
 		try {
@@ -330,12 +439,12 @@ public class tallerBD {
 	public int insertarMecanicoPorObjeto(Mecanico me) {
 		try {
 			CrearConexion();
-			ps = con.prepareStatement("INSERT INTO mecanicos values (?,?,?,?)");
+			ps = con.prepareStatement("INSERT INTO mecanicos (nombre,apellidos,dni,telefono) values (?,?,?,?)");
 			ps.setString(1, me.getNombre());
 			ps.setString(2, me.getApellidos());
 			ps.setString(3, me.getDni());
 			ps.setString(4, me.getTelefono());
-			ps.executeQuery();
+			ps.executeUpdate();
 			return 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -381,4 +490,59 @@ public class tallerBD {
 		}
 	}
 
+	
+	public int obtenerIdMecanicoPorDniMecanico(String dni) {
+		try {
+				CrearConexion();
+				String sql="select idMecanico from mecanicos where dni=?";
+				ps = con.prepareStatement(sql);
+				ps.setString(1, dni);
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					int idMecanico = rs.getInt(1);
+					return idMecanico;
+				} else {
+					return 0;
+				}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		} finally {
+			cerrarConexion();
+		}
+	}
+
+	
+	
+	
+	
+	//Tabla relacion
+	public int insertarRelacionCocheMecanico(int idCoche,int idMecanico) {
+		try {
+				CrearConexion();
+				ps = con.prepareStatement("INSERT INTO coches_has_mecanicos(coches_idCoche,mecanicos_idMecanico) values (?,?)");
+				ps.setInt(1, idCoche);
+				ps.setInt(2, idMecanico);
+				ps.executeUpdate();
+				return 1;
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			cerrarConexion();
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

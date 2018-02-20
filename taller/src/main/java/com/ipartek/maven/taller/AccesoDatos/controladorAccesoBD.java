@@ -11,6 +11,9 @@ public class controladorAccesoBD extends tallerBD {
 
 	
 	
+	//Usuario
+	
+	
 	public Usuario obtenerUsuarioPorId(int id) {
 		return obtenerUsuario(id);
 	}
@@ -22,32 +25,55 @@ public class controladorAccesoBD extends tallerBD {
 		return insertUsuario(usu);
 	}
 	
+	public int actualizarUsuarioPorId(int id,Usuario usu) {
+		return updateUsuario(id, usu);
+	}
+	
 	public int eliminarUsuarioPorId(int id) {
 		
 		return eliminarUsuario(id);
 	}
 	
-	public int actualizarUsuarioPorId(int id,Usuario usu) {
-		return updateUsuario(id, usu);
+	public int obteneridUsuarioPorDni(String dni) {
+		return obtenerUsuarioPordni(dni);
+	}
+	public Mecanico[] obtenerTodosLosMecanicos() {
+		return obtenerTodosMecanico();
 	}
 	
-	public Coche obtenerCochePorId(int id) {
+	//Coches
+	
+	public int EliminarLosCoches() {
+		return eliminarTodosLosCoches();
+	}
+	
+	public Coche[] obtenerCochePorId(int id) {
 		return obtenerCoche(id);
 	}
 	
-	public int isertarCoche(Coche co,int idUsuario) {
+	public int insertarCochePasandoOcocheyIdUsuario(Coche co,int idUsuario) {
 		return insertarCoche(co,idUsuario);
 	}
 	
 	public int eliminarCochePorId(int id) {
 		return eliminarCoche(id);
 	}
-
+	
 	public int actualizarCoche(int id, Coche co) {
 		return updateCoche(id, co);
 	}
 	
-	public Mecanico obtenerMecanicoPorId(int id) {
+	public int obtenerIdCochePasandoMatricula(String matricula) {
+		return obtenerIdCochePorMatricula(matricula);
+	}
+	
+	//Mecanico
+	
+	public int obtenerIDMecanicoPasandoDni(String dni) {
+		return obtenerIdMecanicoPorDniMecanico(dni);
+	}
+	
+	public Mecanico[] obtenerMecanicoPorId(int id) {
 		return obtenerMecanico(id);
 	}
 	
@@ -63,6 +89,22 @@ public class controladorAccesoBD extends tallerBD {
 	public int actualizarMecanicoPorIdYObjeto(int id,Mecanico me) {
 		return updatearMecanico(id, me);
 	}
+	
+	//Relacion
+	
+	
+	public int insertarRelacionCocheMecanicocPasandoIdcocheIdMecanico(int idCoche,int idMecanico) {
+		return insertarRelacionCocheMecanico(idCoche, idMecanico);
+	}
+	
+	
+	
+	
+	
+
+	
+	
+	
 	
 	
 }
