@@ -1,13 +1,21 @@
 package com.ipartek.maven.taller.AccesoDatos;
+import java.util.ArrayList;
+
 import com.ipartek.maven.taller.AccesoDatos.*;
 import com.ipartek.maven.taller.entidades.Coche;
 import com.ipartek.maven.taller.entidades.Mecanico;
 import com.ipartek.maven.taller.entidades.Usuario;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 public class controladorAccesoBD extends tallerBD {
 
+	
+	
 	public Usuario obtenerUsuarioPorId(int id) {
 		return obtenerUsuario(id);
+	}
+	public Usuario[] obtenerTodosUsuarios(){
+		return obtenerUsuarios();
 	}
 	
 	public int insertUsuarioPorObjeto(Usuario usu) {
@@ -27,11 +35,11 @@ public class controladorAccesoBD extends tallerBD {
 		return obtenerCoche(id);
 	}
 	
-	public int isertarCoche(Coche co) {
-		return insertarCoche(co);
+	public int isertarCoche(Coche co,int idUsuario) {
+		return insertarCoche(co,idUsuario);
 	}
 	
-	public int eliminarCoche(int id) {
+	public int eliminarCochePorId(int id) {
 		return eliminarCoche(id);
 	}
 
