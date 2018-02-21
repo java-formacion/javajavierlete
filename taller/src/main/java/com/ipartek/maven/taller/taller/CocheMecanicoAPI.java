@@ -14,7 +14,7 @@ import com.mysql.fabric.xmlrpc.base.Array;
  * Root resource (exposed at "myresource" path)
  */
 @Path("myresource")
-public class CocheMecanicoResource extends controladorAccesoBD{
+public class CocheMecanicoAPI extends controladorAccesoBD{
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)

@@ -1,5 +1,7 @@
 package com.ipartek.maven.taller.taller;
 
+import java.util.List;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,7 +14,7 @@ import com.ipartek.maven.taller.AccesoDatos.controladorAccesoBD;
 import com.ipartek.maven.taller.entidades.Usuario;
 
 @Path("usuarioResource")
-public class UsuarioResource extends controladorAccesoBD{
+public class UsuarioAPI extends controladorAccesoBD{
 
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -26,8 +28,7 @@ public class UsuarioResource extends controladorAccesoBD{
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public void InsertUsuario(Usuario usu) {
-		
-    	insertarUsuario(usu);
+		insertUsuarioPorObjeto(usu);
 	}
 	
 	@DELETE
@@ -65,23 +66,5 @@ public class UsuarioResource extends controladorAccesoBD{
 		}
 	}
 	
-	
-	private void insertarUsuario(Usuario usu) {
-		//insertar Usuario
-    	int respuesta=insertUsuarioPorObjeto(usu);
-    	switch (respuesta) {
-		case 0:
-			System.out.println("usuario insertado");
-			break;
-		case -1:
-			System.out.println("El usuario ya existe en la bd");
-			break;
-		case -2:
-			System.out.println("Error al realizar la isercion");
-			break;
-		default:
-			break;
-		}
-	}
 	
 }

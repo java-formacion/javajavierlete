@@ -395,9 +395,10 @@ public class tallerBD {
 					"select * from coches where idCoche=(select coches.idCoche from coches_has_mecanicos where mecanicos.idMecanico=(SELECT idMecanico from mecanicos))");
 			ps.setInt(1, id);
 			while (rs.next()) {
-				Coche co = new Coche(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
-						obtenerMecanicoPorIdCoche(rs.getInt(1)));
-				coches.add(co);
+				/*Coche co = new Coche(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						obtenerMecanicoPorIdCoche(rs.getInt(1)));*/
+				/*Coche oc
+				coches.add(co);*/
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

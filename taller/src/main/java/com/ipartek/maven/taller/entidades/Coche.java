@@ -5,19 +5,20 @@ import java.util.ArrayList;
 public class Coche {
 
 	private int id;
-	private String marca;
-	private String modelo;
-	private String matricula;
+	private String marca,modelo,matricula;
+	Usuario usuario;
 	private ArrayList<Mecanico> mecanicos;
 	
 	public Coche() {}
-	
-	public Coche(int id, String marca, String modelo, String matricula, ArrayList<Mecanico> mecanicos) {
+
+	public Coche(int id, String marca, String modelo, String matricula, Usuario usuario,
+			ArrayList<Mecanico> mecanicos) {
 		super();
 		this.id = id;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.matricula = matricula;
+		this.usuario = usuario;
 		this.mecanicos = mecanicos;
 	}
 
@@ -53,6 +54,14 @@ public class Coche {
 		this.matricula = matricula;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	public ArrayList<Mecanico> getMecanicos() {
 		return mecanicos;
 	}
@@ -60,6 +69,7 @@ public class Coche {
 	public void setMecanicos(ArrayList<Mecanico> mecanicos) {
 		this.mecanicos = mecanicos;
 	}
+	
 	
 	
 	

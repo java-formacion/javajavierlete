@@ -3,10 +3,7 @@ package com.ipartek.maven.taller.entidades;
 public class Usuario {
 	
 	private int id;
-	private String nombre;
-	private String apellidos;
-	private String dni;
-	private String telefono;
+	private String nombre,apellidos,dni,telefono;
 	private Coche coche;
 	
 	public Usuario() {}

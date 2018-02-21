@@ -11,7 +11,7 @@ import com.ipartek.maven.taller.AccesoDatos.controladorAccesoBD;
 import com.ipartek.maven.taller.entidades.Mecanico;
 
 @Path("mecanicoResource")
-public class MecanicoResource extends controladorAccesoBD{
+public class MecanicoAPI extends controladorAccesoBD{
 
 	
 	@GET
