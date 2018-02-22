@@ -9,11 +9,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.ipartek.maven.taller.AccesoDatos.controladorAccesoBD;
 import com.ipartek.maven.taller.entidades.Coche;
+import com.ipartek.taller.servicios.CocheServicio;
 
 @Path("coche")
-public class CocheAPI extends controladorAccesoBD{
+public class CocheAPI extends CocheServicio{
 
 	@GET
 	@Path("{id}")
@@ -25,21 +25,10 @@ public class CocheAPI extends controladorAccesoBD{
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public void insertarCoche(Coche co,String dni) {
-		int idUsuario=obteneridUsuarioPorDni(dni);
+	public int insertarCoche(Coche co,int  id) {
 		
-		switch (idUsuario) {
-		case 0:
-			System.out.println("idCoche no encontrado");
-			break;
-		case -1:
-			System.out.println("error");
-			break;
-		default:
-			insertarCochePasandoOcocheyIdUsuario(co, idUsuario);
-			break;
-		}
-		
+			int resultado=insertarCochePasandoOcocheyIdUsuario(co, id);
+			return resultado;
 	}
 	
 	@DELETE

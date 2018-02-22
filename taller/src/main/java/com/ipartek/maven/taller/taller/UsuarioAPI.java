@@ -10,11 +10,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.ipartek.maven.taller.AccesoDatos.controladorAccesoBD;
 import com.ipartek.maven.taller.entidades.Usuario;
+import com.ipartek.taller.servicios.UsuarioServicio;
 
 @Path("usuarioResource")
-public class UsuarioAPI extends controladorAccesoBD{
+public class UsuarioAPI extends UsuarioServicio{
 
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -33,37 +33,18 @@ public class UsuarioAPI extends controladorAccesoBD{
 	
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	public void EliminarUsuario(String dni) {
-		int idUsuario= obtenerUsuarioPordni(dni);
-		switch (idUsuario) {
-		case 0:
-			System.out.println("No existe el usuario con ese dni");
-			break;
-		case -1:
-			System.out.println("Error al obtener el id usuario pasando dni");
-			break;
-		default:
+	public void EliminarUsuario(int idUsuario) {
 			eliminarUsuarioPorId(idUsuario);
-			break;
-		}
+		
 	}
 	
 	
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
-	public void actualizarUsuairo(Usuario usu,String dni) {
-		int idUsuario = obteneridUsuarioPorDni(dni);
-		switch (idUsuario) {
-		case 0:
-			System.out.println("No existe el usuario con ese dni");
-			break;
-		case -1:
-			System.out.println("Error al obtener el id usuario pasando dni");
-			break;
-		default:
-			actualizarUsuarioPorId(3, usu);
-			break;
-		}
+	public void actualizarUsuairo(int idUsuario,Usuario usu) {
+		
+			actualizarUsuarioPorId(idUsuario, usu);
+		
 	}
 	
 	
