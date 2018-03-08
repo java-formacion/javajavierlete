@@ -148,7 +148,7 @@ public class DaoUsuario {
 					
 					usuarios.get(i).setCoches(cocheUser.toArray(new Coche[coches.size()]));
 					
-					System.out.println(usuarios.get(i).getCoches().length);
+					
 					break;
 					}
 					else usuarios.add(u);
