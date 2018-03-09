@@ -42,6 +42,17 @@ public class AlumnoDAOImpl implements AlumnoDAO {
 		
 		return alumnos;
 	}
+
+	@Override
+	@Transactional(readOnly=false)
+	public void addAlumno(Alumno al) {
+		
+		
+		sessionFactory.getCurrentSession().save(al);
+		
+
+		
+	}
 	
 	
 	

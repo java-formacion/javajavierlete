@@ -22,4 +22,12 @@ public class AlumnoServiceImpl implements AlumnoService{
 		return alumnoDao.getAlumnos();
 	}
 
+
+	@Override
+	public void addAlumno(Alumno al) {
+		
+		alumnoDao.addAlumno(al);
+		
+	}
+
 }
