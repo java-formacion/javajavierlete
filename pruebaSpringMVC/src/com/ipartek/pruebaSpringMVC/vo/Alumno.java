@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -16,8 +17,8 @@ import javax.persistence.Table;
 public class Alumno {
 
 	@Id
-	@GeneratedValue
-	@Column(name="idAlumnos")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private int id;
 	
 	@Column(name="Nombre")
@@ -26,7 +27,14 @@ public class Alumno {
 	@Column(name="Apellidos")
 	private String apellido;
 	
-	@Column(name="Correo")
+	@Column(name="telefono")
+	private String telefono;
+	
+	@Column(name="direccion")
+	private String direccion;
+	
+	
+	@Column(name="email")
 	private String email;
 	
 	
@@ -63,5 +71,24 @@ public class Alumno {
 		this.email = email;
 	}
 
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	
+	
+	
 	
 }

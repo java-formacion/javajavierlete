@@ -7,5 +7,7 @@ import com.ipartek.pruebaSpringMVC.vo.Alumno;
 public interface AlumnoDAO {
 
 	
-	List<Alumno> getAlumnos();
+	public List<Alumno> getAlumnos();
+	
+	public void addAlumno(Alumno al);
 }
