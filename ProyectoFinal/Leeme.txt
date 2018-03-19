@@ -1,0 +1,12 @@
+Para iniciar el Servidor por primera vez hay que incluir el java (en este caso use el 8_161) y el apache (probado con el 8, 8.5 y 9)
+Despues en la carpeta ProyectoFinal/WebContent/WEB-INF/ hay que editar el archivo web.xml para cambiar la direccion de la base de datos sqlite ya que no puede ser relativa (o lo es pero solo al servidor, no al proyecto)
+La base de datos esta situada en ProyectoFinal/bdd/
+Al arrancar el proyecto, por servidor, seleccionando el Proyecto (en su misma carpeta) deberia iniciar el navegador.
+
+El proyecto en si implicaba varias cosas, como son el simplificado de los 5 proyectos en uno solo, la expansion de los mismos e intentar mejorar la legibilidad de los mismos.
+
+La union de los proyectos y la expansion son las que he conseguido, no siendo del todo capaz de añadir legibilidad a todo.
+
+En caso de haber seguido con el proyecto (con mas tiempo) la idea seria añadir la pagina de usuario (donde ver y editar los campos despues de haber echo login), un sign up funcional (falta por añadir el post (creo que ya funciona la comprobacion de complegidad y la ecualidad de las contraseñas)) y la capacidad de añadir nuevos productos y editarlos desde una cuenta administrador en un futuro (necesitaria cambiar la base de datos para añadir el campo admin en users y añadir las paginas correspondientes para ello).
+
+Tambien queda pendiente la implementacion de algun sistema para que al añadir un producto nuevo no se añada uno mas al actualizar la pagina (el unico "bug" como tal que he encontrado en la pagina)
